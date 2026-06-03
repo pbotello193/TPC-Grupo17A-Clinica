@@ -1,4 +1,5 @@
-﻿using System;
+﻿using negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,10 @@ namespace WebApplicationClinica
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            MedicoNegocio negocio = new MedicoNegocio();
+            Session.Add("listaMedicos", negocio.listarMedicos());
+            dgvMedicos.DataSource = Session["listaMedicos"];
+            dgvMedicos.DataBind();
         }
     }
 }
