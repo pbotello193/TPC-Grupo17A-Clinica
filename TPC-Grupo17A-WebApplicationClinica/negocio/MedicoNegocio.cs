@@ -44,5 +44,30 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+        public void agregar(Medico nuevo)
+        {
+            try
+            {
+                datos.setearConsulta("INSERT INTO Medicos(Nombre, Apellido, Matricula, Telefono, Email) VALUES(@Nombre, @Apellido, @Matricula, @Telefono, @Email)");
+                datos.setearParametro("@Nombre", nuevo.Nombre);
+                datos.setearParametro("@Apellido", nuevo.Apellido);
+                datos.setearParametro("@Matricula", nuevo.Matricula);
+                datos.setearParametro("@Telefono", nuevo.Telefono);
+                datos.setearParametro("@Email", nuevo.Email);
+
+                datos.ejecutarLectura();
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error al agregar el artículo.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }
+

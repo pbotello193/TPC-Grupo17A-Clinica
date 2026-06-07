@@ -4,7 +4,7 @@
 
 <html>
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -12,17 +12,17 @@
 <body>
     <form id="form1" runat="server">
         <div>
-             <nav class="app-navbar"> 
-                 <div class="container"> 
-                 <a class="brand" href="Default.aspx">MiClinica</a> 
-                 <ul class="nav-links"> 
-                     <li><a href="Default.aspx">Inicio</a></li> 
-                     <li><a href="WebForm-Turnos.aspx">Turnos</a></li> 
-                     <li><a href="WebForm-Paciente.aspx">Pacientes</a></li> 
-                     <li><a href="WebForm-Medico.aspx">Médicos</a></li> 
-                 </ul>
-                 </div> 
-             </nav>
+            <nav class="app-navbar">
+                <div class="container">
+                    <a class="brand" href="Default.aspx">MiClinica</a>
+                    <ul class="nav-links">
+                        <li><a href="Default.aspx">Inicio</a></li>
+                        <li><a href="WebForm-Turnos.aspx">Turnos</a></li>
+                        <li><a href="WebForm-Paciente.aspx">Pacientes</a></li>
+                        <li><a href="WebForm-Medico.aspx">Médicos</a></li>
+                    </ul>
+                </div>
+            </nav>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>

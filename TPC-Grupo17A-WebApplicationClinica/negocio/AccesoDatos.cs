@@ -20,7 +20,7 @@ namespace negocio
 
         public AccesoDatos() 
         {
-            conexion = new SqlConnection("server=(localdb)\\MSSQLLocalDB; database=Clinica_DB; integrated security=true");
+            conexion = new SqlConnection("server=localhost; database=Clinica_DB; integrated security=true");
             comando = new SqlCommand();
         }
 
