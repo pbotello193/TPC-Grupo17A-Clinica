@@ -1,9 +1,10 @@
-﻿using System;
+﻿using dominio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using dominio;
+using static System.Collections.Specialized.BitVector32;
 
 namespace negocio
 {
@@ -16,12 +17,13 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("select nombre, apellido, matricula, telefono, email from Medicos");
+                datos.setearConsulta("select id, nombre, apellido, matricula, telefono, email from Medicos");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Medico aux = new Medico();
+                    aux.Id = (int)datos.Lector["Id"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Apellido = (string)datos.Lector["Apellido"];
                     aux.Matricula = (string)datos.Lector["Matricula"];
@@ -36,7 +38,7 @@ namespace negocio
             catch (Exception ex)
             {
 
-                throw ex;
+                throw ex; 
             }
 
             finally
@@ -68,6 +70,31 @@ namespace negocio
             }
         }
 
+        public void modificar(Medico modificar)
+        {
+            try
+            {
+                datos.setearConsulta("UPDATE Medicos set Nombre = @Nombre, Apellido = @Apellido, Matricula = @Matricula, Telefono = @Telefono, Email = @Email where Id=@Id");
+                datos.setearParametro("@Id", modificar.Id);
+                datos.setearParametro("@Nombre", modificar.Nombre);
+                datos.setearParametro("@Apellido", modificar.Apellido);
+                datos.setearParametro("@Matricula", modificar.Matricula);
+                datos.setearParametro("@Telefono", modificar.Telefono);
+                datos.setearParametro("@Email", modificar.Email);
+
+                datos.ejecutarAccion();
+                datos.cerrarConexion();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+            finally { datos.cerrarConexion(); }
+        }
     }
+
+
 }
 

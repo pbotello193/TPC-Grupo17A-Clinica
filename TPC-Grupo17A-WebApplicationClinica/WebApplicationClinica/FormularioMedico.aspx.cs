@@ -14,6 +14,29 @@ namespace WebApplicationClinica
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            txtId.Enabled = false;
+            try
+            {
+                string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
+                if (id != "" && !IsPostBack)
+                {
+                    List<Medico> listaMedicos = (List<Medico>)Session["listaMedicos"];
+                    Medico aux = listaMedicos.Find(x => x.Id == int.Parse(id));
+
+                    txtId.Text = aux.Id.ToString();
+                    txtNombre.Text = aux.Nombre;
+                    txtApellido.Text = aux.Apellido;
+                    txtMatricula.Text = aux.Matricula;
+                    txtTelefono.Text = aux.Telefono;
+                    txtEmail.Text = aux.Email;
+
+                }
+                }
+            catch (Exception ex)
+            {
+
+                Session.Add("error", ex);
+            }
 
         }
 
@@ -30,7 +53,13 @@ namespace WebApplicationClinica
                 nuevo.Telefono = txtTelefono.Text;
                 nuevo.Email = txtEmail.Text;
 
-                negocio.agregar(nuevo);
+                if (Request.QueryString["id"] != null)
+                {
+                    nuevo.Id = int.Parse(txtId.Text);
+                    negocio.modificar(nuevo);
+                }
+                else
+                    negocio.agregar(nuevo);
                 Response.Redirect("WebForm-Medico.aspx", false);
             }
             catch (Exception ex)

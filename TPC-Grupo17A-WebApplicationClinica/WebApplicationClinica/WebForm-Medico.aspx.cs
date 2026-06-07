@@ -17,5 +17,11 @@ namespace WebApplicationClinica
             dgvMedicos.DataSource = Session["listaMedicos"];
             dgvMedicos.DataBind();
         }
+
+        protected void dgvMedicos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string id = dgvMedicos.SelectedDataKey.Value.ToString();
+            Response.Redirect("FormularioMedico.aspx?id=" + id);
+        }
     }
 }

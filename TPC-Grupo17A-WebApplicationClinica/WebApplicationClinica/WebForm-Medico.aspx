@@ -4,7 +4,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
-        <asp:GridView ID="dgvMedicos" runat="server" AutoGenerateColumns="false">
+        <asp:GridView ID="dgvMedicos" runat="server" OnSelectedIndexChanged="dgvMedicos_SelectedIndexChanged"
+            DataKeyNames="Id" AutoGenerateColumns="false">
             <Columns>
                 <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
                 <asp:BoundField HeaderText="Apellido" DataField="Apellido" />
@@ -12,7 +13,7 @@
                 <asp:BoundField HeaderText="Telefono" DataField="Telefono" />
                 <asp:BoundField HeaderText="Email" DataField="Email" />
                  <%--Para el modificar despues--%>
-                <asp:CommandField HeaderText ="Accion" ShowSelectButton="true" />
+                <asp:CommandField HeaderText ="Accion" ShowSelectButton="true" SelectText="✍" />
               </Columns>
         </asp:GridView>
         <a href="FormularioMedico.aspx" class="btn btn-primary">Agregar</a>
