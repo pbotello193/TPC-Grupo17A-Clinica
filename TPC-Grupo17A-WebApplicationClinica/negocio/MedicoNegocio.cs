@@ -17,7 +17,7 @@ namespace negocio
         {
             try
             {
-                string consulta = "select id, nombre, apellido, matricula, telefono, email from Medicos WHERE Activo = 1";
+                string consulta = "select id, apellido, nombre, matricula, telefono, email, activo from Medicos WHERE Activo = 1 ORDER BY Apellido ASC";
                 datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
                 EspecialidadNegocio especialidadNegocio = new EspecialidadNegocio();
@@ -26,11 +26,13 @@ namespace negocio
                 {
                     Medico aux = new Medico();
                     aux.Id = (int)datos.Lector["Id"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Apellido = (string)datos.Lector["Apellido"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Matricula = (string)datos.Lector["Matricula"];
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Email = (string)datos.Lector["Email"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+
                     aux.Especialidades = especialidadNegocio.listarPorMedico(aux.Id);
 
                     medicos.Add(aux);
@@ -53,7 +55,7 @@ namespace negocio
         {
             try
             {
-                string consulta = "select id, nombre, apellido, matricula, telefono, email, activo from Medicos WHERE Activo = 1";
+                string consulta = "select id, apellido, nombre, matricula, telefono, email, activo from Medicos ORDER BY Activo DESC, Apellido ASC";
                 datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
                 EspecialidadNegocio especialidadNegocio = new EspecialidadNegocio();
@@ -62,8 +64,8 @@ namespace negocio
                 {
                     Medico aux = new Medico();
                     aux.Id = (int)datos.Lector["Id"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Apellido = (string)datos.Lector["Apellido"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Matricula = (string)datos.Lector["Matricula"];
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Email = (string)datos.Lector["Email"];
@@ -115,13 +117,14 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("UPDATE Medicos set Nombre = @Nombre, Apellido = @Apellido, Matricula = @Matricula, Telefono = @Telefono, Email = @Email where Id=@Id");
+                datos.setearConsulta("UPDATE Medicos set Nombre = @Nombre, Apellido = @Apellido, Matricula = @Matricula, Telefono = @Telefono, Email = @Email, Activo = @Activo where Id=@Id");
                 datos.setearParametro("@Id", modificar.Id);
                 datos.setearParametro("@Nombre", modificar.Nombre);
                 datos.setearParametro("@Apellido", modificar.Apellido);
                 datos.setearParametro("@Matricula", modificar.Matricula);
                 datos.setearParametro("@Telefono", modificar.Telefono);
                 datos.setearParametro("@Email", modificar.Email);
+                datos.setearParametro("@Activo", modificar.Activo);
 
                 datos.ejecutarAccion();
 

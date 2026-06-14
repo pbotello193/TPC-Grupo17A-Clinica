@@ -16,7 +16,6 @@ namespace WebApplicationClinica
         {
             txtId.Enabled = false;
             btnEliminarFisico.Visible = false;
-            btnEliminarLogico.Visible = false;
             try
             {
                 if (!IsPostBack)
@@ -29,7 +28,6 @@ namespace WebApplicationClinica
                 if (id != "" && !IsPostBack)
                 {
                     btnEliminarFisico.Visible = true;
-                    btnEliminarLogico.Visible = true;
                     List<Medico> listaMedicos = (List<Medico>)Session["listaMedicos"];
                     Medico aux = listaMedicos.Find(x => x.Id == int.Parse(id));
 
@@ -39,6 +37,15 @@ namespace WebApplicationClinica
                     txtMatricula.Text = aux.Matricula;
                     txtTelefono.Text = aux.Telefono;
                     txtEmail.Text = aux.Email;
+
+                    if (aux.Activo) //lo trae siempre en false!!!
+                    {
+                        rdbActivo.Checked = true;
+                    }
+                    else
+                    {
+                        rdbInactivo.Checked = true;
+                    }
                     if (aux.Especialidades != null)
                     {
                         foreach (ListItem item in cblEspecialidades.Items)
@@ -73,6 +80,14 @@ namespace WebApplicationClinica
                 nuevo.Matricula = txtMatricula.Text;
                 nuevo.Telefono = txtTelefono.Text;
                 nuevo.Email = txtEmail.Text;
+                if (rdbActivo.Checked)
+                {
+                    nuevo.Activo = true;
+                }
+                else
+                {
+                    nuevo.Activo = false;
+                }
 
                 if (Request.QueryString["id"] != null)
                 {

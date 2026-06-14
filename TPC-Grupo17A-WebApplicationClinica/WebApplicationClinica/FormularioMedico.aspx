@@ -30,14 +30,26 @@
                     <label for="txtEmail" class="form-label">Email</label>
                     <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" />
                 </div>
-                <asp:Label ID="lblEspecialidades" runat="server" Text="Especialidades:"></asp:Label>
-                <asp:CheckBoxList ID="cblEspecialidades" runat="server" DataTextField="Nombre" DataValueField="Id"></asp:CheckBoxList>
+
+                <div>
+                    <div>
+                        <asp:Label ID="lblEspecialidades" runat="server" Text="Especialidades:" Font-Bold="true" ></asp:Label>
+                        <asp:CheckBoxList ID="cblEspecialidades" runat="server" DataTextField="Nombre" DataValueField="Id"></asp:CheckBoxList>
+                    </div>
+                    <div>
+                        <asp:Label ID="lblEstado" Text="Estado:" runat="server" Font-Bold="true"  />
+                        <div>
+                            <asp:RadioButton ID="rdbActivo" Text="Activo" runat="server" GroupName="Estado" />
+                            <asp:RadioButton ID="rdbInactivo" Text="Inactivo" runat="server" GroupName="Estado" />
+                        </div>
+                    </div>
+
+                </div>
                 <div class="mb-3">
                     <asp:Button Text="Aceptar" runat="server" ID="btnAceptar" class="btn btn-primary" OnClick="btnAceptar_Click" />
                     <a href="WebForm-Medico.aspx" class="btn btn-danger">Cancelar</a>
                 </div>
                 <asp:Button ID="btnEliminarFisico" class="btn btn-secondary" runat="server" Text="Eliminar Fisico" OnClick="btnEliminarFisico_Click" />
-                <asp:Button ID="btnEliminarLogico" class="btn btn-secondary" runat="server" Text="Eliminar Logico" OnClick="btnEliminarLogico_Click" />
             </div>
         </div>
     </div>
