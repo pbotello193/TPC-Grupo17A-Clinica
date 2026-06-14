@@ -13,11 +13,11 @@ namespace negocio
         List<Medico> medicos = new List<Medico>();
         AccesoDatos datos = new AccesoDatos();
 
-        public List<Medico> listarMedicos()
+        public List<Medico> listarMedicosActivos()
         {
             try
             {
-                string consulta = "select id, nombre, apellido, matricula, telefono, email from Medicos";
+                string consulta = "select id, nombre, apellido, matricula, telefono, email from Medicos WHERE Activo = 1";
                 datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
                 EspecialidadNegocio especialidadNegocio = new EspecialidadNegocio();
@@ -48,6 +48,44 @@ namespace negocio
             {
                 datos.cerrarConexion();
             }
+        }
+        public List<Medico> listarMedicosCompleto()
+        {
+            try
+            {
+                string consulta = "select id, nombre, apellido, matricula, telefono, email, activo from Medicos WHERE Activo = 1";
+                datos.setearConsulta(consulta);
+                datos.ejecutarLectura();
+                EspecialidadNegocio especialidadNegocio = new EspecialidadNegocio();
+
+                while (datos.Lector.Read())
+                {
+                    Medico aux = new Medico();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Apellido = (string)datos.Lector["Apellido"];
+                    aux.Matricula = (string)datos.Lector["Matricula"];
+                    aux.Telefono = (string)datos.Lector["Telefono"];
+                    aux.Email = (string)datos.Lector["Email"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+                    aux.Especialidades = especialidadNegocio.listarPorMedico(aux.Id);
+
+                    medicos.Add(aux);
+                }
+
+                return medicos;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
         }
         public int agregar(Medico nuevo)
         {
@@ -104,6 +142,24 @@ namespace negocio
                 datos.setearParametro("@IdMedico", id);
                 datos.ejecutarAccion();
           
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void eliminarLogico(int id)
+        {
+            try
+            {
+                datos.setearConsulta("UPDATE Medicos SET Activo = 0 WHERE Id = @Id");
+                datos.setearParametro("@Id", id);
+
+                datos.ejecutarAccion();
             }
             catch (Exception ex)
             {

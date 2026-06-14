@@ -24,7 +24,8 @@ CREATE TABLE Medicos (
     Apellido VARCHAR(100) NOT NULL,
     Matricula VARCHAR(50) NOT NULL,
     Telefono VARCHAR(50) NOT NULL,
-    Email VARCHAR(150) NOT NULL
+    Email VARCHAR(150) NOT NULL,
+	Activo BIT NOT NULL
 );
 GO
 
@@ -84,16 +85,16 @@ END
 
 --Inserts para la tabla medicos
 
+INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email, Activo)
+VALUES ('Carlos', 'Gómez', 'M-45892', '1134567890', 'carlos.gomez@clinica.com', 1);
 INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email)
-VALUES ('Carlos', 'Gómez', 'M-45892', '1134567890', 'carlos.gomez@clinica.com');
+VALUES ('María Laura', 'Rodríguez', 'M-32145', '1165432109', 'maria.rodriguez@clinica.com', 1);
 INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email)
-VALUES ('María Laura', 'Rodríguez', 'M-32145', '1165432109', 'maria.rodriguez@clinica.com');
+VALUES ('Juan Pablo', 'Martínez', 'M-78563', '1198765432', 'juan.martinez@clinica.com', 1);
 INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email)
-VALUES ('Juan Pablo', 'Martínez', 'M-78563', '1198765432', 'juan.martinez@clinica.com');
+VALUES ('Ana Inés', 'Fernández', 'M-12457', '1122334455', 'ana.fernandez@clinica.com', 1);
 INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email)
-VALUES ('Ana Inés', 'Fernández', 'M-12457', '1122334455', 'ana.fernandez@clinica.com');
-INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email)
-VALUES ('Jorge Luis', 'López', 'M-96325', '1155667788', 'jorge.lopez@clinica.com');
+VALUES ('Jorge Luis', 'López', 'M-96325', '1155667788', 'jorge.lopez@clinica.com', 1);
 GO
 
 --Inserts para especialidades
@@ -120,4 +121,5 @@ INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) VALUES (4, 4);
 INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) VALUES (5, 1);
 INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) VALUES (5, 3);
 GO
+
 

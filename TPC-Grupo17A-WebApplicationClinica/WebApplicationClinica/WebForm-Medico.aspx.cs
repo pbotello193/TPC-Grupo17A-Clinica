@@ -13,7 +13,7 @@ namespace WebApplicationClinica
         protected void Page_Load(object sender, EventArgs e)
         {
             MedicoNegocio negocio = new MedicoNegocio();
-            Session.Add("listaMedicos", negocio.listarMedicos());
+            Session.Add("listaMedicos", negocio.listarMedicosActivos());
             dgvMedicos.DataSource = Session["listaMedicos"];
             dgvMedicos.DataBind();;
         }
