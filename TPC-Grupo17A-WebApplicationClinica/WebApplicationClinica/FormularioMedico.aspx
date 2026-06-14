@@ -30,10 +30,13 @@
                     <label for="txtEmail" class="form-label">Email</label>
                     <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" />
                 </div>
+                <asp:Label ID="lblEspecialidades" runat="server" Text="Especialidades:"></asp:Label>
+                <asp:CheckBoxList ID="cblEspecialidades" runat="server" DataTextField="Nombre" DataValueField="Id"></asp:CheckBoxList>
                 <div class="mb-3">
                     <asp:Button Text="Aceptar" runat="server" ID="btnAceptar" class="btn btn-primary" OnClick="btnAceptar_Click" />
                     <a href="WebForm-Medico.aspx" class="btn btn-danger">Cancelar</a>
                 </div>
             </div>
         </div>
+    </div>
 </asp:Content>

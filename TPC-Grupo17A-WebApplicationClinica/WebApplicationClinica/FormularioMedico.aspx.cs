@@ -17,6 +17,12 @@ namespace WebApplicationClinica
             txtId.Enabled = false;
             try
             {
+                if (!IsPostBack)
+                {
+                    EspecialidadNegocio negocio = new EspecialidadNegocio();
+                    cblEspecialidades.DataSource = negocio.listarEspecialidades();
+                    cblEspecialidades.DataBind();
+                }
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
                 if (id != "" && !IsPostBack)
                 {
@@ -29,9 +35,19 @@ namespace WebApplicationClinica
                     txtMatricula.Text = aux.Matricula;
                     txtTelefono.Text = aux.Telefono;
                     txtEmail.Text = aux.Email;
+                    if (aux.Especialidades != null)
+                    {
+                        foreach (ListItem item in cblEspecialidades.Items)
+                        {
+                            if (aux.Especialidades.Any(x => x.Id == int.Parse(item.Value)))
+                            {
+                                item.Selected = true;
+                            }
+                        }
+                    }
 
                 }
-                }
+            }
             catch (Exception ex)
             {
 
@@ -45,7 +61,8 @@ namespace WebApplicationClinica
             try
             {
                 Medico nuevo = new Medico();
-                MedicoNegocio negocio = new MedicoNegocio();
+                MedicoNegocio medNegocio = new MedicoNegocio();
+                EspecialidadNegocio espNegocio = new EspecialidadNegocio();
 
                 nuevo.Nombre = txtNombre.Text;
                 nuevo.Apellido = txtApellido.Text;
@@ -56,10 +73,29 @@ namespace WebApplicationClinica
                 if (Request.QueryString["id"] != null)
                 {
                     nuevo.Id = int.Parse(txtId.Text);
-                    negocio.modificar(nuevo);
+                    medNegocio.modificar(nuevo);
+                    espNegocio.resetearEspecialidades(nuevo.Id);
+
+                    foreach (ListItem item in cblEspecialidades.Items)
+                    {
+                        if (item.Selected)
+                        {
+                            espNegocio.asignarEspecialidad(nuevo.Id, int.Parse(item.Value));
+                        }
+                    }
                 }
                 else
-                    negocio.agregar(nuevo);
+                {
+                    int idMedicoAgregado = medNegocio.agregar(nuevo);
+
+                    foreach (ListItem item in cblEspecialidades.Items)
+                    {
+                        if (item.Selected)
+                        {
+                            espNegocio.asignarEspecialidad(idMedicoAgregado, int.Parse(item.Value));
+                        }
+                    }
+                }
                 Response.Redirect("WebForm-Medico.aspx", false);
             }
             catch (Exception ex)

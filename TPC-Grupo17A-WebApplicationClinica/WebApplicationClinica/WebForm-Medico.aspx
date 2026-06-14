@@ -13,7 +13,7 @@
                     <asp:BoundField HeaderText="Matricula" DataField="Matricula" />
                     <asp:BoundField HeaderText="Telefono" DataField="Telefono" />
                     <asp:BoundField HeaderText="Email" DataField="Email" />
-                    <asp:CommandField HeaderText="Accion" ShowSelectButton="true" SelectText="Modificar" />
+                    <asp:CommandField HeaderText="Accion" ShowSelectButton="true" SelectText="Editar" />
                 </Columns>
             </asp:GridView>
         </div>

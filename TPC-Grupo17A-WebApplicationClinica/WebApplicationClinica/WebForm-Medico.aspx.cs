@@ -15,7 +15,7 @@ namespace WebApplicationClinica
             MedicoNegocio negocio = new MedicoNegocio();
             Session.Add("listaMedicos", negocio.listarMedicos());
             dgvMedicos.DataSource = Session["listaMedicos"];
-            dgvMedicos.DataBind();
+            dgvMedicos.DataBind();;
         }
 
         protected void dgvMedicos_SelectedIndexChanged(object sender, EventArgs e)

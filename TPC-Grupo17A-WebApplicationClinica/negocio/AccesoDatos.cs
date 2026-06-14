@@ -43,6 +43,12 @@ namespace negocio
             conexion.Open();
             comando.ExecuteNonQuery();
         }
+        public int ejecutarAccionScalar() 
+        {
+            comando.Connection = conexion;
+            conexion.Open();
+            return int.Parse(comando.ExecuteScalar().ToString());
+        }
 
         public void setearParametro(string nombre, object valor)
         {

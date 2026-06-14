@@ -17,8 +17,10 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("select id, nombre, apellido, matricula, telefono, email from Medicos");
+                string consulta = "select id, nombre, apellido, matricula, telefono, email from Medicos";
+                datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
+                EspecialidadNegocio especialidadNegocio = new EspecialidadNegocio();
 
                 while (datos.Lector.Read())
                 {
@@ -29,6 +31,7 @@ namespace negocio
                     aux.Matricula = (string)datos.Lector["Matricula"];
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Email = (string)datos.Lector["Email"];
+                    aux.Especialidades = especialidadNegocio.listarPorMedico(aux.Id);
 
                     medicos.Add(aux);
                 }
@@ -46,23 +49,23 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        public void agregar(Medico nuevo)
+        public int agregar(Medico nuevo)
         {
             try
             {
-                datos.setearConsulta("INSERT INTO Medicos(Nombre, Apellido, Matricula, Telefono, Email) VALUES(@Nombre, @Apellido, @Matricula, @Telefono, @Email)");
+                datos.setearConsulta("INSERT INTO Medicos(Nombre, Apellido, Matricula, Telefono, Email) OUTPUT INSERTED.ID VALUES(@Nombre, @Apellido, @Matricula, @Telefono, @Email)");
                 datos.setearParametro("@Nombre", nuevo.Nombre);
                 datos.setearParametro("@Apellido", nuevo.Apellido);
                 datos.setearParametro("@Matricula", nuevo.Matricula);
                 datos.setearParametro("@Telefono", nuevo.Telefono);
                 datos.setearParametro("@Email", nuevo.Email);
 
-                datos.ejecutarLectura();
+                return datos.ejecutarAccionScalar(); //Prueba a ver si devuelve el id (parece que no)
 
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error al agregar el artículo.", ex);
+                throw ex;
             }
             finally
             {
@@ -83,7 +86,6 @@ namespace negocio
                 datos.setearParametro("@Email", modificar.Email);
 
                 datos.ejecutarAccion();
-                datos.cerrarConexion();
 
             }
             catch (Exception ex)
