@@ -60,7 +60,7 @@ namespace negocio
                 datos.setearParametro("@Telefono", nuevo.Telefono);
                 datos.setearParametro("@Email", nuevo.Email);
 
-                return datos.ejecutarAccionScalar(); //Prueba a ver si devuelve el id (parece que no)
+                return datos.ejecutarAccionScalar(); //Prueba a ver si devuelve el id
 
             }
             catch (Exception ex)
@@ -94,6 +94,25 @@ namespace negocio
 
             }
             finally { datos.cerrarConexion(); }
+        }
+        public void eliminarFisico(int id)
+        {
+            //CREAR SP EN LA DB PARA NO HACER DOS CONEXIONES
+            try
+            {
+                datos.setearProcedimiento("SP_EliminarMedicoFisico");
+                datos.setearParametro("@IdMedico", id);
+                datos.ejecutarAccion();
+          
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 

@@ -15,6 +15,7 @@ namespace WebApplicationClinica
         protected void Page_Load(object sender, EventArgs e)
         {
             txtId.Enabled = false;
+            btnEliminar.Visible = false;
             try
             {
                 if (!IsPostBack)
@@ -26,6 +27,7 @@ namespace WebApplicationClinica
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
                 if (id != "" && !IsPostBack)
                 {
+                    btnEliminar.Visible = true;
                     List<Medico> listaMedicos = (List<Medico>)Session["listaMedicos"];
                     Medico aux = listaMedicos.Find(x => x.Id == int.Parse(id));
 
@@ -101,6 +103,22 @@ namespace WebApplicationClinica
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MedicoNegocio medNegocio = new MedicoNegocio();
+
+                int idMedico = int.Parse(txtId.Text);
+                medNegocio.eliminarFisico(idMedico);
+                Response.Redirect("WebForm-Medico.aspx", false);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
             }
         }
     }

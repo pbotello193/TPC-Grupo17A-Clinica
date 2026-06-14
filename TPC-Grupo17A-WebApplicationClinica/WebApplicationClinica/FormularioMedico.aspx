@@ -36,6 +36,7 @@
                     <asp:Button Text="Aceptar" runat="server" ID="btnAceptar" class="btn btn-primary" OnClick="btnAceptar_Click" />
                     <a href="WebForm-Medico.aspx" class="btn btn-danger">Cancelar</a>
                 </div>
+                <asp:Button ID="btnEliminar" class="btn btn-secondary" runat="server" Text="Eliminar Médico" OnClick="btnEliminar_Click" />
             </div>
         </div>
     </div>

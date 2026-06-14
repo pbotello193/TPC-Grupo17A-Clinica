@@ -62,6 +62,26 @@ CREATE TABLE Turnos (
 );
 GO
 
+CREATE PROCEDURE SP_EliminarMedicoFisico
+    @IdMedico INT
+AS
+BEGIN
+    BEGIN TRANSACTION    
+    BEGIN TRY
+	--ELIMINAR PRIMERO LA REALACION EN LA TABLA INTERMEDIA SINO SE ROMPE!!
+        DELETE FROM MedicoEspecialidad 
+        WHERE IdMedico = @IdMedico
+        DELETE FROM Medicos --
+        WHERE Id = @IdMedico
+
+        COMMIT TRANSACTION
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION
+        THROW;
+    END CATCH
+END
+
 --Inserts para la tabla medicos
 
 INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email)
