@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -80,6 +81,26 @@ namespace negocio
             }
             finally { datos.cerrarConexion(); }
         }
+        
+        public void eliminarFisico(int id)
+        {
+            try
+            {
+                datos.setearConsulta("Delete from Especialidades where Id=@IdEspecialidad");
+                datos.setearParametro("@IdEspecialidad", id);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        
 
         public List<Especialidad> listarPorMedico(int idMedico)
         {

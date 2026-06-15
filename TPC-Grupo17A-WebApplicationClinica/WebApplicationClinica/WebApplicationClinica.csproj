@@ -68,8 +68,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
+    <Content Include="FormularioEspecialidad.aspx" />
     <Content Include="FormularioMedico.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="ListaEspecialidades.aspx" />
     <Content Include="Web.config" />
     <Content Include="WebForm-Medico.aspx" />
     <Content Include="WebForm-Paciente.aspx" />
@@ -83,6 +85,13 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FormularioEspecialidad.aspx.cs">
+      <DependentUpon>FormularioEspecialidad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioEspecialidad.aspx.designer.cs">
+      <DependentUpon>FormularioEspecialidad.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FormularioMedico.aspx.cs">
       <DependentUpon>FormularioMedico.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -92,6 +101,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="ListaEspecialidades.aspx.cs">
+      <DependentUpon>ListaEspecialidades.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListaEspecialidades.aspx.designer.cs">
+      <DependentUpon>ListaEspecialidades.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site1.Master.cs">

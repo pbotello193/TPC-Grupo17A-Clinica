@@ -32,13 +32,13 @@
                 </div>
 
                 <div>
-                    <div>
-                        <asp:Label ID="lblEspecialidades" runat="server" Text="Especialidades:" Font-Bold="true" ></asp:Label>
+                    <div class="mb-3">
+                        <asp:Label ID="lblEspecialidades" runat="server" Text="Especialidades:" Font-Bold="true"></asp:Label>
                         <asp:CheckBoxList ID="cblEspecialidades" runat="server" DataTextField="Nombre" DataValueField="Id"></asp:CheckBoxList>
                     </div>
-                    <div>
-                        <asp:Label ID="lblEstado" Text="Estado:" runat="server" Font-Bold="true"  />
-                        <div>
+                    <div class="mb-3">
+                        <asp:Label ID="lblEstado" Text="Estado:" runat="server" Font-Bold="true" />
+                        <div class="mb-3">
                             <asp:RadioButton ID="rdbActivo" Text="Activo" runat="server" GroupName="Estado" />
                             <asp:RadioButton ID="rdbInactivo" Text="Inactivo" runat="server" GroupName="Estado" />
                         </div>
@@ -49,7 +49,9 @@
                     <asp:Button Text="Aceptar" runat="server" ID="btnAceptar" class="btn btn-primary" OnClick="btnAceptar_Click" />
                     <a href="WebForm-Medico.aspx" class="btn btn-danger">Cancelar</a>
                 </div>
-                <asp:Button ID="btnEliminarFisico" class="btn btn-secondary" runat="server" Text="Eliminar Fisico" OnClick="btnEliminarFisico_Click" />
+                <div class="mb-3">
+                    <asp:Button ID="btnEliminarFisico" class="btn btn-secondary" runat="server" Text="Eliminar Fisico" OnClick="btnEliminarFisico_Click" />
+                </div>
             </div>
         </div>
     </div>
