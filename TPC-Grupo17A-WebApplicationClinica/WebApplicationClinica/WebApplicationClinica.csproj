@@ -70,6 +70,7 @@
     <Content Include="Default.aspx" />
     <Content Include="FormularioEspecialidad.aspx" />
     <Content Include="FormularioMedico.aspx" />
+    <Content Include="FormularioPaciente.aspx" />
     <Content Include="Global.asax" />
     <Content Include="ListaEspecialidades.aspx" />
     <Content Include="Web.config" />
@@ -98,6 +99,13 @@
     </Compile>
     <Compile Include="FormularioMedico.aspx.designer.cs">
       <DependentUpon>FormularioMedico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormularioPaciente.aspx.cs">
+      <DependentUpon>FormularioPaciente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioPaciente.aspx.designer.cs">
+      <DependentUpon>FormularioPaciente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
