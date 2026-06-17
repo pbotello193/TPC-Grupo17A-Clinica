@@ -8,7 +8,7 @@ namespace dominio
 {
     public class Paciente
     {
-        //public int Id { get; set; }
+        public int Id { get; set; }
         public string Dni { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
@@ -16,6 +16,7 @@ namespace dominio
         public DateTime FechaNacimiento { get; set; }
         public string Telefono { get; set; }
         public string Direccion { get; set; }
+        //public bool Activo { get; set; } -> baja logica
 
 
     }

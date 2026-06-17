@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using negocio;
+using System;
 
 namespace WebApplicationClinica
 {
@@ -11,7 +7,20 @@ namespace WebApplicationClinica
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            PacienteNegocio negocio = new PacienteNegocio();
 
+            if (!IsPostBack)
+            {
+                Session.Add("listaPacientes", negocio.listarPacientes());
+                dgvPacientes.DataSource = Session["listaPacientes"];
+                dgvPacientes.DataBind();
+            }
+        }
+
+        protected void dgvPacientes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string id = dgvPacientes.SelectedDataKey.Value.ToString();
+            Response.Redirect("FormularioPaciente.aspx?id=" + id);
         }
     }
 }
