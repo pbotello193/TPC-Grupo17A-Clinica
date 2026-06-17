@@ -63,6 +63,17 @@ CREATE TABLE Turnos (
 );
 GO
 
+CREATE TABLE TurnosDeTrabajo (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    IdMedico INT NOT NULL,
+    DiaDeLaSemana INT NOT NULL,
+    HoraInicio TIME NOT NULL,
+    HoraFin TIME NOT NULL,
+    CONSTRAINT FK_TurnoDeTrabajo_Medico FOREIGN KEY (IdMedico) REFERENCES Medicos(Id)
+);
+GO
+
+
 CREATE PROCEDURE SP_EliminarMedicoFisico
     @IdMedico INT
 AS
@@ -86,15 +97,12 @@ END
 --Inserts para la tabla medicos
 
 INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email, Activo)
-VALUES ('Carlos', 'Gómez', 'M-45892', '1134567890', 'carlos.gomez@clinica.com', 1);
-INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email)
-VALUES ('María Laura', 'Rodríguez', 'M-32145', '1165432109', 'maria.rodriguez@clinica.com', 1);
-INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email)
-VALUES ('Juan Pablo', 'Martínez', 'M-78563', '1198765432', 'juan.martinez@clinica.com', 1);
-INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email)
-VALUES ('Ana Inés', 'Fernández', 'M-12457', '1122334455', 'ana.fernandez@clinica.com', 1);
-INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email)
-VALUES ('Jorge Luis', 'López', 'M-96325', '1155667788', 'jorge.lopez@clinica.com', 1);
+VALUES 
+    ('Carlos', 'Gómez', 'M-45892', '1134567890', 'carlos.gomez@clinica.com', 1),
+    ('María Laura', 'Rodríguez', 'M-32145', '1165432109', 'maria.rodriguez@clinica.com', 1),
+    ('Juan Pablo', 'Martínez', 'M-78563', '1198765432', 'juan.martinez@clinica.com', 1),
+    ('Ana Inés', 'Fernández', 'M-12457', '1122334455', 'ana.fernandez@clinica.com', 1),
+    ('Jorge Luis', 'López', 'M-96325', '1155667788', 'jorge.lopez@clinica.com', 1);
 GO
 
 --Inserts para especialidades
@@ -121,5 +129,6 @@ INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) VALUES (4, 4);
 INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) VALUES (5, 1);
 INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) VALUES (5, 3);
 GO
+
 
 

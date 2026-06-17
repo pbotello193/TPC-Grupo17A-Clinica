@@ -26,6 +26,7 @@
                         <a class="nav-link" href="WebForm-Paciente.aspx">Pacientes</a>
                         <a class="nav-link" href="WebForm-Medico.aspx">Medicos</a>
                         <a class="nav-link" href="ListaEspecialidades.aspx">Especialidades</a>
+                        <a class="nav-link" href="FormularioTurnoDeTrabajo.aspx">Horarios Médicos</a>
                     </div>
                 </div>
             </div>
