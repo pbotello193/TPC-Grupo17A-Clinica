@@ -14,13 +14,11 @@ namespace WebApplicationClinica
         protected void Page_Load(object sender, EventArgs e)
         {
             txtId.Enabled = false;
-            btnEliminarFisico.Visible = false;
             try
             {
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
                 if (id != "" && !IsPostBack)
                 {
-                    btnEliminarFisico.Visible = true;
                     txtId.Text = id;
 
                     List<Especialidad> listaEspecialidades = (List<Especialidad>)Session["listaEspecialidades"];
@@ -29,9 +27,6 @@ namespace WebApplicationClinica
                     txtId.Text = aux.Id.ToString();
                     txtNombre.Text = aux.Nombre;
                     txtDescripcion.Text = aux.Descripcion;
-
-
-
                 }
             }
             catch (Exception ex)
@@ -44,6 +39,12 @@ namespace WebApplicationClinica
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(txtNombre.Text) || string.IsNullOrWhiteSpace(txtDescripcion.Text))
+                {
+                    lblMensaje.Text = "Complete todos los datos antes de guardar";
+                    return; //para evitar ir a la db
+                }
+
                 EspecialidadNegocio espNegocio = new EspecialidadNegocio();
                 Especialidad nuevo = new Especialidad();
 
@@ -62,29 +63,19 @@ namespace WebApplicationClinica
 
                 Response.Redirect("ListaEspecialidades.aspx", false);
             }
-            catch (Exception ex)
+            catch (System.Data.SqlClient.SqlException ex)
             {
+                //excepciones con la db
                 Session.Add("error", ex);
-            }
-        }
-
-
-
-        protected void btnEliminarFisico_Click(object sender, EventArgs e)
-        {
-            //Validar que no este asociada a ningun medico antes de borrar!!
-            try
-            {
-                EspecialidadNegocio espNegocio = new EspecialidadNegocio();
-
-                int idEspecialidad = int.Parse(txtId.Text);
-                espNegocio.eliminarFisico(idEspecialidad);
-                Response.Redirect("ListaEspecialidades.aspx", false);
+                lblMensaje.Text = "Hubo un problema con la base de datos. Intente nuevamente mas tarde.";
             }
             catch (Exception ex)
             {
+                //excepciones generales
                 Session.Add("error", ex);
+                lblMensaje.Text = "Ocurrió un error al intentar guardar la especialidad.";
             }
         }
+
     }
 }

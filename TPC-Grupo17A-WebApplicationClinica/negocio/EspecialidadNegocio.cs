@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace negocio
 {
@@ -81,26 +82,6 @@ namespace negocio
             }
             finally { datos.cerrarConexion(); }
         }
-        
-        public void eliminarFisico(int id)
-        {
-            try
-            {
-                datos.setearConsulta("Delete from Especialidades where Id=@IdEspecialidad");
-                datos.setearParametro("@IdEspecialidad", id);
-                datos.ejecutarAccion();
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
-        
 
         public List<Especialidad> listarPorMedico(int idMedico)
         {
@@ -140,9 +121,9 @@ namespace negocio
         }
 
 
-        public void resetearEspecialidades(int idMedico) 
+        public void resetearEspecialidades(int idMedico)
         {
-        //Para borrar las especialidades asociadas a un medico antes de actualizarlas
+            //Para borrar las especialidades asociadas a un medico antes de actualizarlas
             AccesoDatos datosLocal = new AccesoDatos();
             try
             {
@@ -182,8 +163,7 @@ namespace negocio
                 datosLocal.cerrarConexion();
             }
         }
-
-
+        
     }
 }
 
