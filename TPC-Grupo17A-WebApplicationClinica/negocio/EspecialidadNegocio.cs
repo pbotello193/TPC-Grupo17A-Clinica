@@ -163,7 +163,34 @@ namespace negocio
                 datosLocal.cerrarConexion();
             }
         }
-        
+
+        public bool existeEspecialidad(string nombre, int idEspecialidad = 0)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                //verifica si no hay otra esp. con el mismo nombre (exceptuar el id de la actual si es modificacion)
+                datos.setearConsulta("SELECT COUNT(*) FROM Especialidades WHERE Nombre = @Nombre AND Id <> @Id");
+                datos.setearParametro("@Nombre", nombre);
+                datos.setearParametro("@Id", idEspecialidad);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    int cantidad = Convert.ToInt32(datos.Lector[0]);
+                    return cantidad > 0;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
 

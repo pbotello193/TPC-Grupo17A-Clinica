@@ -54,10 +54,22 @@ namespace WebApplicationClinica
                 if (Request.QueryString["id"] != null)
                 {
                     nuevo.Id = int.Parse(txtId.Text);
+                    //verifica si existe esp. con el mismo nombre y distinto id
+                    if (espNegocio.existeEspecialidad(nuevo.Nombre, nuevo.Id))
+                    {
+                        lblMensaje.Text = "Ya existe una especialidad con ese nombre";
+                        return;
+                    }
                     espNegocio.modificar(nuevo);
                 }
                 else
                 {
+                    //verifica si existe esp. con el mismo nombre
+                    if (espNegocio.existeEspecialidad(nuevo.Nombre, nuevo.Id))
+                    {
+                        lblMensaje.Text = "Ya existe una especialidad con ese nombre.";
+                        return;
+                    }
                     espNegocio.agregar(nuevo);
                 }
 
