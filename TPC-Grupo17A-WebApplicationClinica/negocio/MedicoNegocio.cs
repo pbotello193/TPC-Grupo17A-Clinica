@@ -136,25 +136,6 @@ namespace negocio
             }
             finally { datos.cerrarConexion(); }
         }
-        public void eliminarFisico(int id)
-        {
-            //CREAR SP EN LA DB PARA NO HACER DOS CONEXIONES
-            try
-            {
-                datos.setearProcedimiento("SP_EliminarMedicoFisico");
-                datos.setearParametro("@IdMedico", id);
-                datos.ejecutarAccion();
-          
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
         public void eliminarLogico(int id)
         {
             try

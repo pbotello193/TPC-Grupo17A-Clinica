@@ -71,6 +71,9 @@ namespace WebApplicationClinica
         {
             try
             {
+                Page.Validate();
+                if (!Page.IsValid) 
+                    return;
                 Medico nuevo = new Medico();
                 MedicoNegocio medNegocio = new MedicoNegocio();
                 EspecialidadNegocio espNegocio = new EspecialidadNegocio();
@@ -123,21 +126,6 @@ namespace WebApplicationClinica
             }
         }
 
-        protected void btnEliminarFisico_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                MedicoNegocio medNegocio = new MedicoNegocio();
-
-                int idMedico = int.Parse(txtId.Text);
-                medNegocio.eliminarFisico(idMedico);
-                Response.Redirect("WebForm-Medico.aspx", false);
-            }
-            catch (Exception ex)
-            {
-                Session.Add("error", ex);
-            }
-        }
 
         protected void btnEliminarLogico_Click(object sender, EventArgs e)
         {

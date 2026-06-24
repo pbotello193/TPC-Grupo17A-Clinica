@@ -1,6 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="FormularioMedico.aspx.cs" Inherits="WebApplicationClinica.FormularioMedico" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style> /*Estilo para los mjs de validacion*/
+        .validacion
+        {
+            color: red;
+            font-size: 13px;
+            font-weight:bold;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
@@ -13,24 +21,28 @@
                 <div class="mb-3">
                     <label for="txtNombre" class="form-label">Nombre</label>
                     <asp:TextBox runat="server" ID="txtNombre" CssClass="form-control" />
+                    <asp:RequiredFieldValidator ErrorMessage="El nombre es requerido" CssClass="validacion" Display="Dynamic" ControlToValidate="txtNombre" runat="server" />
                 </div>
                 <div class="mb-3">
                     <label for="txtApellido" class="form-label">Apellido</label>
                     <asp:TextBox runat="server" ID="txtApellido" CssClass="form-control" />
+                    <asp:RequiredFieldValidator ErrorMessage="El apellido es requerido" CssClass="validacion" Display="Dynamic" ControlToValidate="txtApellido" runat="server" />
                 </div>
                 <div class="mb-3">
                     <label for="txtMatricula" class="form-label">Matricula</label>
                     <asp:TextBox runat="server" ID="txtMatricula" CssClass="form-control" />
+                    <asp:RequiredFieldValidator ErrorMessage="La matricula es requerida" CssClass="validacion" Display="Dynamic" ControlToValidate="txtMatricula" runat="server" />
                 </div>
                 <div class="mb-3">
                     <label for="txtTelefono" class="form-label">Telefono</label>
                     <asp:TextBox runat="server" ID="txtTelefono" CssClass="form-control" />
+                    <asp:RegularExpressionValidator ErrorMessage="Ingrese el numero sin guiones ni espacios" CssClass="validacion" Display="Dynamic" ControlToValidate="txtTelefono" runat="server" />
                 </div>
                 <div class="mb-3">
                     <label for="txtEmail" class="form-label">Email</label>
                     <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" />
+                    <asp:RegularExpressionValidator ErrorMessage="Ingrese un Email valido" CssClass="validacion" Display="Dynamic" ControlToValidate="txtEmail" ValidationExpression="^\w+([-.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" runat="server" />
                 </div>
-
                 <div>
                     <div class="mb-3">
                         <asp:Label ID="lblEspecialidades" runat="server" Text="Especialidades:" Font-Bold="true"></asp:Label>
@@ -48,9 +60,6 @@
                 <div class="mb-3">
                     <asp:Button Text="Aceptar" runat="server" ID="btnAceptar" class="btn btn-primary" OnClick="btnAceptar_Click" />
                     <a href="WebForm-Medico.aspx" class="btn btn-danger">Cancelar</a>
-                </div>
-                <div class="mb-3">
-                    <asp:Button ID="btnEliminarFisico" class="btn btn-secondary" runat="server" Text="Eliminar Fisico" OnClick="btnEliminarFisico_Click" />
                 </div>
             </div>
         </div>
