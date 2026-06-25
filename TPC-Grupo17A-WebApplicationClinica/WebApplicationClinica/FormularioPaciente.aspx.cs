@@ -61,6 +61,19 @@ namespace WebApplicationClinica
                 Paciente paciente = new Paciente();
                 PacienteNegocio pacienteNegocio = new PacienteNegocio();
 
+
+                // existe DNI
+                int idPaciente = 0;
+                if (Request.QueryString["id"] != null)
+                    idPaciente = int.Parse(txtId.Text);
+
+                if (pacienteNegocio.existeDni(txtDni.Text, idPaciente))
+                {
+                    lblError.Text = "Ya existe un paciente registrado con ese DNI.";
+                    lblError.Visible = true;
+                    return;
+                }
+
                 paciente.Nombre = txtNombre.Text;
                 paciente.Apellido = txtApellido.Text;
                 paciente.Dni = txtDni.Text;

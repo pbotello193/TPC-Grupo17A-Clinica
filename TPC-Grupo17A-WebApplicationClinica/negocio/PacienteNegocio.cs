@@ -82,6 +82,37 @@ namespace negocio
             }
         }
 
+
+        // Existe DNI --> controla si ya existe el DNI en la bd
+        public bool existeDni(string dni, int idPaciente = 0)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM Pacientes WHERE DNI = @DNI AND Id <> @Id");
+                datos.setearParametro("@DNI", dni);
+                datos.setearParametro("@Id", idPaciente);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    int cantidad = Convert.ToInt32(datos.Lector[0]);
+                    return cantidad > 0;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public void agregar(Paciente nuevo)
         {
             AccesoDatos datos = new AccesoDatos();

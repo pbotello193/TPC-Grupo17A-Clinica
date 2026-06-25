@@ -18,9 +18,13 @@
                     <label for="txtApellido" class="form-label">Apellido</label>
                     <asp:TextBox runat="server" ID="txtApellido" CssClass="form-control" />
                 </div>
+
+                <%--DNI --%>
                 <div class="mb-3">
                     <label for="txtDni" class="form-label">DNI</label>
                     <asp:TextBox runat="server" ID="txtDni" CssClass="form-control" />
+
+                    <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
                 </div>
                 <div class="mb-3">
                     <label for="txtFechaNacimiento" class="form-label">Fecha de nacimiento</label>
@@ -38,9 +42,7 @@
                     <label for="txtDireccion" class="form-label">Direccion</label>
                     <asp:TextBox runat="server" ID="txtDireccion" CssClass="form-control" />
                 </div>
-                <div class="mb-3">
-                    <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
-                </div>
+
                 <div class="mb-3">
                     <asp:Button ID="btnAceptar" class="btn btn-primary" runat="server" Text="Aceptar" OnClick="btnAceptar_Click" />
                     <a href="WebForm-Paciente.aspx" class="btn btn-danger">Cancelar</a>
