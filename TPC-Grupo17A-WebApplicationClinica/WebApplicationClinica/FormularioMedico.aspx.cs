@@ -15,7 +15,7 @@ namespace WebApplicationClinica
         protected void Page_Load(object sender, EventArgs e)
         {
             txtId.Enabled = false;
-            btnEliminarFisico.Visible = false;
+            //btnEliminarFisico.Visible = false;  
             try
             {
                 if (!IsPostBack)
@@ -27,7 +27,7 @@ namespace WebApplicationClinica
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
                 if (id != "" && !IsPostBack)
                 {
-                    btnEliminarFisico.Visible = true;
+                    //btnEliminarFisico.Visible = true;
                     List<Medico> listaMedicos = (List<Medico>)Session["listaMedicos"];
                     Medico aux = listaMedicos.Find(x => x.Id == int.Parse(id));
 
