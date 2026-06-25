@@ -10,7 +10,6 @@ namespace WebApplicationClinica
         protected void Page_Load(object sender, EventArgs e)
         {
             txtId.Enabled = false;
-            btnEliminarFisico.Visible = false;
 
             try
             {
@@ -18,7 +17,7 @@ namespace WebApplicationClinica
 
                 if (id != "" && !IsPostBack)
                 {
-                    btnEliminarFisico.Visible = true;
+                    pnlId.Visible = true;
                     PacienteNegocio pacienteNegocio = new PacienteNegocio();
                     Paciente aux = pacienteNegocio.obtenerPorId(int.Parse(id));
 
@@ -67,7 +66,7 @@ namespace WebApplicationClinica
 
                 if (!Regex.IsMatch(apellido, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ' ]{2,30}$"))
                 {
-                    lblErrorApellido.Text = "El apellido debe tener entre 2 y 30 caracteres y solo puede contener letras, espacios o apóstrofes.";
+                    lblErrorApellido.Text = "El apellido debe tener entre 2 y 30 caracteres y solo puede contener letras y espacios.";
                     lblErrorApellido.Visible = true;
                     return;
                 }
@@ -122,20 +121,5 @@ namespace WebApplicationClinica
             }
         }
 
-        protected void btnEliminarFisico_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                PacienteNegocio pacienteNegocio = new PacienteNegocio();
-
-                int idPaciente = int.Parse(txtId.Text);
-                pacienteNegocio.eliminarFisico(idPaciente);
-                Response.Redirect("WebForm-Paciente.aspx", false);
-            }
-            catch (Exception ex)
-            {
-                Session.Add("error", ex);
-            }
-        }
     }
 }

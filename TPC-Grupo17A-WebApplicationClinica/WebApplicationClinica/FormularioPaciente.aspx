@@ -6,25 +6,27 @@
     <div class="container">
         <div class="row">
             <div class="col-6">
-                                <%-- Errores generales del formulario --%>
+                <%--Errores generales del formulario --%>
                 <div class="mb-3">
                     <asp:Label ID="lblErrorGeneral" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
                 </div>
+                <asp:Panel ID="pnlId" runat="server" Visible="false">
+                    <div class="mb-3">
+                        <label for="txtId" class="form-label">Id</label>
+                        <asp:TextBox runat="server" ID="txtId" CssClass="form-control" Enabled="false" />
+                    </div>
+                </asp:Panel>
+                <%--Apellido --%>
                 <div class="mb-3">
-                    <label for="txtId" class="form-label">Id</label>
-                    <asp:TextBox runat="server" ID="txtId" CssClass="form-control" />
+                    <label for="txtApellido" class="form-label">Apellido</label>
+                    <asp:TextBox runat="server" ID="txtApellido" CssClass="form-control" />
+                    <asp:Label ID="lblErrorApellido" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
                 </div>
                 <%--Nombre --%>
                 <div class="mb-3">
                     <label for="txtNombre" class="form-label">Nombre</label>
                     <asp:TextBox runat="server" ID="txtNombre" CssClass="form-control" />
                     <asp:Label ID="lblErrorNombre" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
-                </div>
-                <%--Apellido --%>
-                <div class="mb-3">
-                    <label for="txtApellido" class="form-label">Apellido</label>
-                    <asp:TextBox runat="server" ID="txtApellido" CssClass="form-control" />
-                    <asp:Label ID="lblErrorApellido" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
                 </div>
                 <%--DNI --%>
                 <div class="mb-3">
@@ -52,9 +54,6 @@
                 <div class="mb-3">
                     <asp:Button ID="btnAceptar" class="btn btn-primary" runat="server" Text="Aceptar" OnClick="btnAceptar_Click" />
                     <a href="WebForm-Paciente.aspx" class="btn btn-danger">Cancelar</a>
-                </div>
-                <div class="mb-3">
-                    <asp:Button ID="btnEliminarFisico" class="btn btn-secondary" runat="server" Text="Eliminar" OnClick="btnEliminarFisico_Click" />
                 </div>
             </div>
         </div>

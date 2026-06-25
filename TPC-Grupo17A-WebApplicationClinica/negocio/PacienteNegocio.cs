@@ -82,7 +82,6 @@ namespace negocio
             }
         }
 
-
         // Existe DNI --> controla si ya existe el DNI en la bd
         public bool existeDni(string dni, int idPaciente = 0)
         {
@@ -112,7 +111,6 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-
         public void agregar(Paciente nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -168,25 +166,5 @@ namespace negocio
             }
         }
 
-        public void eliminarFisico(int id)
-        {
-            AccesoDatos datos = new AccesoDatos();
-
-            try
-            {
-                datos.setearConsulta("DELETE FROM Pacientes WHERE Id = @Id");
-                datos.setearParametro("@Id", id);
-
-                datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
     }
 }
