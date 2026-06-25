@@ -15,6 +15,15 @@ namespace WebApplicationClinica
     {
 
         /// <summary>
+        /// Control lblErrorGeneral.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorGeneral;
+
+        /// <summary>
         /// Control txtId.
         /// </summary>
         /// <remarks>
@@ -33,6 +42,15 @@ namespace WebApplicationClinica
         protected global::System.Web.UI.WebControls.TextBox txtNombre;
 
         /// <summary>
+        /// Control lblErrorNombre.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorNombre;
+
+        /// <summary>
         /// Control txtApellido.
         /// </summary>
         /// <remarks>
@@ -40,6 +58,15 @@ namespace WebApplicationClinica
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtApellido;
+
+        /// <summary>
+        /// Control lblErrorApellido.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorApellido;
 
         /// <summary>
         /// Control txtDni.
@@ -51,13 +78,13 @@ namespace WebApplicationClinica
         protected global::System.Web.UI.WebControls.TextBox txtDni;
 
         /// <summary>
-        /// Control lblError.
+        /// Control lblErrorDni.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblError;
+        protected global::System.Web.UI.WebControls.Label lblErrorDni;
 
         /// <summary>
         /// Control txtFechaNacimiento.

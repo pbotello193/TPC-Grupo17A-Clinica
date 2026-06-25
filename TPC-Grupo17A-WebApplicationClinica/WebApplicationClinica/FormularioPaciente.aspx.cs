@@ -1,6 +1,7 @@
 using dominio;
 using negocio;
 using System;
+using System.Text.RegularExpressions;
 
 namespace WebApplicationClinica
 {
@@ -41,26 +42,47 @@ namespace WebApplicationClinica
         {
             try
             {
-                lblError.Visible = false;
+                lblErrorGeneral.Visible = false;
+                lblErrorNombre.Visible = false;
+                lblErrorApellido.Visible = false;
+                lblErrorDni.Visible = false;
 
                 if (txtNombre.Text == "" || txtApellido.Text == "" || txtDni.Text == "" || txtFechaNacimiento.Text == "" || txtTelefono.Text == "" || txtEmail.Text == "" || txtDireccion.Text == "")
                 {
-                    lblError.Text = "Complete todos los campos.";
-                    lblError.Visible = true;
+                    lblErrorGeneral.Text = "Complete todos los campos.";
+                    lblErrorGeneral.Visible = true;
                     return;
                 }
 
-                long dni;
-                if (!long.TryParse(txtDni.Text, out dni))
+                string nombre = txtNombre.Text.Trim();
+
+                if (!Regex.IsMatch(nombre, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ' ]{2,30}$"))
                 {
-                    lblError.Text = "El DNI solo puede contener numeros.";
-                    lblError.Visible = true;
+                    lblErrorNombre.Text = "El nombre debe tener entre 2 y 30 caracteres y solo puede contener letras y espacios.";
+                    lblErrorNombre.Visible = true;
+                    return;
+                }
+
+                string apellido = txtApellido.Text.Trim();
+
+                if (!Regex.IsMatch(apellido, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ' ]{2,30}$"))
+                {
+                    lblErrorApellido.Text = "El apellido debe tener entre 2 y 30 caracteres y solo puede contener letras, espacios o apóstrofes.";
+                    lblErrorApellido.Visible = true;
+                    return;
+                }
+
+                string dni = txtDni.Text.Trim();
+
+                if (!Regex.IsMatch(dni, @"^[0-9]{7,8}$"))
+                {
+                    lblErrorDni.Text = "El DNI debe contener entre 7 y 8 números, sin puntos ni espacios.";
+                    lblErrorDni.Visible = true;
                     return;
                 }
 
                 Paciente paciente = new Paciente();
                 PacienteNegocio pacienteNegocio = new PacienteNegocio();
-
 
                 // existe DNI
                 int idPaciente = 0;
@@ -69,14 +91,14 @@ namespace WebApplicationClinica
 
                 if (pacienteNegocio.existeDni(txtDni.Text, idPaciente))
                 {
-                    lblError.Text = "Ya existe un paciente registrado con ese DNI.";
-                    lblError.Visible = true;
+                    lblErrorDni.Text = "Ya existe un paciente registrado con ese DNI.";
+                    lblErrorDni.Visible = true;
                     return;
                 }
 
-                paciente.Nombre = txtNombre.Text;
-                paciente.Apellido = txtApellido.Text;
-                paciente.Dni = txtDni.Text;
+                paciente.Nombre = nombre;
+                paciente.Apellido = apellido;
+                paciente.Dni = dni;
                 paciente.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
                 paciente.Telefono = txtTelefono.Text;
                 paciente.Email = txtEmail.Text;
