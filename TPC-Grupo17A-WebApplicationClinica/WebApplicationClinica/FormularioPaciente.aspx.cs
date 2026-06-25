@@ -1,7 +1,8 @@
+using System;
+using System.Linq;
+using System.Text.RegularExpressions;
 using dominio;
 using negocio;
-using System;
-using System.Text.RegularExpressions;
 
 namespace WebApplicationClinica
 {
@@ -45,6 +46,10 @@ namespace WebApplicationClinica
                 lblErrorNombre.Visible = false;
                 lblErrorApellido.Visible = false;
                 lblErrorDni.Visible = false;
+                lblErrorFechaNacimiento.Visible = false;
+                lblErrorTelefono.Visible = false;
+                lblErrorEmail.Visible = false;
+                lblErrorDireccion.Visible = false;
 
                 if (txtNombre.Text == "" || txtApellido.Text == "" || txtDni.Text == "" || txtFechaNacimiento.Text == "" || txtTelefono.Text == "" || txtEmail.Text == "" || txtDireccion.Text == "")
                 {
@@ -80,6 +85,52 @@ namespace WebApplicationClinica
                     return;
                 }
 
+                //Fechas
+                DateTime fechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
+
+                if (fechaNacimiento > DateTime.Today)
+                {
+                    lblErrorFechaNacimiento.Text = "La fecha de nacimiento no puede ser posterior al día de hoy.";
+                    lblErrorFechaNacimiento.Visible = true;
+                    return;
+                }
+
+                if (fechaNacimiento < DateTime.Today.AddYears(-130))
+                {
+                    lblErrorFechaNacimiento.Text = "La fecha de nacimiento no puede superar los 130 años.";
+                    lblErrorFechaNacimiento.Visible = true;
+                    return;
+                }
+
+                string telefono = txtTelefono.Text.Trim();
+
+                if (!Regex.IsMatch(telefono, @"^\+?[0-9]{10,13}$"))
+                {
+                    lblErrorTelefono.Text = "El teléfono debe contener entre 10 y 13 números. Puede comenzar con el signo +.";
+                    lblErrorTelefono.Visible = true;
+                    return;
+                }
+
+                string email = txtEmail.Text.Trim().ToLower();
+
+                if (email.Length > 50 || !Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                {
+                    lblErrorEmail.Text = "Ingrese un correo electrónico válido de hasta 50 caracteres.";
+                    lblErrorEmail.Visible = true;
+                    return;
+                }
+
+                string direccion = txtDireccion.Text.Trim();
+
+                if (direccion.Length < 5 || direccion.Length > 100 ||
+                    !direccion.Any(char.IsLetter) ||
+                    !Regex.IsMatch(direccion, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\s.,°º#/-]+$"))
+                {
+                    lblErrorDireccion.Text = "La dirección debe tener entre 5 y 100 caracteres y contener al menos una letra.";
+                    lblErrorDireccion.Visible = true;
+                    return;
+                }
+
                 Paciente paciente = new Paciente();
                 PacienteNegocio pacienteNegocio = new PacienteNegocio();
 
@@ -98,10 +149,10 @@ namespace WebApplicationClinica
                 paciente.Nombre = nombre;
                 paciente.Apellido = apellido;
                 paciente.Dni = dni;
-                paciente.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-                paciente.Telefono = txtTelefono.Text;
-                paciente.Email = txtEmail.Text;
-                paciente.Direccion = txtDireccion.Text;
+                paciente.FechaNacimiento = fechaNacimiento;
+                paciente.Telefono = telefono;
+                paciente.Email = email;
+                paciente.Direccion = direccion;
 
                 if (Request.QueryString["id"] != null)
                 {
