@@ -7,14 +7,31 @@ namespace WebApplicationClinica
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            PacienteNegocio negocio = new PacienteNegocio();
-
             if (!IsPostBack)
             {
-                Session.Add("listaPacientes", negocio.listarPacientes());
-                dgvPacientes.DataSource = Session["listaPacientes"];
-                dgvPacientes.DataBind();
+                cargarPacientes();
             }
+        }
+
+        //carga segun seleccion
+        private void cargarPacientes()
+        {
+            PacienteNegocio negocio = new PacienteNegocio();
+
+            if (ddlEstadoPacientes.SelectedValue == "inactivos")
+                Session["listaPacientes"] = negocio.listarPacientesInactivos();
+            else if (ddlEstadoPacientes.SelectedValue == "todos")
+                Session["listaPacientes"] = negocio.listarPacientesCompleto();
+            else
+                Session["listaPacientes"] = negocio.listarPacientes();
+
+            dgvPacientes.DataSource = Session["listaPacientes"];
+            dgvPacientes.DataBind();
+        }
+
+        protected void ddlEstadoPacientes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cargarPacientes();
         }
 
         protected void dgvPacientes_SelectedIndexChanged(object sender, EventArgs e)

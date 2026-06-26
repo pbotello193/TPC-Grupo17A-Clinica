@@ -6,6 +6,7 @@ namespace negocio
 {
     public class PacienteNegocio
     {
+        //lista pacientes Activos
         public List<Paciente> listarPacientes()
         {
             List<Paciente> pacientes = new List<Paciente>();
@@ -13,7 +14,7 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("SELECT Id, Nombre, Apellido, DNI, FechaNacimiento, Telefono, Email, Direccion FROM Pacientes ORDER BY Apellido ASC, Nombre ASC");
+                datos.setearConsulta("SELECT Id, Nombre, Apellido, DNI, FechaNacimiento, Telefono, Email, Direccion, Activo FROM Pacientes WHERE Activo = 1 ORDER BY Apellido ASC, Nombre ASC");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -27,7 +28,7 @@ namespace negocio
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Email = (string)datos.Lector["Email"];
                     aux.Direccion = (string)datos.Lector["Direccion"];
-                    //aux.Activo = true;
+                    aux.Activo = (bool)datos.Lector["Activo"];
 
                     pacientes.Add(aux);
                 }
@@ -44,13 +45,94 @@ namespace negocio
             }
         }
 
+
+        //lista pacientes Inactivos
+        public List<Paciente> listarPacientesInactivos()
+        {
+            List<Paciente> pacientes = new List<Paciente>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT Id, Nombre, Apellido, DNI, FechaNacimiento, Telefono, Email, Direccion, Activo FROM Pacientes WHERE Activo = 0 ORDER BY Apellido ASC, Nombre ASC");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Paciente aux = new Paciente();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Apellido = (string)datos.Lector["Apellido"];
+                    aux.Dni = (string)datos.Lector["DNI"];
+                    aux.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
+                    aux.Telefono = (string)datos.Lector["Telefono"];
+                    aux.Email = (string)datos.Lector["Email"];
+                    aux.Direccion = (string)datos.Lector["Direccion"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+
+                    pacientes.Add(aux);
+                }
+
+                return pacientes;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+        //lista pacientes Activos e Inactivos
+        public List<Paciente> listarPacientesCompleto()
+        {
+            List<Paciente> pacientes = new List<Paciente>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT Id, Nombre, Apellido, DNI, FechaNacimiento, Telefono, Email, Direccion, Activo FROM Pacientes ORDER BY Activo DESC, Apellido ASC, Nombre ASC");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Paciente aux = new Paciente();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Apellido = (string)datos.Lector["Apellido"];
+                    aux.Dni = (string)datos.Lector["DNI"];
+                    aux.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
+                    aux.Telefono = (string)datos.Lector["Telefono"];
+                    aux.Email = (string)datos.Lector["Email"];
+                    aux.Direccion = (string)datos.Lector["Direccion"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+
+                    pacientes.Add(aux);
+                }
+
+                return pacientes;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
         public Paciente obtenerPorId(int id)
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearConsulta("SELECT Id, Nombre, Apellido, DNI, FechaNacimiento, Telefono, Email, Direccion FROM Pacientes WHERE Id = @Id");
+                datos.setearConsulta("SELECT Id, Nombre, Apellido, DNI, FechaNacimiento, Telefono, Email, Direccion, Activo FROM Pacientes WHERE Id = @Id");
                 datos.setearParametro("@Id", id);
                 datos.ejecutarLectura();
 
@@ -65,7 +147,7 @@ namespace negocio
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Email = (string)datos.Lector["Email"];
                     aux.Direccion = (string)datos.Lector["Direccion"];
-                    //aux.Activo = true;
+                    aux.Activo = (bool)datos.Lector["Activo"];
 
                     return aux;
                 }
@@ -82,7 +164,8 @@ namespace negocio
             }
         }
 
-        // Existe DNI --> controla si ya existe el DNI en la bd
+
+        //controla si ya existe el DNI en la bd
         public bool existeDni(string dni, int idPaciente = 0)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -111,6 +194,50 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+
+        public void desactivar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE Pacientes SET Activo = 0 WHERE Id = @Id");
+                datos.setearParametro("@Id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+        public void reactivar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE Pacientes SET Activo = 1 WHERE Id = @Id");
+                datos.setearParametro("@Id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
         public void agregar(Paciente nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -137,6 +264,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
 
         public void modificar(Paciente modificar)
         {

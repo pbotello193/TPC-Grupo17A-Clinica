@@ -22,6 +22,10 @@ namespace WebApplicationClinica
                     PacienteNegocio pacienteNegocio = new PacienteNegocio();
                     Paciente aux = pacienteNegocio.obtenerPorId(int.Parse(id));
 
+                    btnCambiarEstado.Visible = true;
+                    btnCambiarEstado.Text = aux.Activo ? "Dar de baja" : "Reactivar";
+                    btnCambiarEstado.CssClass = aux.Activo ? "btn btn-secondary" : "btn btn-success";
+
                     txtId.Text = aux.Id.ToString();
                     txtNombre.Text = aux.Nombre;
                     txtApellido.Text = aux.Apellido;
@@ -172,5 +176,25 @@ namespace WebApplicationClinica
             }
         }
 
+        protected void btnCambiarEstado_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idPaciente = int.Parse(txtId.Text);
+                PacienteNegocio pacienteNegocio = new PacienteNegocio();
+                Paciente paciente = pacienteNegocio.obtenerPorId(idPaciente);
+
+                if (paciente.Activo)
+                    pacienteNegocio.desactivar(idPaciente);
+                else
+                    pacienteNegocio.reactivar(idPaciente);
+
+                Response.Redirect("WebForm-Paciente.aspx", false);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+            }
+        }
     }
 }

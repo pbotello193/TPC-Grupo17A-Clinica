@@ -62,6 +62,7 @@
                 <div class="mb-3">
                     <asp:Button ID="btnAceptar" class="btn btn-primary" runat="server" Text="Aceptar" OnClick="btnAceptar_Click" />
                     <a href="WebForm-Paciente.aspx" class="btn btn-danger">Cancelar</a>
+                    <asp:Button ID="btnCambiarEstado" runat="server" CssClass="btn btn-secondary" Visible="false" OnClick="btnCambiarEstado_Click" />
                 </div>
             </div>
         </div>
