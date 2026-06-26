@@ -32,7 +32,7 @@ namespace negocio
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("No se pudieron cargar los turnos de trabajo del médico seleccionado. Por favor, reintente en unos momentos.", ex);
             }
             finally
             {
@@ -43,6 +43,8 @@ namespace negocio
         {
             try
             {
+                nuevo.Validar(); // valido los datos del turno de trabajo antes de intentar insertarlo en la base de datos
+
                 datos.setearConsulta("INSERT INTO TurnosDeTrabajo (IdMedico, DiaDeLaSemana, HoraInicio, HoraFin) VALUES (@IdMedico, @DiaDeLaSemana, @HoraInicio, @HoraFin)");
                 datos.setearParametro("@IdMedico", nuevo.IdMedico);
                 datos.setearParametro("@DiaDeLaSemana", (int)nuevo.DiaDeLaSemana);
@@ -50,29 +52,39 @@ namespace negocio
                 datos.setearParametro("@HoraFin", nuevo.HoraFin);
                 datos.ejecutarAccion();
             }
+            catch (ArgumentException ex)
+            {
+                throw new Exception("Datos del turno incorrectos: " + ex.Message, ex);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Ocurrió un error al intentar registrar el nuevo turno de trabajo. Verifique la conexión con el servidor.", ex);
             }
             finally
             {
                 datos.cerrarConexion();
             }
         }
-        public void modificar(TurnoDeTrabajo t)
+        public void modificar(TurnoDeTrabajo turnoModificar)
         {
             try
             {
+                turnoModificar.Validar(); // valido los datos del turno de trabajo antes de intentar modificarlo en la base de datos
+
                 datos.setearConsulta("UPDATE TurnosDeTrabajo SET DiaDeLaSemana = @DiaDeLaSemana, HoraInicio = @HoraInicio, HoraFin = @HoraFin WHERE Id = @Id");
-                datos.setearParametro("@Id", t.Id);
-                datos.setearParametro("@DiaDeLaSemana", (int)t.DiaDeLaSemana);
-                datos.setearParametro("@HoraInicio", t.HoraInicio);
-                datos.setearParametro("@HoraFin", t.HoraFin);
+                datos.setearParametro("@Id", turnoModificar.Id);
+                datos.setearParametro("@DiaDeLaSemana", (int)turnoModificar.DiaDeLaSemana);
+                datos.setearParametro("@HoraInicio", turnoModificar.HoraInicio);
+                datos.setearParametro("@HoraFin", turnoModificar.HoraFin);
                 datos.ejecutarAccion();
+            }
+            catch (ArgumentException ex)
+            {
+                throw new Exception("No se pudo modificar el turno de trabajo: " + ex.Message, ex);
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Ocurrió un error al intentar guardar los cambios del turno de trabajo. Intente nuevamente.", ex);
             }
             finally
             {
@@ -89,7 +101,7 @@ namespace negocio
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("No se pudo eliminar el turno de trabajo. Compruebe que no tenga turnos médicos agendados asociados a este horario.", ex);
             }
             finally
             {
