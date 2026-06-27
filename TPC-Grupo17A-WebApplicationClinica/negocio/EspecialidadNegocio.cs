@@ -11,11 +11,11 @@ namespace negocio
 {
     public class EspecialidadNegocio
     {
-        List<Especialidad> especialidades = new List<Especialidad>();
         AccesoDatos datos = new AccesoDatos();
 
         public List<Especialidad> listarEspecialidades()
         {
+            List<Especialidad> especialidades = new List<Especialidad>();
             try
             {
                 datos.setearConsulta("select Id, Nombre, Descripcion from Especialidades");
@@ -50,7 +50,7 @@ namespace negocio
                 datos.setearParametro("@Nombre", nuevo.Nombre);
                 datos.setearParametro("@Descripcion", nuevo.Descripcion);
 
-                datos.ejecutarLectura();
+                datos.ejecutarAccion();
 
             }
             catch (Exception ex)

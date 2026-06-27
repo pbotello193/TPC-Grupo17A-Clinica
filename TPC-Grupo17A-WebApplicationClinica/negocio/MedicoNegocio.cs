@@ -89,14 +89,43 @@ namespace negocio
             }
 
         }
+        public bool validarMatricula(string matricula, int id = 0) //el = 0 es para que si no manda id usa ese valor(en caso de agregar)
+        {
+            // Método para verificar si ya existe una matrícula (exceptuando el id en caso de modificación)
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM Medicos WHERE Matricula = @Matricula AND Id <> @Id");
+                datos.setearParametro("@Matricula", matricula);
+                datos.setearParametro("@Id", id);
+                datos.ejecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    int cantidad = Convert.ToInt32(datos.Lector[0]);
+                    return cantidad > 0;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
         public int agregar(Medico nuevo)
         {
             try
             {
+                
                 datos.setearConsulta("INSERT INTO Medicos(Nombre, Apellido, Matricula, Telefono, Email) OUTPUT INSERTED.ID VALUES(@Nombre, @Apellido, @Matricula, @Telefono, @Email)");
                 datos.setearParametro("@Nombre", nuevo.Nombre);
                 datos.setearParametro("@Apellido", nuevo.Apellido);
                 datos.setearParametro("@Matricula", nuevo.Matricula);
+                if (validarMatricula(nuevo.Matricula))
+                    throw new Exception("Ya existe un médico con esa matrícula.");
                 datos.setearParametro("@Telefono", nuevo.Telefono);
                 datos.setearParametro("@Email", nuevo.Email);
 
@@ -122,6 +151,8 @@ namespace negocio
                 datos.setearParametro("@Nombre", modificar.Nombre);
                 datos.setearParametro("@Apellido", modificar.Apellido);
                 datos.setearParametro("@Matricula", modificar.Matricula);
+                if (validarMatricula(modificar.Matricula, modificar.Id))
+                    throw new InvalidOperationException("Ya existe un médico con esa matrícula.");
                 datos.setearParametro("@Telefono", modificar.Telefono);
                 datos.setearParametro("@Email", modificar.Email);
                 datos.setearParametro("@Activo", modificar.Activo);
@@ -154,6 +185,9 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+        
+
+
     }
 
 

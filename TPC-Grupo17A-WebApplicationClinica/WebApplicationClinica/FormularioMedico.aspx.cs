@@ -15,7 +15,6 @@ namespace WebApplicationClinica
         protected void Page_Load(object sender, EventArgs e)
         {
             txtId.Enabled = false;
-            btnEliminarFisico.Visible = false;
             try
             {
                 if (!IsPostBack)
@@ -27,7 +26,6 @@ namespace WebApplicationClinica
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
                 if (id != "" && !IsPostBack)
                 {
-                    btnEliminarFisico.Visible = true;
                     List<Medico> listaMedicos = (List<Medico>)Session["listaMedicos"];
                     Medico aux = listaMedicos.Find(x => x.Id == int.Parse(id));
 
@@ -72,7 +70,7 @@ namespace WebApplicationClinica
             try
             {
                 Page.Validate();
-                if (!Page.IsValid) 
+                if (!Page.IsValid)
                     return;
                 Medico nuevo = new Medico();
                 MedicoNegocio medNegocio = new MedicoNegocio();
@@ -81,6 +79,12 @@ namespace WebApplicationClinica
                 nuevo.Nombre = txtNombre.Text;
                 nuevo.Apellido = txtApellido.Text;
                 nuevo.Matricula = txtMatricula.Text;
+                if (medNegocio.validarMatricula(txtMatricula.Text))
+                { //Aca es donde lanza el validador si la matricula ya existe
+                    validadorMatricula.IsValid = false;
+                    validadorMatricula.ErrorMessage = "Ya existe un médico con esa matrícula.";
+                    return;
+                }
                 nuevo.Telefono = txtTelefono.Text;
                 nuevo.Email = txtEmail.Text;
                 if (rdbActivo.Checked)
@@ -122,7 +126,7 @@ namespace WebApplicationClinica
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw ex; //manejar aca el mensaje de error de matricula duplicada
             }
         }
 
