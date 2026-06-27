@@ -47,9 +47,11 @@ namespace WebApplicationClinica
 
             var displayList = lista.Select(turnoDeTrabajo => new {
                 turnoDeTrabajo.Id,
+                turnoDeTrabajo.Activo,
                 DiaNombre = obtenerNombreDia(turnoDeTrabajo.DiaDeLaSemana),
                 HoraInicio = turnoDeTrabajo.HoraInicio.ToString(@"hh\:mm"),
-                HoraFin = turnoDeTrabajo.HoraFin.ToString(@"hh\:mm")
+                HoraFin = turnoDeTrabajo.HoraFin.ToString(@"hh\:mm"),
+                Estado = turnoDeTrabajo.Activo ? "Activo" : "Inactivo"
             }).ToList();
             dgvTurnos.DataSource = displayList;
             dgvTurnos.DataBind();

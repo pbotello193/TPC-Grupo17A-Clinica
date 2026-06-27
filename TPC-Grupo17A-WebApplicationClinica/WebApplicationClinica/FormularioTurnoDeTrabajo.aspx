@@ -68,6 +68,7 @@
                         <asp:BoundField HeaderText="Día" DataField="DiaNombre" />
                         <asp:BoundField HeaderText="Inicio" DataField="HoraInicio" />
                         <asp:BoundField HeaderText="Fin" DataField="HoraFin" />
+                        <asp:BoundField HeaderText="Estado" DataField="Estado" />
                         <asp:CommandField ShowSelectButton="true" SelectText="Editar" ControlStyle-CssClass="btn btn-sm btn-outline-primary" />
                     </Columns>
                 </asp:GridView>
