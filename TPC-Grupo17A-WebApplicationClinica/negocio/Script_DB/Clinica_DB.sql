@@ -12,7 +12,8 @@ CREATE TABLE Pacientes (
     FechaNacimiento DATE NOT NULL,
     Telefono VARCHAR(50) NOT NULL,
     Email VARCHAR(50) NOT NULL,
-    Direccion VARCHAR(100) NOT NULL
+    Direccion VARCHAR(100) NOT NULL,
+    Activo BIT NOT NULL
 );
 GO
 
@@ -69,6 +70,7 @@ CREATE TABLE TurnosDeTrabajo (
     DiaDeLaSemana INT NOT NULL,
     HoraInicio TIME NOT NULL,
     HoraFin TIME NOT NULL,
+    Activo BIT NOT NULL,
     CONSTRAINT FK_TurnoDeTrabajo_Medico FOREIGN KEY (IdMedico) REFERENCES Medicos(Id)
 );
 GO
@@ -94,29 +96,54 @@ BEGIN
     END CATCH
 END
 
+CREATE PROCEDURE SP_EliminarLogicoTurnoDeTrabajo
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    UPDATE TurnosDeTrabajo
+    SET Activo = 0
+    WHERE Id = @Id;
+END
+GO
+
+CREATE PROCEDURE SP_ActivarTurnoDeTrabajo
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    UPDATE TurnosDeTrabajo
+    SET Activo = 1
+    WHERE Id = @Id;
+END
+GO
+
+
 --Inserts para la tabla medicos
 
 INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email, Activo)
 VALUES 
-    ('Carlos', 'Gómez', 'M-45892', '1134567890', 'carlos.gomez@clinica.com', 1),
-    ('María Laura', 'Rodríguez', 'M-32145', '1165432109', 'maria.rodriguez@clinica.com', 1),
-    ('Juan Pablo', 'Martínez', 'M-78563', '1198765432', 'juan.martinez@clinica.com', 1),
-    ('Ana Inés', 'Fernández', 'M-12457', '1122334455', 'ana.fernandez@clinica.com', 1),
-    ('Jorge Luis', 'López', 'M-96325', '1155667788', 'jorge.lopez@clinica.com', 1);
+    ('Carlos', 'Gï¿½mez', 'M-45892', '1134567890', 'carlos.gomez@clinica.com', 1),
+    ('Marï¿½a Laura', 'Rodrï¿½guez', 'M-32145', '1165432109', 'maria.rodriguez@clinica.com', 1),
+    ('Juan Pablo', 'Martï¿½nez', 'M-78563', '1198765432', 'juan.martinez@clinica.com', 1),
+    ('Ana Inï¿½s', 'Fernï¿½ndez', 'M-12457', '1122334455', 'ana.fernandez@clinica.com', 1),
+    ('Jorge Luis', 'Lï¿½pez', 'M-96325', '1155667788', 'jorge.lopez@clinica.com', 1);
 GO
 
 --Inserts para especialidades
 
 INSERT INTO Especialidades (Nombre, Descripcion)
-VALUES ('Pediatría', 'Atención médica integral para bebés, niños y adolescentes.');
+VALUES ('Pediatrï¿½a', 'Atenciï¿½n mï¿½dica integral para bebï¿½s, niï¿½os y adolescentes.');
 INSERT INTO Especialidades (Nombre, Descripcion)
-VALUES ('Cardiología', 'Diagnóstico y tratamiento de enfermedades del corazón y vasos sanguíneos.');
+VALUES ('Cardiologï¿½a', 'Diagnï¿½stico y tratamiento de enfermedades del corazï¿½n y vasos sanguï¿½neos.');
 INSERT INTO Especialidades (Nombre, Descripcion)
-VALUES ('Traumatología', 'Prevención, diagnóstico y tratamiento de lesiones del sistema músculo-esquelético.');
+VALUES ('Traumatologï¿½a', 'Prevenciï¿½n, diagnï¿½stico y tratamiento de lesiones del sistema mï¿½sculo-esquelï¿½tico.');
 INSERT INTO Especialidades (Nombre, Descripcion)
-VALUES ('Dermatología', 'Cuidado de la piel, pelo y uñas, y tratamiento de sus enfermedades.');
+VALUES ('Dermatologï¿½a', 'Cuidado de la piel, pelo y uï¿½as, y tratamiento de sus enfermedades.');
 INSERT INTO Especialidades (Nombre, Descripcion)
-VALUES ('Ginecología', 'Atención a la salud del sistema reproductor femenino.');
+VALUES ('Ginecologï¿½a', 'Atenciï¿½n a la salud del sistema reproductor femenino.');
 GO
 
 --Inserts para MedicoEspecialidad
