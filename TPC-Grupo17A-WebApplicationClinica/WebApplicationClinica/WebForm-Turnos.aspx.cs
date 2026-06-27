@@ -13,5 +13,29 @@ namespace WebApplicationClinica
         {
 
         }
+
+        //buscar pacientes por DNI, nombre o apellido
+        protected void txtBuscarPaciente_TextChanged(object sender, EventArgs e)
+        {
+          
+        }
+
+        //guardar el paciente seleccionado y ocultar la lista
+        protected void dgvPacientesEncontrados_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        //buscar medicos y horarios segun especialidad
+        protected void btnBuscarHorarios_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        //asignar el turno elegido al paciente seleccionado
+        protected void dgvHorariosDisponibles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
