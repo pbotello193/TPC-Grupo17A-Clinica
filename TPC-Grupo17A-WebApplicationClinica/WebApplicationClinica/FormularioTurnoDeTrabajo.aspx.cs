@@ -80,7 +80,7 @@ namespace WebApplicationClinica
             btnEliminarFisico.Visible = true;
             int idMedico = int.Parse(ddlMedico.SelectedValue);
             TurnoDeTrabajoNegocio negocio = new TurnoDeTrabajoNegocio();
-            List<TurnoDeTrabajo> lista = negocio.listarPorMedico(idMedico);
+            List<TurnoDeTrabajo> lista = negocio.listarPorMedico(idMedico, "todos");
             TurnoDeTrabajo seleccionado = lista.Find(x => x.Id == int.Parse(idSelected));
             if (seleccionado != null)
             {
@@ -127,6 +127,9 @@ namespace WebApplicationClinica
         {
             try
             {
+
+                lblError.Visible = false;
+
                 TurnoDeTrabajoNegocio negocio = new TurnoDeTrabajoNegocio();
                 int id = int.Parse(txtId.Text);
                 negocio.eliminar(id);
@@ -136,6 +139,9 @@ namespace WebApplicationClinica
             catch (Exception ex)
             {
                 Session.Add("error", ex);
+
+                lblError.Text = ex.Message;
+                lblError.Visible = true;
             }
         }
         private void limpiarCampos()

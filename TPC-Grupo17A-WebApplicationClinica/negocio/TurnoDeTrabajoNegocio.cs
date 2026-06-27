@@ -110,7 +110,7 @@ namespace negocio
         {
             try
             {
-                datos.setearProcedimiento("SP_EliminarLogicoTurnoDeTrabajo");
+                datos.setearConsulta("UPDATE TurnosDeTrabajo SET Activo = 0 WHERE Id = @Id");
                 datos.setearParametro("@Id", id);
                 datos.ejecutarAccion();
             }
