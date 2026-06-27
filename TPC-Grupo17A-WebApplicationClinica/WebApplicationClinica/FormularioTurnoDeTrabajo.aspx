@@ -6,6 +6,8 @@
     <div class="container mt-3">
         <h2>Turnos de Trabajo del Médico</h2>
         
+        <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false"></asp:Label>
+
         <div class="row">
             <!-- Columna del Formulario (Carga y Edición) -->
             <div class="col-md-6">

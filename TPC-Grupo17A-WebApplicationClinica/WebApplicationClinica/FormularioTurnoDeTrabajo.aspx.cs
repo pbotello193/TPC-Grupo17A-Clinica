@@ -41,11 +41,11 @@ namespace WebApplicationClinica
             }
             TurnoDeTrabajoNegocio negocio = new TurnoDeTrabajoNegocio();
             List<TurnoDeTrabajo> lista = negocio.listarPorMedico(idMedico);
-            var displayList = lista.Select(t => new {
-                t.Id,
-                DiaNombre = obtenerNombreDia(t.DiaDeLaSemana),
-                HoraInicio = t.HoraInicio.ToString(@"hh\:mm"),
-                HoraFin = t.HoraFin.ToString(@"hh\:mm")
+            var displayList = lista.Select(turnoDeTrabajo => new {
+                turnoDeTrabajo.Id,
+                DiaNombre = obtenerNombreDia(turnoDeTrabajo.DiaDeLaSemana),
+                HoraInicio = turnoDeTrabajo.HoraInicio.ToString(@"hh\:mm"),
+                HoraFin = turnoDeTrabajo.HoraFin.ToString(@"hh\:mm")
             }).ToList();
             dgvTurnos.DataSource = displayList;
             dgvTurnos.DataBind();
@@ -84,6 +84,8 @@ namespace WebApplicationClinica
         {
             try
             {
+                lblError.Visible = false;
+
                 int idMedico = int.Parse(ddlMedico.SelectedValue);
                 if (idMedico == 0) return;
                 TurnoDeTrabajoNegocio negocio = new TurnoDeTrabajoNegocio();
@@ -107,6 +109,9 @@ namespace WebApplicationClinica
             catch (Exception ex)
             {
                 Session.Add("error", ex);
+
+                lblError.Text = ex.Message;
+                lblError.Visible = true;
             }
         }
         protected void btnEliminarFisico_Click(object sender, EventArgs e)

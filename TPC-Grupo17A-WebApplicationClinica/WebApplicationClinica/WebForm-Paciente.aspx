@@ -1,9 +1,27 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="WebForm-Paciente.aspx.cs" Inherits="WebApplicationClinica.WebForm_Paciente" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
-        <h1>Pacientes</h1>
+        <div class="mb-3">
+            <h1>Pacientes</h1>
+
+            <div class="d-flex gap-2 align-items-center">
+                <asp:DropDownList ID="ddlEstadoPacientes" runat="server" CssClass="form-select w-auto" AutoPostBack="true" OnSelectedIndexChanged="ddlEstadoPacientes_SelectedIndexChanged">
+                    <asp:ListItem Text="Activos" Value="activos" />
+                    <asp:ListItem Text="Inactivos" Value="inactivos" />
+                    <asp:ListItem Text="Todos" Value="todos" />
+                </asp:DropDownList>
+
+                <%--busca pacientes dentro de la lista seleccionada (activos-inactivos-todos) --%>
+                <asp:TextBox ID="txtBuscar" runat="server"
+                    CssClass="form-control"
+                    AutoPostBack="true"
+                    OnTextChanged="txtBuscar_TextChanged"
+                    placeholder="Buscar por apellido, nombre o DNI" />
+            </div>
+        </div>
 
         <div class="mb-3">
             <asp:GridView ID="dgvPacientes" runat="server"
@@ -19,6 +37,15 @@
                     <asp:BoundField HeaderText="Telefono" DataField="Telefono" />
                     <asp:BoundField HeaderText="Email" DataField="Email" />
                     <asp:BoundField HeaderText="Direccion" DataField="Direccion" />
+
+                    <asp:TemplateField HeaderText="Estado">
+                        <ItemTemplate>
+                            <%--muestra si el paciente esta activo o inactivo --%>
+                            <span class='<%# (bool)Eval("Activo") ? "badge bg-success" : "badge bg-secondary" %>'>
+                                <%# (bool)Eval("Activo") ? "Activo" : "Inactivo" %>
+                            </span>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Accion">
                         <ItemTemplate>
