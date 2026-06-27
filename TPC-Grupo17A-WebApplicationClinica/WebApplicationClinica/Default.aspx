@@ -3,76 +3,81 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="py-5">
+    <div class="pt-3 pb-5">
         <div class="text-center mb-5">
             <h1 class="display-5 fw-bold">Sistema de Gestión Clínica</h1>
-            <p class="lead text-muted mx-auto" style="max-width: 720px;">
+            <%--<p class="lead text-muted mx-auto" style="max-width: 720px;">
                 Administrá pacientes, médicos, especialidades, horarios de atención y turnos médicos desde un solo lugar.
-            </p>
+            </p>--%>
+        </div>
+        <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 bg-light">
+                <div class="card-body p-4">
+                    <div class="rounded-circle bg-info-subtle bg-opacity-10 text-info-emphasis d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                        <i class="bi bi-calendar-check fs-2"></i>
+                    </div>
+                    <%--turnos --%>
+                    <h5 class="card-title fw-bold">Turnos</h5>
+                    <p class="card-text text-muted">Gestión y asignación de turnos a pacientes.</p>
+                    <a href="WebForm-Turnos.aspx" class="btn btn-dark">Ingresar</a>
+                </div>
+            </div>
         </div>
 
-        <div class="row g-4">
             <div class="col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm border-0">
+                <div class="card h-100 shadow-sm border-0 bg-light">
                     <div class="card-body p-4">
-                        <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                        <div class="rounded-circle bg-info-subtle bg-opacity-10 text-info-emphasis d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
                             <i class="bi bi-person fs-2"></i>
                         </div>
+                        <%--pacientes --%>
                         <h5 class="card-title fw-bold">Pacientes</h5>
-                        <p class="card-text text-muted">Gestionar altas, modificaciones, búsquedas y estado de pacientes.</p>
-                        <a href="WebForm-Paciente.aspx" class="btn btn-primary">Ingresar</a>
+                        <p class="card-text text-muted">Gestión y consulta de pacientes.</p>
+                        <a href="WebForm-Paciente.aspx" class="btn btn-dark">Ingresar</a>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm border-0">
+                <div class="card h-100 shadow-sm border-0 bg-light">
                     <div class="card-body p-4">
-                        <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                        <div class="rounded-circle bg-info-subtle bg-opacity-10 text-info-emphasis d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
                             <i class="bi bi-heart-pulse fs-2"></i>
                         </div>
+                        <%--medicos --%>
                         <h5 class="card-title fw-bold">Médicos</h5>
-                        <p class="card-text text-muted">Administrar profesionales, matrículas, especialidades y estado.</p>
-                        <a href="WebForm-Medico.aspx" class="btn btn-primary">Ingresar</a>
+                        <p class="card-text text-muted">Gestión y consulta de profesionales.</p>
+                        <a href="WebForm-Medico.aspx" class="btn btn-dark">Ingresar</a>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm border-0">
+                <div class="card h-100 shadow-sm border-0 bg-light">
                     <div class="card-body p-4">
-                        <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                        <div class="rounded-circle bg-info-subtle bg-opacity-10 text-info-emphasis d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
                             <i class="bi bi-clipboard2-pulse fs-2"></i>
                         </div>
+                        <%--especialidades --%>
                         <h5 class="card-title fw-bold">Especialidades</h5>
-                        <p class="card-text text-muted">Consultar y mantener las especialidades médicas disponibles.</p>
-                        <a href="ListaEspecialidades.aspx" class="btn btn-primary">Ingresar</a>
+                        <p class="card-text text-muted">Gestión y consulta de especialidades médicas.</p>
+                        <a href="ListaEspecialidades.aspx" class="btn btn-dark">Ingresar</a>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm border-0">
+                <div class="card h-100 shadow-sm border-0 bg-light">
                     <div class="card-body p-4">
-                        <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                        <div class="rounded-circle bg-info-subtle bg-opacity-10 text-info-emphasis d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
                             <i class="bi bi-calendar-week fs-2"></i>
                         </div>
+                        <%--horarios medicos --%>
                         <h5 class="card-title fw-bold">Horarios Médicos</h5>
-                        <p class="card-text text-muted">Configurar días y horarios de atención de cada médico.</p>
-                        <a href="FormularioTurnoDeTrabajo.aspx" class="btn btn-primary">Ingresar</a>
-                    </div>
-                </div>
-            </div>
+                        <p class="card-text text-muted">Gestión y consulta de dias y horarios médicos.</p>
+                        <a href="FormularioTurnoDeTrabajo.aspx" class="btn btn-dark">Ingresar</a>
 
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-body p-4">
-                        <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
-                            <i class="bi bi-calendar-check fs-2"></i>
-                        </div>
-                        <h5 class="card-title fw-bold">Turnos</h5>
-                        <p class="card-text text-muted">Gestionar la asignación de turnos médicos.</p>
-                        <a href="WebForm-Turnos.aspx" class="btn btn-primary">Ingresar</a>
                     </div>
                 </div>
             </div>
