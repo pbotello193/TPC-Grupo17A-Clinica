@@ -40,7 +40,11 @@ namespace WebApplicationClinica
                 return;
             }
             TurnoDeTrabajoNegocio negocio = new TurnoDeTrabajoNegocio();
-            List<TurnoDeTrabajo> lista = negocio.listarPorMedico(idMedico);
+
+            string estado = ddlEstadoTurnos.SelectedValue;
+
+            List<TurnoDeTrabajo> lista = negocio.listarPorMedico(idMedico, estado);
+
             var displayList = lista.Select(turnoDeTrabajo => new {
                 turnoDeTrabajo.Id,
                 DiaNombre = obtenerNombreDia(turnoDeTrabajo.DiaDeLaSemana),
@@ -49,6 +53,11 @@ namespace WebApplicationClinica
             }).ToList();
             dgvTurnos.DataSource = displayList;
             dgvTurnos.DataBind();
+        }
+
+        protected void ddlEstadoTurnos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cargarGrilla();
         }
         private string obtenerNombreDia(DayOfWeek dia)
         {

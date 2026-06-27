@@ -54,6 +54,14 @@
             <!-- Columna del Listado (GridView) -->
             <div class="col-md-6">
                 <h4>Horarios Registrados</h4>
+                <div class="mb-3">
+                    <label class="form-label">Filtrar por Estado</label>
+                    <asp:DropDownList ID="ddlEstadoTurnos" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlEstadoTurnos_SelectedIndexChanged">
+                        <asp:ListItem Value="activos" Text="Activos" Selected="True"/>
+                        <asp:ListItem Value="inactivos" Text="Inactivos"/>
+                        <asp:ListItem Value="todos" Text="Todos"/>
+                        </asp:DropDownList>
+                </div>
                 <asp:GridView ID="dgvTurnos" runat="server" CssClass="table table-striped table-hover"
                     AutoGenerateColumns="false" OnSelectedIndexChanged="dgvTurnos_SelectedIndexChanged" DataKeyNames="Id">
                     <Columns>

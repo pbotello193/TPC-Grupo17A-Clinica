@@ -10,12 +10,25 @@ namespace negocio
     public class TurnoDeTrabajoNegocio
     {
         private AccesoDatos datos = new AccesoDatos();
-        public List<TurnoDeTrabajo> listarPorMedico(int idMedico)
+        public List<TurnoDeTrabajo> listarPorMedico(int idMedico, string estado = "activos")
         {
             List<TurnoDeTrabajo> turnosDeTrabajo = new List<TurnoDeTrabajo>();
             try
             {
-                datos.setearConsulta("SELECT Id, IdMedico, DiaDeLaSemana, HoraInicio, HoraFin, Activo FROM TurnosDeTrabajo WHERE IdMedico = @IdMedico ORDER BY DiaDeLaSemana ASC, HoraInicio ASC");
+                string consulta = "SELECT Id, IdMedico, DiaDeLaSemana, HoraInicio, HoraFin, Activo FROM TurnosDeTrabajo WHERE IdMedico = @IdMedico";
+                
+                if (estado == "activos")
+                {
+                    consulta += " AND Activo = 1";
+                }
+                else if (estado == "inactivos")
+                {
+                    consulta += " AND Activo = 0";
+                }
+
+                consulta += " ORDER BY DiaDeLaSemana ASC, HoraInicio ASC";
+
+                datos.setearConsulta(consulta);
                 datos.setearParametro("@IdMedico", idMedico);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
