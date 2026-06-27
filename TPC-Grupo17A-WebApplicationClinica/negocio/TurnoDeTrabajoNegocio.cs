@@ -15,7 +15,7 @@ namespace negocio
             List<TurnoDeTrabajo> turnosDeTrabajo = new List<TurnoDeTrabajo>();
             try
             {
-                datos.setearConsulta("SELECT Id, IdMedico, DiaDeLaSemana, HoraInicio, HoraFin FROM TurnosDeTrabajo WHERE IdMedico = @IdMedico ORDER BY DiaDeLaSemana ASC, HoraInicio ASC");
+                datos.setearConsulta("SELECT Id, IdMedico, DiaDeLaSemana, HoraInicio, HoraFin, Activo FROM TurnosDeTrabajo WHERE IdMedico = @IdMedico ORDER BY DiaDeLaSemana ASC, HoraInicio ASC");
                 datos.setearParametro("@IdMedico", idMedico);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
@@ -26,6 +26,7 @@ namespace negocio
                     aux.DiaDeLaSemana = (DayOfWeek)(int)datos.Lector["DiaDeLaSemana"];
                     aux.HoraInicio = (TimeSpan)datos.Lector["HoraInicio"];
                     aux.HoraFin = (TimeSpan)datos.Lector["HoraFin"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
                     turnosDeTrabajo.Add(aux);
                 }
                 return turnosDeTrabajo;
@@ -45,11 +46,12 @@ namespace negocio
             {
                 nuevo.Validar(); // valido los datos del turno de trabajo antes de intentar insertarlo en la base de datos
 
-                datos.setearConsulta("INSERT INTO TurnosDeTrabajo (IdMedico, DiaDeLaSemana, HoraInicio, HoraFin) VALUES (@IdMedico, @DiaDeLaSemana, @HoraInicio, @HoraFin)");
+                datos.setearConsulta("INSERT INTO TurnosDeTrabajo (IdMedico, DiaDeLaSemana, HoraInicio, HoraFin, Activo) VALUES (@IdMedico, @DiaDeLaSemana, @HoraInicio, @HoraFin, @Activo)");
                 datos.setearParametro("@IdMedico", nuevo.IdMedico);
                 datos.setearParametro("@DiaDeLaSemana", (int)nuevo.DiaDeLaSemana);
                 datos.setearParametro("@HoraInicio", nuevo.HoraInicio);
                 datos.setearParametro("@HoraFin", nuevo.HoraFin);
+                datos.setearParametro("@Activo", nuevo.Activo);
                 datos.ejecutarAccion();
             }
             catch (ArgumentException ex)
@@ -95,7 +97,7 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("DELETE FROM TurnosDeTrabajo WHERE Id = @Id");
+                datos.setearProcedimiento("SP_EliminarLogicoTurnoDeTrabajo");
                 datos.setearParametro("@Id", id);
                 datos.ejecutarAccion();
             }

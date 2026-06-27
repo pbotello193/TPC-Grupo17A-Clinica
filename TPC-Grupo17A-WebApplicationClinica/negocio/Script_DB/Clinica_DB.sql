@@ -70,7 +70,7 @@ CREATE TABLE TurnosDeTrabajo (
     DiaDeLaSemana INT NOT NULL,
     HoraInicio TIME NOT NULL,
     HoraFin TIME NOT NULL,
-    Activo BIT NOT NULL,
+    Activo BIT NOT NULL DEFAULT 1,
     CONSTRAINT FK_TurnoDeTrabajo_Medico FOREIGN KEY (IdMedico) REFERENCES Medicos(Id)
 );
 GO

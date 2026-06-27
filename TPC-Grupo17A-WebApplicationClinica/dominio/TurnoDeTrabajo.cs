@@ -13,6 +13,7 @@ namespace dominio
         public DayOfWeek DiaDeLaSemana { get; set; }
         public TimeSpan HoraInicio { get; set; }
         public TimeSpan HoraFin { get; set; }
+        public bool Activo { get; set; } = true;
 
         public void Validar()
         {
