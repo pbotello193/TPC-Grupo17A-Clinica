@@ -29,6 +29,21 @@ namespace WebApplicationClinica
         {
             cargarGrilla();
             limpiarCampos();
+
+            int idMedico = int.Parse(ddlMedico.SelectedValue);
+            if (idMedico > 0)
+            {
+                EspecialidadNegocio espNegocio = new EspecialidadNegocio();
+                ddlEspecialidad.DataSource = espNegocio.listarPorMedico(idMedico);
+                ddlEspecialidad.DataValueField = "Id";
+                ddlEspecialidad.DataTextField = "Nombre";
+                ddlEspecialidad.DataBind();
+            }
+            else
+            {
+                ddlEspecialidad.Items.Clear();
+            }
+            
         }
         private void cargarGrilla()
         {
@@ -48,6 +63,7 @@ namespace WebApplicationClinica
             var displayList = lista.Select(turnoDeTrabajo => new {
                 turnoDeTrabajo.Id,
                 turnoDeTrabajo.Activo,
+                EspecialidadNombre = turnoDeTrabajo.Especialidad.Nombre,
                 DiaNombre = obtenerNombreDia(turnoDeTrabajo.DiaDeLaSemana),
                 HoraInicio = turnoDeTrabajo.HoraInicio.ToString(@"hh\:mm"),
                 HoraFin = turnoDeTrabajo.HoraFin.ToString(@"hh\:mm"),
@@ -89,6 +105,7 @@ namespace WebApplicationClinica
                 ddlDia.SelectedValue = ((int)seleccionado.DiaDeLaSemana).ToString();
                 txtHoraInicio.Text = seleccionado.HoraInicio.ToString(@"hh\:mm");
                 txtHoraFin.Text = seleccionado.HoraFin.ToString(@"hh\:mm");
+                ddlEspecialidad.SelectedValue = seleccionado.Especialidad.Id.ToString();
             }
         }
         protected void btnAceptar_Click(object sender, EventArgs e)
@@ -102,6 +119,8 @@ namespace WebApplicationClinica
                 TurnoDeTrabajoNegocio negocio = new TurnoDeTrabajoNegocio();
                 TurnoDeTrabajo nuevo = new TurnoDeTrabajo();
                 nuevo.IdMedico = idMedico;
+                nuevo.Especialidad = new Especialidad();
+                nuevo.Especialidad.Id = int.Parse(ddlEspecialidad.SelectedValue);
                 nuevo.DiaDeLaSemana = (DayOfWeek)int.Parse(ddlDia.SelectedValue);
                 nuevo.HoraInicio = TimeSpan.Parse(txtHoraInicio.Text);
                 nuevo.HoraFin = TimeSpan.Parse(txtHoraFin.Text);
@@ -153,6 +172,10 @@ namespace WebApplicationClinica
             txtHoraInicio.Text = "";
             txtHoraFin.Text = "";
             btnEliminarFisico.Visible = false;
+            if (ddlEspecialidad.Items.Count > 0)
+            {
+                ddlEspecialidad.SelectedIndex = 0;
+            }
         }
     }
 }

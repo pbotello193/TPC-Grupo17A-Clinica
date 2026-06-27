@@ -16,6 +16,12 @@
                     <asp:DropDownList ID="ddlMedico" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlMedico_SelectedIndexChanged">
                     </asp:DropDownList>
                 </div>
+                <div class="mb-3">
+                    <label class="form-label">Especialidad</label>
+                    <asp:DropDownList ID="ddlEspecialidad" runat="server" CssClass="form-select">
+                    </asp:DropDownList>
+                </div>
+
 
                 <div class="mb-3">
                     <label class="form-label">Id Horario</label>
@@ -60,11 +66,12 @@
                         <asp:ListItem Value="activos" Text="Activos" Selected="True"/>
                         <asp:ListItem Value="inactivos" Text="Inactivos"/>
                         <asp:ListItem Value="todos" Text="Todos"/>
-                        </asp:DropDownList>
+                    </asp:DropDownList>
                 </div>
                 <asp:GridView ID="dgvTurnos" runat="server" CssClass="table table-striped table-hover"
                     AutoGenerateColumns="false" OnSelectedIndexChanged="dgvTurnos_SelectedIndexChanged" DataKeyNames="Id">
                     <Columns>
+                        <asp:BoundField HeaderText="Especialidad" DataField="EspecialidadNombre" />
                         <asp:BoundField HeaderText="Día" DataField="DiaNombre" />
                         <asp:BoundField HeaderText="Inicio" DataField="HoraInicio" />
                         <asp:BoundField HeaderText="Fin" DataField="HoraFin" />

@@ -10,6 +10,7 @@ namespace dominio
     {
         public int Id { get; set; }
         public int IdMedico { get; set; }
+        public Especialidad Especialidad { get; set; }
         public DayOfWeek DiaDeLaSemana { get; set; }
         public TimeSpan HoraInicio { get; set; }
         public TimeSpan HoraFin { get; set; }
