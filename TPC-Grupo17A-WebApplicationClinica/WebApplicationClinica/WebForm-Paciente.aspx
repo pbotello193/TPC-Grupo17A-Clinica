@@ -28,6 +28,8 @@
                 CssClass="table table-striped table-hover align-middle"
                 DataKeyNames="Id"
                 AutoGenerateColumns="false"
+                ShowHeaderWhenEmpty="true"
+                EmptyDataText="No se encontraron pacientes."
                 OnSelectedIndexChanged="dgvPacientes_SelectedIndexChanged">
                 <Columns>
                     <asp:BoundField HeaderText="Apellido" DataField="Apellido" />
