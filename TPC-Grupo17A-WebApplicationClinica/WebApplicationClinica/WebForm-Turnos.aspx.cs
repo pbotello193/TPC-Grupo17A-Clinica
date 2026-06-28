@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using negocio;
 
 namespace WebApplicationClinica
 {
@@ -11,7 +12,26 @@ namespace WebApplicationClinica
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                cargarEspecialidades();
+            }
+        }
 
+        private void cargarEspecialidades()
+        {
+            EspecialidadNegocio negocio = new EspecialidadNegocio();
+
+            ddlEspecialidad.DataSource = negocio.listarEspecialidades();
+            ddlEspecialidad.DataTextField = "Nombre";
+            ddlEspecialidad.DataValueField = "Id";
+            ddlEspecialidad.DataBind();
+
+            ListItem opcionInicial = new ListItem("Seleccione una especialidad", "0");
+            opcionInicial.Attributes.Add("disabled", "disabled");
+            opcionInicial.Attributes.Add("style", "display:none");
+            ddlEspecialidad.Items.Insert(0, opcionInicial);
+            ddlEspecialidad.SelectedIndex = 0;
         }
 
         //buscar pacientes por DNI, nombre o apellido
