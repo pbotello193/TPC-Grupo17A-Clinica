@@ -39,6 +39,8 @@
                     AutoGenerateColumns="false"
                     DataKeyNames="Id"
                     Visible="false"
+                    ShowHeaderWhenEmpty="true"
+                    EmptyDataText="No se encontraron pacientes activos."
                     OnSelectedIndexChanged="dgvPacientesEncontrados_SelectedIndexChanged">
                     <Columns>
                         <asp:BoundField HeaderText="Apellido" DataField="Apellido" />
