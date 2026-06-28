@@ -11,19 +11,19 @@
             </p>--%>
         </div>
         <div class="row g-4">
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm border-0 bg-light">
-                <div class="card-body p-4">
-                    <div class="rounded-circle bg-info-subtle bg-opacity-10 text-info-emphasis d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
-                        <i class="bi bi-calendar-check fs-2"></i>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 bg-light">
+                    <div class="card-body p-4">
+                        <div class="rounded-circle bg-info-subtle bg-opacity-10 text-info-emphasis d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                            <i class="bi bi-calendar-check fs-2"></i>
+                        </div>
+                        <%--turnos --%>
+                        <h5 class="card-title fw-bold">Turnos</h5>
+                        <p class="card-text text-muted">Gestión y asignación de turnos a pacientes.</p>
+                        <a href="WebForm-Turnos.aspx" class="btn btn-dark">Ingresar</a>
                     </div>
-                    <%--turnos --%>
-                    <h5 class="card-title fw-bold">Turnos</h5>
-                    <p class="card-text text-muted">Gestión y asignación de turnos a pacientes.</p>
-                    <a href="WebForm-Turnos.aspx" class="btn btn-dark">Ingresar</a>
                 </div>
             </div>
-        </div>
 
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 bg-light">
@@ -77,7 +77,6 @@
                         <h5 class="card-title fw-bold">Horarios Médicos</h5>
                         <p class="card-text text-muted">Gestión y consulta de dias y horarios médicos.</p>
                         <a href="FormularioTurnoDeTrabajo.aspx" class="btn btn-dark">Ingresar</a>
-
                     </div>
                 </div>
             </div>
