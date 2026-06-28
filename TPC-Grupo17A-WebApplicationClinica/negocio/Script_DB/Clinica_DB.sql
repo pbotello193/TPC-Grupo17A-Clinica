@@ -138,16 +138,16 @@ GO
 
 --Inserts para especialidades
 
+INSERT INTO Especialidades (Nombre, Descripcion, Activo)
+VALUES ('Pediatr�a', 'Atenci�n m�dica integral para beb�s, ni�os y adolescentes.', 1);
 INSERT INTO Especialidades (Nombre, Descripcion)
-VALUES ('Pediatr�a', 'Atenci�n m�dica integral para beb�s, ni�os y adolescentes.');
+VALUES ('Cardiolog�a', 'Diagn�stico y tratamiento de enfermedades del coraz�n y vasos sangu�neos.', 1);
 INSERT INTO Especialidades (Nombre, Descripcion)
-VALUES ('Cardiolog�a', 'Diagn�stico y tratamiento de enfermedades del coraz�n y vasos sangu�neos.');
+VALUES ('Traumatolog�a', 'Prevenci�n, diagn�stico y tratamiento de lesiones del sistema m�sculo-esquel�tico.', 1);
 INSERT INTO Especialidades (Nombre, Descripcion)
-VALUES ('Traumatolog�a', 'Prevenci�n, diagn�stico y tratamiento de lesiones del sistema m�sculo-esquel�tico.');
+VALUES ('Dermatolog�a', 'Cuidado de la piel, pelo y u�as, y tratamiento de sus enfermedades.', 0);
 INSERT INTO Especialidades (Nombre, Descripcion)
-VALUES ('Dermatolog�a', 'Cuidado de la piel, pelo y u�as, y tratamiento de sus enfermedades.');
-INSERT INTO Especialidades (Nombre, Descripcion)
-VALUES ('Ginecolog�a', 'Atenci�n a la salud del sistema reproductor femenino.');
+VALUES ('Ginecolog�a', 'Atenci�n a la salud del sistema reproductor femenino.', 0);
 GO
 
 --Inserts para MedicoEspecialidad

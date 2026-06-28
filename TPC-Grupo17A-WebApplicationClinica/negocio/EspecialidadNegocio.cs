@@ -107,9 +107,10 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("INSERT INTO Especialidades(Nombre, Descripcion) VALUES(@Nombre, @Descripcion)");
+                datos.setearConsulta("INSERT INTO Especialidades(Nombre, Descripcion, Activo) VALUES(@Nombre, @Descripcion, @Activo)");
                 datos.setearParametro("@Nombre", nuevo.Nombre);
                 datos.setearParametro("@Descripcion", nuevo.Descripcion);
+                datos.setearParametro("@Activo", nuevo.Activo);
 
                 datos.ejecutarAccion();
 
