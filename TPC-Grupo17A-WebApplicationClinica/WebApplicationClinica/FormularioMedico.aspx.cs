@@ -2,6 +2,7 @@
 using negocio;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -20,7 +21,7 @@ namespace WebApplicationClinica
                 if (!IsPostBack)
                 {
                     EspecialidadNegocio negocio = new EspecialidadNegocio();
-                    cblEspecialidades.DataSource = negocio.listarEspecialidades();
+                    cblEspecialidades.DataSource = negocio.listarTodasEspecialidades();
                     cblEspecialidades.DataBind();
                 }
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
@@ -75,11 +76,15 @@ namespace WebApplicationClinica
                 Medico nuevo = new Medico();
                 MedicoNegocio medNegocio = new MedicoNegocio();
                 EspecialidadNegocio espNegocio = new EspecialidadNegocio();
-
+                // Si es una modificación asigno el id antes de validar sino siempre va con 0
+                if (Request.QueryString["id"] != null)
+                {
+                    nuevo.Id = int.Parse(txtId.Text);
+                }
                 nuevo.Nombre = txtNombre.Text;
                 nuevo.Apellido = txtApellido.Text;
                 nuevo.Matricula = txtMatricula.Text;
-                if (medNegocio.validarMatricula(txtMatricula.Text))
+                if (medNegocio.validarMatricula(txtMatricula.Text, nuevo.Id))
                 { //Aca es donde lanza el validador si la matricula ya existe
                     validadorMatricula.IsValid = false;
                     validadorMatricula.ErrorMessage = "Ya existe un médico con esa matrícula.";

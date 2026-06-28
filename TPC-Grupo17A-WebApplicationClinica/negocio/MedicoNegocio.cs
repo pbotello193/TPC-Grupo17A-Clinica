@@ -51,6 +51,40 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+        public List<Medico> listarMedicosInactivos()
+        {
+            try
+            {
+                string consulta = "select id, apellido, nombre, matricula, telefono, email, activo from Medicos WHERE Activo = 0 ORDER BY Apellido ASC";
+                datos.setearConsulta(consulta);
+                datos.ejecutarLectura();
+                EspecialidadNegocio especialidadNegocio = new EspecialidadNegocio();
+
+                while (datos.Lector.Read())
+                {
+                    Medico aux = new Medico();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Apellido = (string)datos.Lector["Apellido"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Matricula = (string)datos.Lector["Matricula"];
+                    aux.Telefono = (string)datos.Lector["Telefono"];
+                    aux.Email = (string)datos.Lector["Email"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+
+                    aux.Especialidades = especialidadNegocio.listarPorMedico(aux.Id);
+
+                    medicos.Add(aux);
+                }
+
+                return medicos;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
         public List<Medico> listarMedicosCompleto()
         {
             try
@@ -124,7 +158,7 @@ namespace negocio
                 datos.setearParametro("@Nombre", nuevo.Nombre);
                 datos.setearParametro("@Apellido", nuevo.Apellido);
                 datos.setearParametro("@Matricula", nuevo.Matricula);
-                if (validarMatricula(nuevo.Matricula))
+                if (validarMatricula(nuevo.Matricula, nuevo.Id))
                     throw new Exception("Ya existe un médico con esa matrícula.");
                 datos.setearParametro("@Telefono", nuevo.Telefono);
                 datos.setearParametro("@Email", nuevo.Email);

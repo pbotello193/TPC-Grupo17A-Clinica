@@ -24,7 +24,7 @@ namespace WebApplicationClinica
         {
             EspecialidadNegocio negocio = new EspecialidadNegocio();
 
-            ddlEspecialidad.DataSource = negocio.listarEspecialidades();
+            ddlEspecialidad.DataSource = negocio.listarTodasEspecialidades();
             ddlEspecialidad.DataTextField = "Nombre";
             ddlEspecialidad.DataValueField = "Id";
             ddlEspecialidad.DataBind();

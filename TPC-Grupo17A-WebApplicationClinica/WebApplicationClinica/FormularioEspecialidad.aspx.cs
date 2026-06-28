@@ -27,6 +27,14 @@ namespace WebApplicationClinica
                     txtId.Text = aux.Id.ToString();
                     txtNombre.Text = aux.Nombre;
                     txtDescripcion.Text = aux.Descripcion;
+                    if (aux.Activo)
+                    {
+                        rdbActivo.Checked = true;
+                    }
+                    else
+                    {
+                        rdbInactivo.Checked = true;
+                    }
                 }
             }
             catch (Exception ex)
@@ -50,6 +58,14 @@ namespace WebApplicationClinica
 
                 nuevo.Nombre = txtNombre.Text;
                 nuevo.Descripcion = txtDescripcion.Text;
+                if (rdbActivo.Checked)
+                {
+                    nuevo.Activo = true;
+                }
+                else
+                {
+                    nuevo.Activo = false;
+                }
 
                 if (Request.QueryString["id"] != null)
                 {

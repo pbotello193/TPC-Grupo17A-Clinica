@@ -3,12 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="container">
-        <asp:ScriptManager runat="server" />
-        
+    <div class="container">   
         <div class="mb-3">
             <h1>Médicos</h1>
-
             <asp:UpdatePanel runat="server">
                 <ContentTemplate>
                     <div class="d-flex gap-2 align-items-center mb-3">
@@ -32,7 +29,7 @@
                             <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
                             <asp:BoundField HeaderText="Matrícula" DataField="Matricula" />
                             
-                            <%-- Columna para mostrar las especialidades como equitas --%>
+                            <%-- Columna para mostrar las especialidades como etquitas --%>
                             <asp:TemplateField HeaderText="Especialidades">
                                 <ItemTemplate>
                                     <asp:Repeater ID="repEspecialidades" runat="server" DataSource='<%# Eval("Especialidades") %>'>

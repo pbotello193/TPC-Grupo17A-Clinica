@@ -20,7 +20,15 @@
                         <asp:TextBox runat="server" ID="txtDescripcion" CssClass="form-control" />
                     </div>
                     <div class="mb-3">
-                        <div class="mb-3"> <!-- lbl para mostrar mjs de error -->
+                        <asp:Label ID="lblEstado" Text="Estado:" runat="server" Font-Bold="true" />
+                        <div class="mb-3">
+                            <asp:RadioButton ID="rdbActivo" Text="Activo" runat="server" GroupName="Estado" />
+                            <asp:RadioButton ID="rdbInactivo" Text="Inactivo" runat="server" GroupName="Estado" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="mb-3">
+                            <!-- lbl para mostrar mjs de error -->
                             <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
                         </div>
                         <asp:Button ID="btnAceptar" class="btn btn-primary" runat="server" Text="Aceptar" OnClick="btnAceptar_Click" />

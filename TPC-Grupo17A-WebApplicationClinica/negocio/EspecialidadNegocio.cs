@@ -13,12 +13,12 @@ namespace negocio
     {
         AccesoDatos datos = new AccesoDatos();
 
-        public List<Especialidad> listarEspecialidades()
+        public List<Especialidad> listarTodasEspecialidades()
         {
             List<Especialidad> especialidades = new List<Especialidad>();
             try
             {
-                datos.setearConsulta("select Id, Nombre, Descripcion from Especialidades");
+                datos.setearConsulta("select Id, Nombre, Descripcion, Activo from Especialidades");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -27,6 +27,67 @@ namespace negocio
                     aux.Id = (int)datos.Lector["Id"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+
+                    especialidades.Add(aux);
+                }
+                return especialidades;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public List<Especialidad> listarEspecialidadesActivas()
+        {
+            List<Especialidad> especialidades = new List<Especialidad>();
+            try
+            {
+                datos.setearConsulta("select Id, Nombre, Descripcion, Activo from Especialidades Where activo = 1");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Especialidad aux = new Especialidad();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+
+                    especialidades.Add(aux);
+                }
+                return especialidades;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public List<Especialidad> listarEspecialidadesInactivas()
+        {
+            List<Especialidad> especialidades = new List<Especialidad>();
+            try
+            {
+                datos.setearConsulta("select Id, Nombre, Descripcion, Activo from Especialidades Where activo = 0");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Especialidad aux = new Especialidad();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
 
                     especialidades.Add(aux);
                 }
@@ -67,10 +128,11 @@ namespace negocio
         {
             try
             {
-                datos.setearConsulta("UPDATE Especialidades set Nombre = @Nombre, Descripcion = @Descripcion where Id=@Id");
+                datos.setearConsulta("UPDATE Especialidades set Nombre = @Nombre, Descripcion = @Descripcion, Activo = @Activo where Id=@Id");
                 datos.setearParametro("@Id", modificar.Id);
                 datos.setearParametro("@Nombre", modificar.Nombre);
                 datos.setearParametro("@Descripcion", modificar.Descripcion);
+                datos.setearParametro("@Activo", modificar.Activo);
 
                 datos.ejecutarAccion();
 

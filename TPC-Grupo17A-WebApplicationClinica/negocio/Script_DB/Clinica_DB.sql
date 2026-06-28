@@ -33,7 +33,8 @@ GO
 CREATE TABLE Especialidades (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL,
-    Descripcion VARCHAR(250) NOT NULL
+    Descripcion VARCHAR(250) NOT NULL,
+	Activo BIT NOT NULL
 );
 
 GO

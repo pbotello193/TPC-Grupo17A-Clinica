@@ -20,18 +20,17 @@ namespace WebApplicationClinica
         {
             MedicoNegocio negocio = new MedicoNegocio();
 
-            if (ddlEstadoMedicos.SelectedValue == "inactivos")
+            if (ddlEstadoMedicos.SelectedValue == "activos")
             {
-                //Hacer mejor un metodo para filtrar inactivos
-                Session["listaMedicos"] = negocio.listarMedicosCompleto().FindAll(x => !x.Activo);
+                Session["listaMedicos"] = negocio.listarMedicosActivos();
             }
-            else if (ddlEstadoMedicos.SelectedValue == "todos")
+            else if (ddlEstadoMedicos.SelectedValue == "inactivos")
             {
-                Session["listaMedicos"] = negocio.listarMedicosCompleto();
+                Session["listaMedicos"] = negocio.listarMedicosInactivos();
             }
             else
             {
-                Session["listaMedicos"] = negocio.listarMedicosActivos();
+                Session["listaMedicos"] = negocio.listarMedicosCompleto();
             }
 
             dgvMedicos.DataSource = Session["listaMedicos"];
@@ -64,7 +63,7 @@ namespace WebApplicationClinica
             if (dgvMedicos.SelectedDataKey != null)
             {
                 string id = dgvMedicos.SelectedDataKey.Value.ToString();
-                Response.Redirect("FormularioMedico.aspx?id=" + id, false);
+                Response.Redirect("FormularioMedico.aspx?id=" + id);
             }
         }
     }
