@@ -105,25 +105,24 @@ namespace WebApplicationClinica
         {
             string idSelected = dgvTurnos.SelectedDataKey.Value.ToString();
             txtId.Text = idSelected;
-            btnEliminarFisico.Visible = true;
-
             int idMedico = int.Parse(ddlMedico.SelectedValue);
             TurnoDeTrabajoNegocio negocio = new TurnoDeTrabajoNegocio();
             List<TurnoDeTrabajo> lista = negocio.listarPorMedico(idMedico, "todos");
             TurnoDeTrabajo seleccionado = lista.Find(x => x.Id == int.Parse(idSelected));
-
             if (seleccionado != null)
             {
                 ddlDia.SelectedValue = ((int)seleccionado.DiaDeLaSemana).ToString();
                 txtHoraInicio.Text = seleccionado.HoraInicio.ToString(@"hh\:mm");
                 txtHoraFin.Text = seleccionado.HoraFin.ToString(@"hh\:mm");
-
                 ListItem itemEsp = ddlEspecialidad.Items.FindByValue(seleccionado.Especialidad.Id.ToString());
                 if (itemEsp != null)
                 {
                     ddlEspecialidad.ClearSelection();
                     itemEsp.Selected = true;
                 }
+                // Mostrar boton dependiendo el estado del turno
+                btnEliminarFisico.Visible = seleccionado.Activo;
+                btnActivar.Visible = !seleccionado.Activo;
             }
         }
 
@@ -183,6 +182,27 @@ namespace WebApplicationClinica
             }
         }
 
+        protected void btnActivar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                lblError.Visible = false;
+
+                TurnoDeTrabajoNegocio negocio = new TurnoDeTrabajoNegocio();
+                int id = int.Parse(txtId.Text);
+                negocio.activar(id);
+                cargarGrilla();
+                limpiarCampos();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                lblError.Text = ex.Message;
+                lblError.Visible = true;
+            }
+        }
+
+
         private void limpiarCampos()
         {
             txtId.Text = "";
@@ -190,6 +210,7 @@ namespace WebApplicationClinica
             txtHoraInicio.Text = "";
             txtHoraFin.Text = "";
             btnEliminarFisico.Visible = false;
+            btnActivar.Visible = false;
             if (ddlEspecialidad.Items.Count > 0)
                 ddlEspecialidad.SelectedIndex = 0;
         }

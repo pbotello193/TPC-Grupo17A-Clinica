@@ -57,6 +57,7 @@
                 <div class="mb-3">
                     <asp:Button ID="btnAceptar" class="btn btn-primary" runat="server" Text="Aceptar" OnClick="btnAceptar_Click" />
                     <asp:Button runat="server" ID="btnEliminarFisico" Text="Eliminar Horario" class="btn btn-secondary" OnClick="btnEliminarFisico_Click" />
+                    <asp:Button runat="server" ID="btnActivar" Text="Activar Horario" class="btn btn-success" OnClick="btnActivar_Click" Visible="false" />
                 </div>
             </div>
 

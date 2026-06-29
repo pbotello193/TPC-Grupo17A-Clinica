@@ -142,5 +142,22 @@ namespace negocio
 
             }
         }
+        public void activar(int id)
+        {
+            try
+            {
+                datos.setearConsulta("UPDATE TurnosDeTrabajo SET Activo = 1 WHERE Id = @Id");
+                datos.setearParametro("@Id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("No se pudo activar el turno de trabajo.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
