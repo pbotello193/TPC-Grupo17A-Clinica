@@ -158,7 +158,27 @@ namespace WebApplicationClinica
         //asignar el turno elegido al paciente seleccionadoD
         protected void dgvHorariosDisponibles_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (Session["listaHorariosDisponibles"] == null || string.IsNullOrEmpty(hfIdPaciente.Value)) 
+                return;
+            List<Turno> listaTurnos = (List<Turno>)Session["listaHorariosDisponibles"];
 
+            //para copiar el indice del turno desde la lista
+            int seleccion = dgvHorariosDisponibles.SelectedIndex;
+            Turno turnoSeleccionado = listaTurnos[seleccion];
+
+            try
+            {
+                TurnoNegocio negocio = new TurnoNegocio();
+                negocio.agregar(turnoSeleccionado);
+
+
+                Session.Remove("listaHorariosDisponibles");//limpio la lista para evitar problemas
+                Response.Redirect("WebForm-Turnos.aspx", false);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+            }
         }
     }
 }

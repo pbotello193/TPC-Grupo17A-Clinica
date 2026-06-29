@@ -33,19 +33,18 @@
                     <asp:TextBox runat="server" ID="txtMatricula" CssClass="form-control" />
                     <asp:RequiredFieldValidator ErrorMessage="La matricula es requerida" CssClass="validacion" Display="Dynamic" ControlToValidate="txtMatricula" runat="server" />
                     <%--Validador creado para verificar si ya existe la matricula--%>
-                    <asp:CustomValidator ID="validadorMatricula" runat="server"  ControlToValidate="txtMatricula" CssClass="validacion" Display="Dynamic">
-    </asp:CustomValidator>
+                    <asp:CustomValidator ID="validadorMatricula" runat="server" ControlToValidate="txtMatricula" CssClass="validacion" Display="Dynamic"> </asp:CustomValidator>
                 </div>
-            </div>
-            <div class="mb-3">
-                <label for="txtTelefono" class="form-label">Telefono</label>
-                <asp:TextBox runat="server" ID="txtTelefono" CssClass="form-control" />
-                <asp:RegularExpressionValidator ErrorMessage="Ingrese el numero sin guiones ni espacios" CssClass="validacion" Display="Dynamic" ControlToValidate="txtTelefono" ValidationExpression="^\d+$" runat="server" />
-            </div>
-            <div class="mb-3">
-                <label for="txtEmail" class="form-label">Email</label>
-                <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" />
-                <asp:RegularExpressionValidator ErrorMessage="Ingrese un Email valido" CssClass="validacion" Display="Dynamic" ControlToValidate="txtEmail" ValidationExpression="^\w+([-.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" runat="server" />
+                <div class="mb-3">
+                    <label for="txtTelefono" class="form-label">Telefono</label>
+                    <asp:TextBox runat="server" ID="txtTelefono" CssClass="form-control" />
+                    <asp:RegularExpressionValidator ErrorMessage="Ingrese el numero sin guiones ni espacios" CssClass="validacion" Display="Dynamic" ControlToValidate="txtTelefono" ValidationExpression="^\d+$" runat="server" />
+                </div>
+                <div class="mb-3">
+                    <label for="txtEmail" class="form-label">Email</label>
+                    <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" />
+                    <asp:RegularExpressionValidator ErrorMessage="Ingrese un Email valido" CssClass="validacion" Display="Dynamic" ControlToValidate="txtEmail" ValidationExpression="^\w+([-.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" runat="server" />
+                </div>
             </div>
             <div>
                 <div class="mb-3">
@@ -66,6 +65,5 @@
                 <a href="WebForm-Medico.aspx" class="btn btn-danger">Cancelar</a>
             </div>
         </div>
-    </div>
     </div>
 </asp:Content>
