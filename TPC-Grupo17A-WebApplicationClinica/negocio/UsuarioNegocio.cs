@@ -15,7 +15,7 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("SELECT Id, TipoUser FROM Usuarios WHERE Usuario = @user AND Pass = @pass");
+                datos.setearConsulta("SELECT Id, TipoUser FROM Usuarios WHERE Usuario = @user AND Pass = @pass AND Activo = 1");
                 datos.setearParametro("@user", usuario.User);
                 datos.setearParametro("@pass", usuario.Pass);
 
