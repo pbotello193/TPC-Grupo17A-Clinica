@@ -1,4 +1,4 @@
-CREATE DATABASE Clinica_DB;
+﻿CREATE DATABASE Clinica_DB;
 GO
 
 USE Clinica_DB;
@@ -85,26 +85,6 @@ CREATE TABLE TurnosDeTrabajo (
 GO
 
 
-CREATE PROCEDURE SP_EliminarMedicoFisico
-    @IdMedico INT
-AS
-BEGIN
-    BEGIN TRANSACTION    
-    BEGIN TRY
-	--ELIMINAR PRIMERO LA REALACION EN LA TABLA INTERMEDIA SINO SE ROMPE!!
-        DELETE FROM MedicoEspecialidad 
-        WHERE IdMedico = @IdMedico
-        DELETE FROM Medicos --
-        WHERE Id = @IdMedico
-
-        COMMIT TRANSACTION
-    END TRY
-    BEGIN CATCH
-        ROLLBACK TRANSACTION
-        THROW;
-    END CATCH
-END
-
 CREATE PROCEDURE SP_EliminarLogicoTurnoDeTrabajo
     @Id INT
 AS
@@ -133,26 +113,26 @@ GO
 --Inserts para la tabla medicos
 
 INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email, Activo)
-VALUES 
-    ('Carlos', 'G�mez', 'M-45892', '1134567890', 'carlos.gomez@clinica.com', 1),
-    ('Mar�a Laura', 'Rodr�guez', 'M-32145', '1165432109', 'maria.rodriguez@clinica.com', 1),
-    ('Juan Pablo', 'Mart�nez', 'M-78563', '1198765432', 'juan.martinez@clinica.com', 1),
-    ('Ana In�s', 'Fern�ndez', 'M-12457', '1122334455', 'ana.fernandez@clinica.com', 1),
-    ('Jorge Luis', 'L�pez', 'M-96325', '1155667788', 'jorge.lopez@clinica.com', 1);
+VALUES
+    ('Carlos', 'Gomez', 'M-45892', '1134567890', 'carlos.gomez@clinica.com', 1),
+    ('Maria Laura', 'Rodriguez', 'M-32145', '1165432109', 'maria.rodriguez@clinica.com', 1),
+    ('Juan Pablo', 'Martinez', 'M-78563', '1198765432', 'juan.martinez@clinica.com', 1),
+    ('Ana Ines', 'Fernandez', 'M-12457', '1122334455', 'ana.fernandez@clinica.com', 1),
+    ('Jorge Luis', 'Lopez', 'M-96325', '1155667788', 'jorge.lopez@clinica.com', 1);
 GO
 
 --Inserts para especialidades
 
 INSERT INTO Especialidades (Nombre, Descripcion, Activo)
-VALUES ('Pediatr�a', 'Atenci�n m�dica integral para beb�s, ni�os y adolescentes.', 1);
-INSERT INTO Especialidades (Nombre, Descripcion)
-VALUES ('Cardiolog�a', 'Diagn�stico y tratamiento de enfermedades del coraz�n y vasos sangu�neos.', 1);
-INSERT INTO Especialidades (Nombre, Descripcion)
-VALUES ('Traumatolog�a', 'Prevenci�n, diagn�stico y tratamiento de lesiones del sistema m�sculo-esquel�tico.', 1);
-INSERT INTO Especialidades (Nombre, Descripcion)
-VALUES ('Dermatolog�a', 'Cuidado de la piel, pelo y u�as, y tratamiento de sus enfermedades.', 0);
-INSERT INTO Especialidades (Nombre, Descripcion)
-VALUES ('Ginecolog�a', 'Atenci�n a la salud del sistema reproductor femenino.', 0);
+VALUES ('Pediatria', 'Atencion medica integral para bebes, ninos y adolescentes.', 1);
+INSERT INTO Especialidades (Nombre, Descripcion, Activo)
+VALUES ('Cardiologia', 'Diagnostico y tratamiento de enfermedades del corazon y vasos sanguineos.', 1);
+INSERT INTO Especialidades (Nombre, Descripcion, Activo)
+VALUES ('Traumatologia', 'Prevencion, diagnostico y tratamiento de lesiones del sistema musculo-esqueletico.', 1);
+INSERT INTO Especialidades (Nombre, Descripcion, Activo)
+VALUES ('Dermatologia', 'Cuidado de la piel, pelo y unas, y tratamiento de sus enfermedades.', 0);
+INSERT INTO Especialidades (Nombre, Descripcion, Activo)
+VALUES ('Ginecologia', 'Atencion a la salud del sistema reproductor femenino.', 0);
 GO
 
 --Inserts para MedicoEspecialidad
@@ -166,5 +146,15 @@ INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) VALUES (5, 1);
 INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) VALUES (5, 3);
 GO
 
+-- Inserts para la tabla pacientes
 
+INSERT INTO Pacientes (Nombre, Apellido, DNI, FechaNacimiento, Telefono, Email, Direccion, Activo)
+VALUES
+    ('Sofia', 'Pereyra', '30111222', '1983-04-12', '1150011001', 'sofia.pereyra@mail.com', 'Av. Rivadavia 1234', 1),
+    ('Martin', 'Gomez', '32555777', '1986-09-25', '1150011002', 'martin.gomez@mail.com', 'San Martin 245', 1),
+    ('Valentina', 'Suarez', '38444111', '1994-02-03', '1150011003', 'valentina.suarez@mail.com', 'Belgrano 890', 1),
+    ('Diego', 'Ramirez', '27888999', '1979-11-18', '1150011004', 'diego.ramirez@mail.com', 'Mitre 456', 1),
+    ('Camila', 'Gomez', '41777666', '1998-07-30', '1150011005', 'camila.gomez@mail.com', 'Lavalle 321', 0),
+    ('Luciano', 'Molina', '29123456', '1981-01-09', '1150011006', 'luciano.molina@mail.com', 'Corrientes 1550', 0);
+GO
 
