@@ -26,10 +26,23 @@ namespace WebApplicationClinica
             }
             else
             {
-                // En cada PostBack, recargar ddlEspecialidad
+                // En cada PostBack, recargar ddlEspecialidad 
+                // ddlMedico.SelectedValue ya tiene el valor correcto gracias a su ViewState
                 int idMedico = 0;
                 int.TryParse(ddlMedico.SelectedValue, out idMedico);
+                // Guardamos el valor que el usuario selecciona ANTES de recargar el dropdown
+                string espSeleccionada = Request.Form[ddlEspecialidad.UniqueID];
                 cargarEspecialidades(idMedico);
+                // Restauramos la seleccion del usuario luego de recargar los valores de forma segura
+                if (!string.IsNullOrEmpty(espSeleccionada))
+                {
+                    ListItem item = ddlEspecialidad.Items.FindByValue(espSeleccionada);
+                    if (item != null)
+                    {
+                        ddlEspecialidad.ClearSelection(); // Limpia la selección por defecto (índice 0)
+                        item.Selected = true;             // Aplica la selección del usuario
+                    }
+                }
             }
 
             btnEliminarFisico.Visible = !string.IsNullOrEmpty(txtId.Text);
