@@ -158,3 +158,39 @@ VALUES
     ('Luciano', 'Molina', '29123456', '1981-01-09', '1150011006', 'luciano.molina@mail.com', 'Corrientes 1550', 0);
 GO
 
+
+--Tablas login
+CREATE TABLE Roles (
+    Id INT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Activo BIT NOT NULL DEFAULT 1
+);
+GO
+
+CREATE TABLE Usuarios (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Usuario VARCHAR(50) NOT NULL,
+    Pass VARCHAR(50) NOT NULL,
+    TipoUser INT NOT NULL,
+    IdMedico INT NULL, --null porque solo se completa para medicos
+    Activo BIT NOT NULL DEFAULT 1,
+    CONSTRAINT UQ_Usuarios_Usuario UNIQUE (Usuario),
+    CONSTRAINT FK_Usuarios_Roles FOREIGN KEY (TipoUser) REFERENCES Roles(Id),
+    CONSTRAINT FK_Usuarios_Medicos FOREIGN KEY (IdMedico) REFERENCES Medicos(Id)
+);
+GO
+
+--Inserts roles y usuarios
+INSERT INTO Roles (Id, Nombre, Activo)
+VALUES
+    (1, 'Administrador', 1),
+    (2, 'Recepcionista', 1),
+    (3, 'Medico', 1);
+GO
+
+INSERT INTO Usuarios (Usuario, Pass, TipoUser, IdMedico, Activo)
+VALUES
+    ('admin', 'admin', 1, NULL, 1),
+    ('recepcion', 'recepcion', 2, NULL, 1),
+    ('medico', 'medico', 3, 1, 1);
+GO
