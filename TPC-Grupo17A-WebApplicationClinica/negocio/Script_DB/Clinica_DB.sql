@@ -55,13 +55,18 @@ CREATE TABLE MedicoEspecialidad (
 );
 
 CREATE TABLE Turnos (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    FechaHora DATETIME NOT NULL,
-    Observaciones VARCHAR(200) NOT NULL,
+    Id INT IDENTITY(1000,1) PRIMARY KEY, 
+    Fecha DATE NOT NULL,
+    HoraInicio TIME NOT NULL,
+    HoraFin TIME NOT NULL,
+    Observaciones VARCHAR(300) NOT NULL,
     IdPaciente INT NOT NULL,
     IdMedico INT NOT NULL,
+    IdEspecialidad INT NOT NULL,
+    Estado VARCHAR(50) NOT NULL DEFAULT 'Pendiente', 
     CONSTRAINT FK_Turno_Paciente FOREIGN KEY (IdPaciente) REFERENCES Pacientes(Id),
-    CONSTRAINT FK_Turno_Medico FOREIGN KEY (IdMedico) REFERENCES Medicos(Id)
+    CONSTRAINT FK_Turno_Medico FOREIGN KEY (IdMedico) REFERENCES Medicos(Id),
+    CONSTRAINT FK_Turno_Especialidad FOREIGN KEY (IdEspecialidad) REFERENCES Especialidades(Id)
 );
 GO
 

@@ -8,7 +8,7 @@ namespace dominio
 {
     public class Turno
     {
-        //public int Id { get; set; }
+        public int Id { get; set; }
         public DateTime Fecha { get; set; }
         public TimeSpan HoraInicio { get; set; }
         public TimeSpan HoraFin { get; set; }
