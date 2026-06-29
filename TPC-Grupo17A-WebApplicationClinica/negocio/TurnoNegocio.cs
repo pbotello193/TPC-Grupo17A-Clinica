@@ -11,6 +11,68 @@ namespace negocio
     {
         private AccesoDatos datos = new AccesoDatos();
 
+        public List<Turno> listar()
+        {
+            List<Turno> lista = new List<Turno>();
+            try
+            {
+                string consulta = "SELECT T.Id, T.Fecha, T.HoraInicio, T.HoraFin, T.Observaciones, T.Estado, " +
+                                  "P.Id AS IdPaciente, P.Nombre AS NombrePaciente, P.Apellido AS ApellidoPaciente, P.Email AS EmailPaciente, P.DNI AS DniPaciente, P.Telefono AS TelefonoPaciente, " +
+                                  "M.Id AS IdMedico, M.Nombre AS NombreMedico, M.Apellido AS ApellidoMedico, M.Matricula AS MatriculaMedico, M.Telefono AS TelefonoMedico, M.Email AS EmailMedico, " +
+                                  "E.Id AS IdEspecialidad, E.Nombre AS NombreEspecialidad " +
+                                  "FROM Turnos T " +
+                                  "INNER JOIN Pacientes P ON T.IdPaciente = P.Id " +
+                                  "INNER JOIN Medicos M ON T.IdMedico = M.Id " +
+                                  "INNER JOIN Especialidades E ON T.IdEspecialidad = E.Id " +
+                                  "ORDER BY T.Fecha DESC, T.HoraInicio DESC";
+                datos.setearConsulta(consulta);
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Turno aux = new Turno();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Fecha = (DateTime)datos.Lector["Fecha"];
+                    aux.HoraInicio = (TimeSpan)datos.Lector["HoraInicio"];
+                    aux.HoraFin = (TimeSpan)datos.Lector["HoraFin"];
+                    aux.Observaciones = (string)datos.Lector["Observaciones"];
+                    aux.Estado = (string)datos.Lector["Estado"];
+                    aux.Paciente = new Paciente
+                    {
+                        Id = (int)datos.Lector["IdPaciente"],
+                        Nombre = (string)datos.Lector["NombrePaciente"],
+                        Apellido = (string)datos.Lector["ApellidoPaciente"],
+                        Email = (string)datos.Lector["EmailPaciente"],
+                        Dni = (string)datos.Lector["DniPaciente"],
+                        Telefono = (string)datos.Lector["TelefonoPaciente"]
+                    };
+                    aux.Medico = new Medico
+                    {
+                        Id = (int)datos.Lector["IdMedico"],
+                        Nombre = (string)datos.Lector["NombreMedico"],
+                        Apellido = (string)datos.Lector["ApellidoMedico"],
+                        Matricula = (string)datos.Lector["MatriculaMedico"],
+                        Telefono = (string)datos.Lector["TelefonoMedico"],
+                        Email = (string)datos.Lector["EmailMedico"]
+                    };
+                    aux.Especialidad = new Especialidad
+                    {
+                        Id = (int)datos.Lector["IdEspecialidad"],
+                        Nombre = (string)datos.Lector["NombreEspecialidad"]
+                    };
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public void agregar(Turno nuevo)
         {
             // Validar que el turno no esté vencido (Fecha y hora de inicio deben ser a futuro)
