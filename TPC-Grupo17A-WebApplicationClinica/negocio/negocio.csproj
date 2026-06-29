@@ -60,11 +60,5 @@
   <ItemGroup>
     <Content Include="Script_DB\Clinica_DB.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Script_DB\.vs\Script_DB.slnx\FileContentIndex\b7bdbc56-b117-4519-9763-0bf7710cf510.vsidx" />
-    <None Include="Script_DB\.vs\Script_DB.slnx\v18\DocumentLayout.json" />
-    <None Include="Script_DB\.vs\slnx.sqlite" />
-    <None Include="Script_DB\.vs\VSWorkspaceState.json" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
