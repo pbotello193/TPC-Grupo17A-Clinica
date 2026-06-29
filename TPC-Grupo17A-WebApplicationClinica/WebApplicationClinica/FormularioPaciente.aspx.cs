@@ -173,6 +173,8 @@ namespace WebApplicationClinica
             catch (Exception ex)
             {
                 Session.Add("error", ex);
+                lblErrorGeneral.Text = "No se pudo guardar el paciente. Revise los datos ingresados o intente nuevamente.";
+                lblErrorGeneral.Visible = true;
             }
         }
 
