@@ -75,6 +75,9 @@ namespace negocio
 
         public void agregar(Turno nuevo)
         {
+            //Con esto se setea automaticamente la duracion de una hora a partir de HoraInicio
+            nuevo.HoraFin = nuevo.HoraInicio.Add(new TimeSpan(1, 0, 0)); 
+
             // Validar que el turno no esté vencido (Fecha y hora de inicio deben ser a futuro)
             DateTime fechaTurnoCompleta = nuevo.Fecha.Date + nuevo.HoraInicio;
             if (fechaTurnoCompleta <= DateTime.Now)

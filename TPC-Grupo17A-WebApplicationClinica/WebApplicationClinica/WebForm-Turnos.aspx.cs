@@ -89,13 +89,76 @@ namespace WebApplicationClinica
         //buscar medicos y horarios segun especialidad
         protected void btnBuscarHorarios_Click(object sender, EventArgs e)
         {
-            
+            if (string.IsNullOrEmpty(hfIdPaciente.Value) || ddlEspecialidad.SelectedValue == "0")
+            {
+                return;
+            }
+
+            int idPaciente = int.Parse((hfIdPaciente.Value));
+            int idEspecialidad = int.Parse((ddlEspecialidad.SelectedValue));
+
+            MedicoNegocio medicoNegocio = new MedicoNegocio();
+            TurnoDeTrabajoNegocio trabajoNegocio = new TurnoDeTrabajoNegocio();
+
+            List<Medico> medicosActivos = medicoNegocio.listarMedicosActivos();
+            List<Turno> listaTurnosDisponibles = new List<Turno>();
+
+            foreach (Medico medico in medicosActivos)
+            {
+                //filtra los horarios para el medico
+                List<TurnoDeTrabajo> horariosMedico = trabajoNegocio.listarPorMedico(medico.Id, "activos");
+
+                //filtra horarios de la especialidad especifica para ese medico
+                List<TurnoDeTrabajo> horariosFiltrados = horariosMedico.Where(a => a.Especialidad.Id == idEspecialidad).ToList();
+
+                foreach (TurnoDeTrabajo agendaMedico in horariosFiltrados)
+                {
+                    //calcula los dias de diferencia entre hoy y la fecha elegida (+7 y %7 por si da negativo)
+                    //estoy asumiendo que los turnos son a maximo 1 semana, sino hay que cambiarlo
+                    int diasDiferencia = ((int)agendaMedico.DiaDeLaSemana - (int)DateTime.Today.DayOfWeek + 7) % 7;
+                    //valida que el turno no sea pasado ni el mismo dia (si es o es hoy, asi que asigna el mismo dia de la siguiente semana)
+                    DateTime fechaReal = DateTime.Today.AddDays(diasDiferencia == 0 ? 7 : diasDiferencia);
+
+                    //bucle para manejar bloques de 1 hora y que no exceda el horario de fin de turno del medico
+                    while (agendaMedico.HoraInicio < agendaMedico.HoraFin)
+                    {
+                        Turno turnoDisponible = new Turno();
+                        turnoDisponible.Fecha = fechaReal;
+                        turnoDisponible.HoraInicio = agendaMedico.HoraInicio;
+                        turnoDisponible.Paciente = new Paciente();
+                        turnoDisponible.Paciente.Id = idPaciente;
+                        turnoDisponible.Medico = medico;
+                        turnoDisponible.Especialidad = agendaMedico.Especialidad;
+                        turnoDisponible.Observaciones = "Observaciones"; //aca deberia poder cargarse observaciones desde el front
+                        turnoDisponible.Estado = "Nuevo";
+
+                        listaTurnosDisponibles.Add(turnoDisponible);
+
+                        //avanza a la siguiente hora
+                        agendaMedico.HoraInicio = agendaMedico.HoraInicio.Add(new TimeSpan(1, 0, 0));
+                    }
+                }
+            }
+
+            //guardo la lista para usarla
+            Session["listaHorariosDisponibles"] = listaTurnosDisponibles;
+
+            //le da formato correcto para mostrar en la dgv (crea objetos temporales para cargar la lista)
+            dgvHorariosDisponibles.DataSource = listaTurnosDisponibles.Select(t => new
+            {
+                Medico = t.Medico.Apellido + ", " + t.Medico.Nombre,
+                Especialidad = t.Especialidad.Nombre,
+                Fecha = t.Fecha.ToString("dd/MM/yyyy"),
+                Horario = t.HoraInicio.ToString(@"hh\:mm")
+            }).ToList();
+
+            dgvHorariosDisponibles.DataBind();
         }
 
-        //asignar el turno elegido al paciente seleccionado
+        //asignar el turno elegido al paciente seleccionadoD
         protected void dgvHorariosDisponibles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
         }
     }
 }

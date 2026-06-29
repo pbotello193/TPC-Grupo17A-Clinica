@@ -12,6 +12,8 @@ namespace negocio
         private AccesoDatos datos = new AccesoDatos();
         public List<TurnoDeTrabajo> listarPorMedico(int idMedico, string estado = "activos")
         {
+            //creo uno local porque me genera conflicto al consumirlo desde turnos usando foreach
+            AccesoDatos datosLista = new AccesoDatos(); 
             List<TurnoDeTrabajo> turnosDeTrabajo = new List<TurnoDeTrabajo>();
             try
             {
@@ -32,22 +34,22 @@ namespace negocio
 
                 consulta += " ORDER BY T.DiaDeLaSemana ASC, T.HoraInicio ASC";
 
-                datos.setearConsulta(consulta);
-                datos.setearParametro("@IdMedico", idMedico);
-                datos.ejecutarLectura();
-                while (datos.Lector.Read())
+                datosLista.setearConsulta(consulta);
+                datosLista.setearParametro("@IdMedico", idMedico);
+                datosLista.ejecutarLectura();
+                while (datosLista.Lector.Read())
                 {
                     TurnoDeTrabajo aux = new TurnoDeTrabajo();
 
-                    aux.Id = (int)datos.Lector["Id"];
-                    aux.IdMedico = (int)datos.Lector["IdMedico"];
-                    aux.DiaDeLaSemana = (DayOfWeek)(int)datos.Lector["DiaDeLaSemana"];
-                    aux.HoraInicio = (TimeSpan)datos.Lector["HoraInicio"];
-                    aux.HoraFin = (TimeSpan)datos.Lector["HoraFin"];
-                    aux.Activo = (bool)datos.Lector["Activo"];
+                    aux.Id = (int)datosLista.Lector["Id"];
+                    aux.IdMedico = (int)datosLista.Lector["IdMedico"];
+                    aux.DiaDeLaSemana = (DayOfWeek)(int)datosLista.Lector["DiaDeLaSemana"];
+                    aux.HoraInicio = (TimeSpan)datosLista.Lector["HoraInicio"];
+                    aux.HoraFin = (TimeSpan)datosLista.Lector["HoraFin"];
+                    aux.Activo = (bool)datosLista.Lector["Activo"];
                     aux.Especialidad = new Especialidad();
-                    aux.Especialidad.Id = (int)datos.Lector["IdEspecialidad"];
-                    aux.Especialidad.Nombre = (string)datos.Lector["NombreEspecialidad"];
+                    aux.Especialidad.Id = (int)datosLista.Lector["IdEspecialidad"];
+                    aux.Especialidad.Nombre = (string)datosLista.Lector["NombreEspecialidad"];
                     
                     turnosDeTrabajo.Add(aux);
                 }
