@@ -13,12 +13,15 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">Médico</label>
-                    <asp:DropDownList ID="ddlMedico" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlMedico_SelectedIndexChanged">
+                    <asp:DropDownList ID="ddlMedico" runat="server" CssClass="form-select"
+                        AutoPostBack="true"
+                        OnSelectedIndexChanged="ddlMedico_SelectedIndexChanged">
                     </asp:DropDownList>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Especialidad</label>
-                    <asp:DropDownList ID="ddlEspecialidad" runat="server" CssClass="form-select">
+                    <asp:DropDownList ID="ddlEspecialidad" runat="server" CssClass="form-select"
+                        EnableViewState="false">
                     </asp:DropDownList>
                 </div>
 

@@ -123,6 +123,40 @@ namespace negocio
             }
 
         }
+
+        public List<Medico> listarMedicosPorEspecialidad(int idEspecialidad)
+        {
+            List<Medico> listaFiltrada = new List<Medico>();
+            AccesoDatos datosLocal = new AccesoDatos();
+            try
+            {
+                string consulta = "SELECT M.Id, M.Apellido, M.Nombre FROM Medicos M " +
+                                  "INNER JOIN MedicoEspecialidad ME ON M.Id = ME.IdMedico " +
+                                  "WHERE ME.IdEspecialidad = @IdEspecialidad AND M.Activo = 1 " +
+                                  "ORDER BY M.Apellido ASC";
+                datosLocal.setearConsulta(consulta);
+                datosLocal.setearParametro("@IdEspecialidad", idEspecialidad);
+                datosLocal.ejecutarLectura();
+                while (datosLocal.Lector.Read())
+                {
+                    Medico aux = new Medico();
+                    aux.Id = (int)datosLocal.Lector["Id"];
+                    aux.Apellido = (string)datosLocal.Lector["Apellido"];
+                    aux.Nombre = (string)datosLocal.Lector["Nombre"];
+                    listaFiltrada.Add(aux);
+                }
+                return listaFiltrada;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datosLocal.cerrarConexion();
+            }
+        }
+
         public bool validarMatricula(string matricula, int id = 0) //el = 0 es para que si no manda id usa ese valor(en caso de agregar)
         {
             // Método para verificar si ya existe una matrícula (exceptuando el id en caso de modificación)
