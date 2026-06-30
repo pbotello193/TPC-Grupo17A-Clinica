@@ -30,7 +30,7 @@
 
 
                 <div class="mb-3">
-                    <label for="txtObservaciones" class="form-label">Observaciones / Notas para el turno (Opcional)</label>
+                    <label for="txtObservaciones" class="form-label">Motivo de consulta / Observaciones)</label>
                     <asp:TextBox ID="txtObservaciones" runat="server"
                         CssClass="form-control"
                         TextMode="MultiLine"

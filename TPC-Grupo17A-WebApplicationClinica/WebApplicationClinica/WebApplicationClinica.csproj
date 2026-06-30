@@ -79,6 +79,7 @@
     <Content Include="ListaEspecialidades.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="MailTurnoConfirmado.html" />
+    <Content Include="MisTurnosMedicos.aspx" />
     <Content Include="Web.config" />
     <Content Include="WebForm-Medico.aspx" />
     <Content Include="WebForm-Paciente.aspx" />
@@ -157,6 +158,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MisTurnosMedicos.aspx.cs">
+      <DependentUpon>MisTurnosMedicos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MisTurnosMedicos.aspx.designer.cs">
+      <DependentUpon>MisTurnosMedicos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site1.Master.cs">

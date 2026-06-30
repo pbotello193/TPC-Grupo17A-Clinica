@@ -21,7 +21,7 @@
                         </div>
                         <h5 class="card-title fw-bold">Mis turnos</h5>
                         <p class="card-text text-muted">Consultar turnos asignados y registrar observaciones del paciente.</p>
-                        <a href="WebForm-Turnos.aspx" class="btn btn-dark">Ingresar</a>
+                        <a href="MisTurnosMedicos.aspx" class="btn btn-dark">Ingresar</a>
                     </div>
                 </div>
             </div>

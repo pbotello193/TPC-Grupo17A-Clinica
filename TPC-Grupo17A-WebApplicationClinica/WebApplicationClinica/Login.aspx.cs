@@ -48,7 +48,7 @@ namespace WebApplicationClinica
             }
 
             Session["Usuario"] = usuario;
-            Response.Redirect("Default.aspx", false);
+            Response.Redirect(usuario.PaginaInicio, false);
         }
     }
 }

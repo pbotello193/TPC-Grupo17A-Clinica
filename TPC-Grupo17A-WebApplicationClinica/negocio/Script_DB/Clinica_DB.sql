@@ -60,6 +60,7 @@ CREATE TABLE Turnos (
     HoraInicio TIME NOT NULL,
     HoraFin TIME NOT NULL,
     Observaciones VARCHAR(300) NOT NULL,
+    Diagnostico VARCHAR(500) NULL,
     IdPaciente INT NOT NULL,
     IdMedico INT NOT NULL,
     IdEspecialidad INT NOT NULL,

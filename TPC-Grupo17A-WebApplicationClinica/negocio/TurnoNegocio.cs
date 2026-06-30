@@ -16,7 +16,7 @@ namespace negocio
             List<Turno> lista = new List<Turno>();
             try
             {
-                string consulta = "SELECT T.Id, T.Fecha, T.HoraInicio, T.HoraFin, T.Observaciones, T.Estado, " +
+                string consulta = "SELECT T.Id, T.Fecha, T.HoraInicio, T.HoraFin, T.Observaciones, T.Diagnostico, T.Estado, " +
                                   "P.Id AS IdPaciente, P.Nombre AS NombrePaciente, P.Apellido AS ApellidoPaciente, P.Email AS EmailPaciente, P.DNI AS DniPaciente, P.Telefono AS TelefonoPaciente, " +
                                   "M.Id AS IdMedico, M.Nombre AS NombreMedico, M.Apellido AS ApellidoMedico, M.Matricula AS MatriculaMedico, M.Telefono AS TelefonoMedico, M.Email AS EmailMedico, " +
                                   "E.Id AS IdEspecialidad, E.Nombre AS NombreEspecialidad " +
@@ -35,6 +35,7 @@ namespace negocio
                     aux.HoraInicio = (TimeSpan)datos.Lector["HoraInicio"];
                     aux.HoraFin = (TimeSpan)datos.Lector["HoraFin"];
                     aux.Observaciones = (string)datos.Lector["Observaciones"];
+                    aux.Diagnostico = datos.Lector["Diagnostico"] == DBNull.Value ? "" : (string)datos.Lector["Diagnostico"];
                     aux.Estado = (string)datos.Lector["Estado"];
                     aux.Paciente = new Paciente
                     {
@@ -71,6 +72,12 @@ namespace negocio
             {
                 datos.cerrarConexion();
             }
+        }
+
+        public List<Turno> listarPorMedico(int idMedico)
+        {
+            List<Turno> lista = listar();
+            return lista.FindAll(x => x.Medico.Id == idMedico);
         }
 
         public void agregar(Turno nuevo)
