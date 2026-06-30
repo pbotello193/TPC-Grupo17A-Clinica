@@ -77,6 +77,12 @@ namespace negocio
             {
                 nuevo.Validar(); // valido los datos del turno de trabajo antes de intentar insertarlo en la base de datos
 
+                // valido que no se superponga con otro turno activo del mismo medico
+                if (verificarSuperposicion(nuevo))
+                {
+                    throw new ArgumentException("El médico ya tiene asignado un turno de trabajo activo que se superpone con este rango horario.");
+                }
+
                 datos.setearConsulta("INSERT INTO TurnosDeTrabajo (IdMedico, IdEspecialidad, DiaDeLaSemana, HoraInicio, HoraFin, Activo) VALUES (@IdMedico,@IdEspecialidad, @DiaDeLaSemana, @HoraInicio, @HoraFin, @Activo)");
                 datos.setearParametro("@IdMedico", nuevo.IdMedico);
                 datos.setearParametro("@IdEspecialidad", nuevo.Especialidad.Id);
@@ -104,6 +110,12 @@ namespace negocio
             try
             {
                 turnoModificar.Validar(); // valido los datos del turno de trabajo antes de intentar modificarlo en la base de datos
+
+                // valido que no se superponga con otro turno activo del mismo medico
+                if (verificarSuperposicion(turnoModificar))
+                {
+                    throw new ArgumentException("El médico ya tiene asignado un turno de trabajo activo que se superpone con este rango horario.");
+                }
 
                 datos.setearConsulta("UPDATE TurnosDeTrabajo SET IdEspecialidad = @IdEspecialidad, DiaDeLaSemana = @DiaDeLaSemana, HoraInicio = @HoraInicio, HoraFin = @HoraFin WHERE Id = @Id");
                 datos.setearParametro("@Id", turnoModificar.Id);
@@ -148,6 +160,18 @@ namespace negocio
         {
             try
             {
+
+                // antes de activar el turno validamos que no se superponga con otro activo
+                TurnoDeTrabajo turno = obtenerPorId(id);
+                if (turno != null)
+                {
+                    turno.Activo = true; // le pongo true para que pueda verificar con el otro activo porque la otra funcion solo compara activos
+                    if (verificarSuperposicion(turno))
+                    {
+                        throw new ArgumentException("No se puede activar este turno de trabajo porque se superpone con otro turno activo del mismo médico.");
+                    }
+                }
+
                 datos.setearConsulta("UPDATE TurnosDeTrabajo SET Activo = 1 WHERE Id = @Id");
                 datos.setearParametro("@Id", id);
                 datos.ejecutarAccion();
@@ -161,5 +185,59 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public bool verificarSuperposicion(TurnoDeTrabajo nuevo)
+        {
+            List<TurnoDeTrabajo> turnosExistentes = listarPorMedico(nuevo.IdMedico, "activos");
+            foreach (var turno in turnosExistentes)
+            {
+                // se omite el turno que estamos modificando
+                if (turno.Id == nuevo.Id)
+                    continue;
+                // primero vemos si coincide con el dia
+                if (turno.DiaDeLaSemana == nuevo.DiaDeLaSemana)
+                {
+                    if (nuevo.HoraInicio < turno.HoraFin && nuevo.HoraFin > turno.HoraInicio)
+                    {
+                        return true; // si las dos condiciones son true hay conflicto de horarios
+                    }
+                }
+            }
+            return false; // no hay superposición
+        }
+        private TurnoDeTrabajo obtenerPorId(int id)
+        {
+            AccesoDatos datosAux = new AccesoDatos();
+            try
+            {
+                datosAux.setearConsulta("SELECT T.Id, T.IdMedico, T.DiaDeLaSemana, T.HoraInicio, T.HoraFin, T.Activo, " +
+                                       "E.Id AS IdEspecialidad, E.Nombre AS NombreEspecialidad " +
+                                       "FROM TurnosDeTrabajo T " +
+                                       "INNER JOIN Especialidades E ON T.IdEspecialidad = E.Id " +
+                                       "WHERE T.Id = @Id");
+                datosAux.setearParametro("@Id", id);
+                datosAux.ejecutarLectura();
+                if (datosAux.Lector.Read())
+                {
+                    TurnoDeTrabajo aux = new TurnoDeTrabajo();
+                    aux.Id = (int)datosAux.Lector["Id"];
+                    aux.IdMedico = (int)datosAux.Lector["IdMedico"];
+                    aux.DiaDeLaSemana = (DayOfWeek)(int)datosAux.Lector["DiaDeLaSemana"];
+                    aux.HoraInicio = (TimeSpan)datosAux.Lector["HoraInicio"];
+                    aux.HoraFin = (TimeSpan)datosAux.Lector["HoraFin"];
+                    aux.Activo = (bool)datosAux.Lector["Activo"];
+                    aux.Especialidad = new Especialidad();
+                    aux.Especialidad.Id = (int)datosAux.Lector["IdEspecialidad"];
+                    aux.Especialidad.Nombre = (string)datosAux.Lector["NombreEspecialidad"];
+                    return aux;
+                }
+                return null;
+            }
+            finally
+            {
+                datosAux.cerrarConexion();
+            }
+        }
+
     }
 }

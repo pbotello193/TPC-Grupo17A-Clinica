@@ -85,6 +85,28 @@ CREATE TABLE TurnosDeTrabajo (
 );
 GO
 
+--Tablas login
+CREATE TABLE Roles (
+    Id INT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    PaginaInicio VARCHAR(100) NOT NULL,
+    Activo BIT NOT NULL DEFAULT 1
+);
+GO
+
+CREATE TABLE Usuarios (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Usuario VARCHAR(50) NOT NULL,
+    Pass VARCHAR(50) NOT NULL,
+    TipoUser INT NOT NULL,
+    IdMedico INT NULL, --null porque solo se completa para medicos
+    Activo BIT NOT NULL DEFAULT 1,
+    CONSTRAINT UQ_Usuarios_Usuario UNIQUE (Usuario),
+    CONSTRAINT FK_Usuarios_Roles FOREIGN KEY (TipoUser) REFERENCES Roles(Id),
+    CONSTRAINT FK_Usuarios_Medicos FOREIGN KEY (IdMedico) REFERENCES Medicos(Id)
+);
+GO
+
 
 CREATE PROCEDURE SP_EliminarLogicoTurnoDeTrabajo
     @Id INT
@@ -160,27 +182,7 @@ VALUES
 GO
 
 
---Tablas login
-CREATE TABLE Roles (
-    Id INT PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL,
-    PaginaInicio VARCHAR(100) NOT NULL,
-    Activo BIT NOT NULL DEFAULT 1
-);
-GO
 
-CREATE TABLE Usuarios (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Usuario VARCHAR(50) NOT NULL,
-    Pass VARCHAR(50) NOT NULL,
-    TipoUser INT NOT NULL,
-    IdMedico INT NULL, --null porque solo se completa para medicos
-    Activo BIT NOT NULL DEFAULT 1,
-    CONSTRAINT UQ_Usuarios_Usuario UNIQUE (Usuario),
-    CONSTRAINT FK_Usuarios_Roles FOREIGN KEY (TipoUser) REFERENCES Roles(Id),
-    CONSTRAINT FK_Usuarios_Medicos FOREIGN KEY (IdMedico) REFERENCES Medicos(Id)
-);
-GO
 
 --Inserts roles y usuarios
 INSERT INTO Roles (Id, Nombre, PaginaInicio, Activo)
