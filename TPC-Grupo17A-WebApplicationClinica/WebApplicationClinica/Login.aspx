@@ -17,11 +17,13 @@
                     <div class="mb-3">
                         <label for="txtUsuario" class="form-label">Usuario</label>
                         <asp:TextBox ID="txtUsuario" runat="server" CssClass="form-control" />
+                        <asp:Label ID="lblErrorUsuario" runat="server" CssClass="text-danger mt-1 d-block" Visible="false" />
                     </div>
 
                     <div class="mb-3">
                         <label for="txtPassword" class="form-label">Contraseña</label>
                         <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password" />
+                        <asp:Label ID="lblErrorPassword" runat="server" CssClass="text-danger mt-1 d-block" Visible="false" />
                     </div>
 
                     <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
