@@ -129,6 +129,12 @@ namespace negocio
         {
             try
             {
+
+                if (!modificar.Activo && tieneTurnosDeTrabajoActivos(modificar.Id))
+                {
+                    throw new Exception("No se puede inactivar la especialidad porque tiene turnos de trabajo activos asociados.");
+                }
+
                 datos.setearConsulta("UPDATE Especialidades set Nombre = @Nombre, Descripcion = @Descripcion, Activo = @Activo where Id=@Id");
                 datos.setearParametro("@Id", modificar.Id);
                 datos.setearParametro("@Nombre", modificar.Nombre);
@@ -254,6 +260,28 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        private bool tieneTurnosDeTrabajoActivos(int idEspecialidad)
+        {
+            AccesoDatos datosAux = new AccesoDatos();
+            try
+            {
+                datosAux.setearConsulta("SELECT COUNT(*) FROM TurnosDeTrabajo WHERE IdEspecialidad = @IdEspecialidad AND Activo = 1");
+                datosAux.setearParametro("@IdEspecialidad", idEspecialidad);
+                datosAux.ejecutarLectura();
+                if (datosAux.Lector.Read())
+                {
+                    int cantidad = Convert.ToInt32(datosAux.Lector[0]);
+                    return cantidad > 0;
+                }
+                return false;
+            }
+            finally
+            {
+                datosAux.cerrarConexion();
+            }
+        }
+
     }
 }
 
