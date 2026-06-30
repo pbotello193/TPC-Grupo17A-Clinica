@@ -20,5 +20,7 @@ namespace dominio
         public string Pass { get; set; }
         public TipoUsuario TipoUsuario { get; set; }
         public string PaginaInicio { get; set; }
+        public int? IdMedico { get; set; } //? -> puede ser null porque no todos los usuarios son medicos
+        public string NombreMostrar { get; set; }
     }
 }
