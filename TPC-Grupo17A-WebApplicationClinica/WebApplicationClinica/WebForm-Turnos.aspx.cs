@@ -155,24 +155,35 @@ namespace WebApplicationClinica
             dgvHorariosDisponibles.DataBind();
         }
 
-        //asignar el turno elegido al paciente seleccionadoD
+        //asignar el turno elegido al paciente seleccionado
         protected void dgvHorariosDisponibles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Session["listaHorariosDisponibles"] == null || string.IsNullOrEmpty(hfIdPaciente.Value)) 
+            if (Session["listaHorariosDisponibles"] == null || string.IsNullOrEmpty(hfIdPaciente.Value))
                 return;
+
             List<Turno> listaTurnos = (List<Turno>)Session["listaHorariosDisponibles"];
 
-            //para copiar el indice del turno desde la lista
+            // Para copiar el índice del turno desde la lista
             int seleccion = dgvHorariosDisponibles.SelectedIndex;
             Turno turnoSeleccionado = listaTurnos[seleccion];
 
             try
             {
+                int idPaciente = int.Parse((hfIdPaciente.Value));
+
+                if (Session["listaPacientesTurnos"] != null)
+                {//Recupero el paciento de la lista en session para cargarlo en el turno
+                    List<Paciente> listaPacientes = (List<Paciente>)Session["listaPacientesTurnos"];
+                    turnoSeleccionado.Paciente = listaPacientes.Find(x => x.Id == idPaciente) ?? turnoSeleccionado.Paciente;
+                }
                 TurnoNegocio negocio = new TurnoNegocio();
                 negocio.agregar(turnoSeleccionado);
 
-
-                Session.Remove("listaHorariosDisponibles");//limpio la lista para evitar problemas
+                EmailService email = new EmailService();
+                string rutaPlantilla = Server.MapPath("~/MailTurnoConfirmado.html");
+                email.armarMailConfirmacion(turnoSeleccionado, rutaPlantilla);
+                email.enviarEmail();
+                Session.Remove("listaHorariosDisponibles");
                 Response.Redirect("WebForm-Turnos.aspx", false);
             }
             catch (Exception ex)
@@ -180,5 +191,6 @@ namespace WebApplicationClinica
                 Session.Add("error", ex);
             }
         }
+
     }
 }
