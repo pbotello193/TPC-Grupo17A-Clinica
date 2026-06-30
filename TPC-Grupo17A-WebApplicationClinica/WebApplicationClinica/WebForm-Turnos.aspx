@@ -28,6 +28,16 @@
                     </div>
                 </div>
 
+
+                <div class="mb-3">
+                    <label for="txtObservaciones" class="form-label">Observaciones / Notas para el turno (Opcional)</label>
+                    <asp:TextBox ID="txtObservaciones" runat="server"
+                        CssClass="form-control"
+                        TextMode="MultiLine"
+                        Rows="2"
+                        placeholder="Ej: El paciente trae estudios previos, control post-quirúrgico, etc..." />
+                </div>
+
                 <asp:HiddenField ID="hfIdPaciente" runat="server" />
 
                 <asp:Label ID="lblPacienteSeleccionado" runat="server"
@@ -62,6 +72,11 @@
         <div class="card shadow-sm border-0 bg-light">
             <div class="card-body p-4">
                 <h5 class="card-title mb-3">Horarios y médicos disponibles</h5>
+
+                <div class="mb-3">
+                    <!-- lbl para mostrar mjs de error -->
+                    <asp:Label ID="lblMensajeError" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
+                </div>
 
                 <asp:GridView ID="dgvHorariosDisponibles" runat="server"
                     CssClass="table table-hover align-middle mb-0"

@@ -176,19 +176,28 @@ namespace WebApplicationClinica
                     List<Paciente> listaPacientes = (List<Paciente>)Session["listaPacientesTurnos"];
                     turnoSeleccionado.Paciente = listaPacientes.Find(x => x.Id == idPaciente) ?? turnoSeleccionado.Paciente;
                 }
+                if (!string.IsNullOrEmpty(txtObservaciones.Text.Trim()))
+                {
+                    turnoSeleccionado.Observaciones = txtObservaciones.Text.Trim();
+                }
+                else
+                {
+                    turnoSeleccionado.Observaciones = "";
+                }
                 TurnoNegocio negocio = new TurnoNegocio();
                 negocio.agregar(turnoSeleccionado);
 
                 EmailService email = new EmailService();
                 string rutaPlantilla = Server.MapPath("~/MailTurnoConfirmado.html");
                 email.armarMailConfirmacion(turnoSeleccionado, rutaPlantilla);
-                email.enviarEmail();
+                //email.enviarEmail();
                 Session.Remove("listaHorariosDisponibles");
                 Response.Redirect("WebForm-Turnos.aspx", false);
             }
             catch (Exception ex)
             {
                 Session.Add("error", ex);
+                lblMensajeError.Text = ex.Message;
             }
         }
 
