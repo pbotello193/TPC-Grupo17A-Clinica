@@ -214,6 +214,12 @@ namespace negocio
         {
             try
             {
+
+                if (!modificar.Activo && tieneTurnosDeTrabajoActivos(modificar.Id))
+                {
+                    throw new InvalidOperationException("No se puede inactivar al médico porque tiene turnos de trabajo activos asociados.");
+                }
+
                 datos.setearConsulta("UPDATE Medicos set Nombre = @Nombre, Apellido = @Apellido, Matricula = @Matricula, Telefono = @Telefono, Email = @Email, Activo = @Activo where Id=@Id");
                 datos.setearParametro("@Id", modificar.Id);
                 datos.setearParametro("@Nombre", modificar.Nombre);
@@ -239,6 +245,12 @@ namespace negocio
         {
             try
             {
+
+                if (tieneTurnosDeTrabajoActivos(id))
+                {
+                    throw new InvalidOperationException("No se puede dar de baja al médico porque tiene turnos de trabajo activos asociados.");
+                }
+
                 datos.setearConsulta("UPDATE Medicos SET Activo = 0 WHERE Id = @Id");
                 datos.setearParametro("@Id", id);
 
@@ -253,7 +265,27 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        
+
+        private bool tieneTurnosDeTrabajoActivos(int idMedico)
+        {
+            AccesoDatos datosAux = new AccesoDatos();
+            try
+            {
+                datosAux.setearConsulta("SELECT COUNT(*) FROM TurnosDeTrabajo WHERE IdMedico = @IdMedico AND Activo = 1");
+                datosAux.setearParametro("@IdMedico", idMedico);
+                datosAux.ejecutarLectura();
+                if (datosAux.Lector.Read())
+                {
+                    int cantidad = Convert.ToInt32(datosAux.Lector[0]);
+                    return cantidad > 0;
+                }
+                return false;
+            }
+            finally
+            {
+                datosAux.cerrarConexion();
+            }
+        }
 
 
     }
