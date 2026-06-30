@@ -163,6 +163,7 @@ GO
 CREATE TABLE Roles (
     Id INT PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL,
+    PaginaInicio VARCHAR(100) NOT NULL,
     Activo BIT NOT NULL DEFAULT 1
 );
 GO
@@ -181,11 +182,11 @@ CREATE TABLE Usuarios (
 GO
 
 --Inserts roles y usuarios
-INSERT INTO Roles (Id, Nombre, Activo)
+INSERT INTO Roles (Id, Nombre, PaginaInicio, Activo)
 VALUES
-    (1, 'Administrador', 1),
-    (2, 'Recepcionista', 1),
-    (3, 'Medico', 1);
+    (1, 'Administrador', 'InicioAdministrador.aspx', 1),
+    (2, 'Recepcionista', 'InicioRecepcionista.aspx', 1),
+    (3, 'Medico', 'InicioMedico.aspx', 1);
 GO
 
 INSERT INTO Usuarios (Usuario, Pass, TipoUser, IdMedico, Activo)

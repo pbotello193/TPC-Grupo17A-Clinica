@@ -19,5 +19,6 @@ namespace dominio
         public string User { get; set; }
         public string Pass { get; set; }
         public TipoUsuario TipoUsuario { get; set; }
+        public string PaginaInicio { get; set; }
     }
 }

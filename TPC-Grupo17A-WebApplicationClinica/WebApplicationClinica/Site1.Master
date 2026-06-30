@@ -28,7 +28,7 @@
                         <a class="nav-link" href="WebForm-Medico.aspx">Medicos</a>
                         <a class="nav-link" href="ListaEspecialidades.aspx">Especialidades</a>
                         <a class="nav-link" href="FormularioTurnoDeTrabajo.aspx">Horarios Médicos</a>
-                        <a class="nav-link" href="Login.aspx">Login</a>
+                        <asp:LinkButton ID="lnkLogin" runat="server" CssClass="nav-link" OnClick="lnkLogin_Click" />
                     </div>
                 </div>
             </div>
