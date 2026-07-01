@@ -42,7 +42,7 @@
                 </div>
                 <%--Telefono --%>
                 <div class="mb-3">
-                    <label for="txtTelefono" class="form-label">Telefono</label>
+                    <label for="txtTelefono" class="form-label">Teléfono</label>
                     <asp:TextBox runat="server" ID="txtTelefono" CssClass="form-control" />
                     <asp:Label ID="lblErrorTelefono" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
                 </div>
@@ -54,7 +54,7 @@
                 </div>
                 <%--Direccion --%>
                 <div class="mb-3">
-                    <label for="txtDireccion" class="form-label">Direccion</label>
+                    <label for="txtDireccion" class="form-label">Dirección</label>
                     <asp:TextBox runat="server" ID="txtDireccion" CssClass="form-control" />
                     <asp:Label ID="lblErrorDireccion" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
                 </div>

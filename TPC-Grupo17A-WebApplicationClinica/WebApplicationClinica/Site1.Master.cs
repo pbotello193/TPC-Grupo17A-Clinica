@@ -54,8 +54,8 @@ namespace WebApplicationClinica
                     || paginaActual == "WebForm-Medico.aspx";
 
             if (Seguridad.EsMedico(usuario))
-                return paginaActual == "MisTurnosMedicos.aspx"
-                    || paginaActual == "InicioMedico.aspx";
+                return paginaActual == "InicioMedico.aspx"
+                    || paginaActual == "MisTurnosMedicos.aspx";
 
             return false;
         }
@@ -68,12 +68,17 @@ namespace WebApplicationClinica
 
             if (usuario == null)
             {
+                lnkLogin.Visible = false;
                 lnkLogin.Text = "Login";
+                lnkInicio.InnerText = "Iniciar sesión";
                 lnkInicio.HRef = "Login.aspx";
                 return;
             }
 
+            lnkLogin.Visible = true;
             lnkLogin.Text = "Cerrar sesión";
+            lnkLogin.CssClass = "btn btn-dark ms-lg-auto";
+            lnkInicio.InnerText = "Inicio";
             lnkInicio.HRef = usuario.PaginaInicio;
 
             if (Seguridad.EsAdmin(usuario))

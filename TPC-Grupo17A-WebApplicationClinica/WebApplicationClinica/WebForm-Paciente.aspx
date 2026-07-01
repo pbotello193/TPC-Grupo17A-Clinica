@@ -3,9 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="container">
+    <div class="container mt-4">
         <div class="mb-3">
-            <h1>Pacientes</h1>
+            <h2 class="mb-4">Pacientes</h2>
 
             <div class="d-flex gap-2 align-items-center">
                 <asp:DropDownList ID="ddlEstadoPacientes" runat="server" CssClass="form-select w-auto" AutoPostBack="true" OnSelectedIndexChanged="ddlEstadoPacientes_SelectedIndexChanged">
@@ -36,9 +36,9 @@
                     <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
                     <asp:BoundField HeaderText="DNI" DataField="Dni" />
                     <asp:BoundField HeaderText="Fecha de nacimiento" DataField="FechaNacimiento" DataFormatString="{0:dd/MM/yyyy}" />
-                    <asp:BoundField HeaderText="Telefono" DataField="Telefono" />
+                    <asp:BoundField HeaderText="Teléfono" DataField="Telefono" />
                     <asp:BoundField HeaderText="Email" DataField="Email" />
-                    <asp:BoundField HeaderText="Direccion" DataField="Direccion" />
+                    <asp:BoundField HeaderText="Dirección" DataField="Direccion" />
 
                     <asp:TemplateField HeaderText="Estado">
                         <ItemTemplate>
@@ -49,10 +49,10 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Accion">
+                    <asp:TemplateField HeaderText="Acción">
                         <ItemTemplate>
                             <asp:LinkButton ID="btnVer" runat="server" CommandName="Select" CssClass="btn btn-sm btn-outline-primary">
-                                Ver
+                                Editar
                             </asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
