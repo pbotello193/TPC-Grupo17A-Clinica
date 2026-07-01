@@ -54,7 +54,7 @@
                             <asp:TemplateField HeaderText="Acción">
                                 <ItemTemplate>
                                     <asp:LinkButton ID="btnVer" runat="server" CommandName="Select" CssClass="btn btn-sm btn-outline-primary">
-                                        Ver
+                                        Editar
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="mb-3">
-            <a href="FormularioMedico.aspx" class="btn btn-primary">Agregar</a>
+            <a id="lnkAgregarMedico" runat="server" href="FormularioMedico.aspx" class="btn btn-primary">Agregar</a>
         </div>
     </div>
 </asp:Content>

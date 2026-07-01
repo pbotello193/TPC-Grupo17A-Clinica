@@ -12,7 +12,17 @@ namespace WebApplicationClinica
         {
             if (!IsPostBack)
             {
+                ConfigurarPermisos();
                 cargarMedicos();
+            }
+        }
+
+        private void ConfigurarPermisos()
+        {
+            if (Seguridad.EsRecepcionista(Session["Usuario"]))
+            {
+                lnkAgregarMedico.Visible = false;
+                dgvMedicos.Columns[7].Visible = false;
             }
         }
 
@@ -60,6 +70,9 @@ namespace WebApplicationClinica
 
         protected void dgvMedicos_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (!Seguridad.EsAdmin(Session["Usuario"]))
+                return;
+
             if (dgvMedicos.SelectedDataKey != null)
             {
                 string id = dgvMedicos.SelectedDataKey.Value.ToString();
