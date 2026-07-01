@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.WebSockets;
+using System.Text.RegularExpressions;
 
 namespace WebApplicationClinica
 {
@@ -71,8 +72,7 @@ namespace WebApplicationClinica
         {
             try
             {
-                Page.Validate();
-                if (!Page.IsValid)
+                if (!ValidarDatosMedico())
                     return;
 
                 if (Request.QueryString["id"] == null && !ValidarUsuarioMedico())
@@ -88,17 +88,17 @@ namespace WebApplicationClinica
                 {
                     nuevo.Id = int.Parse(txtId.Text);
                 }
-                nuevo.Nombre = txtNombre.Text;
-                nuevo.Apellido = txtApellido.Text;
-                nuevo.Matricula = txtMatricula.Text;
+                nuevo.Nombre = txtNombre.Text.Trim();
+                nuevo.Apellido = txtApellido.Text.Trim();
+                nuevo.Matricula = txtMatricula.Text.Trim();
                 if (medNegocio.validarMatricula(txtMatricula.Text, nuevo.Id))
-                { //Aca es donde lanza el validador si la matricula ya existe
-                    validadorMatricula.IsValid = false;
-                    validadorMatricula.ErrorMessage = "Ya existe un médico con esa matrícula.";
+                {
+                    lblErrorMatricula.Text = "Ya existe un médico con esa matrícula.";
+                    lblErrorMatricula.Visible = true;
                     return;
                 }
-                nuevo.Telefono = txtTelefono.Text;
-                nuevo.Email = txtEmail.Text;
+                nuevo.Telefono = txtTelefono.Text.Trim();
+                nuevo.Email = txtEmail.Text.Trim().ToLower();
                 if (rdbActivo.Checked)
                 {
                     nuevo.Activo = true;
@@ -143,8 +143,92 @@ namespace WebApplicationClinica
             }
             catch (Exception ex)
             {
-                throw ex; //manejar aca el mensaje de error de matricula duplicada
+                Session.Add("error", ex);
+                lblErrorGeneral.Text = ex.Message;
+                lblErrorGeneral.Visible = true;
             }
+        }
+
+        private bool ValidarDatosMedico()
+        {
+            LimpiarMensajesValidacionMedico();
+
+            if (txtNombre.Text.Trim() == "" || txtApellido.Text.Trim() == "" || txtMatricula.Text.Trim() == "" || txtTelefono.Text.Trim() == "" || txtEmail.Text.Trim() == "")
+            {
+                lblErrorGeneral.Text = "Complete todos los campos del médico.";
+                lblErrorGeneral.Visible = true;
+                return false;
+            }
+
+            string nombre = txtNombre.Text.Trim();
+            if (!Regex.IsMatch(nombre, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ' ]{2,30}$"))
+            {
+                lblErrorNombre.Text = "El nombre debe tener entre 2 y 30 caracteres y solo puede contener letras y espacios.";
+                lblErrorNombre.Visible = true;
+                return false;
+            }
+
+            string apellido = txtApellido.Text.Trim();
+            if (!Regex.IsMatch(apellido, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ' ]{2,30}$"))
+            {
+                lblErrorApellido.Text = "El apellido debe tener entre 2 y 30 caracteres y solo puede contener letras y espacios.";
+                lblErrorApellido.Visible = true;
+                return false;
+            }
+
+            string matricula = txtMatricula.Text.Trim();
+            if (!Regex.IsMatch(matricula, @"^[a-zA-Z0-9-]{3,10}$"))
+            {
+                lblErrorMatricula.Text = "La matrícula debe tener entre 3 y 10 caracteres y solo puede contener letras, números y guiones.";
+                lblErrorMatricula.Visible = true;
+                return false;
+            }
+
+            string telefono = txtTelefono.Text.Trim();
+            if (!Regex.IsMatch(telefono, @"^\+?[0-9]{10,13}$"))
+            {
+                lblErrorTelefono.Text = "El teléfono debe contener entre 10 y 13 números. Puede comenzar con el signo +.";
+                lblErrorTelefono.Visible = true;
+                return false;
+            }
+
+            string email = txtEmail.Text.Trim().ToLower();
+            if (email.Length > 50 || !Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                lblErrorEmail.Text = "Ingrese un correo electrónico válido de hasta 50 caracteres.";
+                lblErrorEmail.Visible = true;
+                return false;
+            }
+
+            if (!cblEspecialidades.Items.Cast<ListItem>().Any(item => item.Selected))
+            {
+                lblErrorEspecialidades.Text = "Seleccione al menos una especialidad.";
+                lblErrorEspecialidades.Visible = true;
+                return false;
+            }
+
+            if (!rdbActivo.Checked && !rdbInactivo.Checked)
+            {
+                lblErrorEstado.Text = "Seleccione el estado del médico.";
+                lblErrorEstado.Visible = true;
+                return false;
+            }
+
+            return true;
+        }
+
+        private void LimpiarMensajesValidacionMedico()
+        {
+            lblErrorGeneral.Visible = false;
+            lblErrorNombre.Visible = false;
+            lblErrorApellido.Visible = false;
+            lblErrorMatricula.Visible = false;
+            lblErrorTelefono.Visible = false;
+            lblErrorEmail.Visible = false;
+            lblErrorEspecialidades.Visible = false;
+            lblErrorEstado.Visible = false;
+            lblErrorUsuario.Visible = false;
+            lblErrorPassword.Visible = false;
         }
 
         private bool ValidarUsuarioMedico()
@@ -162,8 +246,8 @@ namespace WebApplicationClinica
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                lblErrorUsuario.Text = "Ingrese la contraseña del médico.";
-                lblErrorUsuario.Visible = true;
+                lblErrorPassword.Text = "Ingrese la contraseña del médico.";
+                lblErrorPassword.Visible = true;
                 return false;
             }
 
