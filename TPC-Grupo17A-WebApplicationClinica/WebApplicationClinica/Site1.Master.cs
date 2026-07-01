@@ -54,8 +54,8 @@ namespace WebApplicationClinica
                     || paginaActual == "WebForm-Medico.aspx";
 
             if (Seguridad.EsMedico(usuario))
-                return paginaActual == "InicioMedico.aspx"
-                    || paginaActual == "MisTurnosMedico.aspx";
+                return paginaActual == "MisTurnosMedicos.aspx"
+                    || paginaActual == "InicioMedico.aspx";
 
             return false;
         }

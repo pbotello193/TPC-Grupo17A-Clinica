@@ -11,7 +11,7 @@
 
         <div class="card shadow-sm border-0 bg-light">
             <div class="card-body p-4">
-                                <asp:GridView ID="dgvMisTurnos" runat="server"
+                <asp:GridView ID="dgvMisTurnos" runat="server"
                     CssClass="table table-hover align-middle mb-0"
                     AutoGenerateColumns="false"
                     ShowHeaderWhenEmpty="true"
