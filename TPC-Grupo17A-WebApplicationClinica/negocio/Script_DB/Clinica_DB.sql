@@ -199,8 +199,6 @@ VALUES
 GO
 
 
-
-
 --Inserts roles y usuarios
 INSERT INTO Roles (Id, Nombre, PaginaInicio, Activo)
 VALUES
@@ -213,5 +211,9 @@ INSERT INTO Usuarios (Usuario, Pass, TipoUser, IdMedico, Activo)
 VALUES
     ('admin', 'admin', 1, NULL, 1),
     ('recepcion', 'recepcion', 2, NULL, 1),
-    ('medico', 'medico', 3, 1, 1);
+    ('cgomez', 'cgomez', 3, 1, 1),
+    ('mrodriguez', 'mrodriguez', 3, 2, 1),
+    ('jmartinez', 'jmartinez', 3, 3, 1),
+    ('afernandez', 'afernandez', 3, 4, 1),
+    ('jlopez', 'jlopez', 3, 5, 1);
 GO

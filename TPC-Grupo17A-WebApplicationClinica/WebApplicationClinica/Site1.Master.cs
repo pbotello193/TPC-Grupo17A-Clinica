@@ -48,6 +48,7 @@ namespace WebApplicationClinica
         {
             if (Seguridad.EsRecepcionista(usuario))
                 return paginaActual == "InicioRecepcionista.aspx"
+                    || paginaActual == "AgendaMedicos.aspx"
                     || paginaActual == "WebForm-Turnos.aspx"
                     || paginaActual == "WebForm-Paciente.aspx"
                     || paginaActual == "FormularioPaciente.aspx"
@@ -91,6 +92,8 @@ namespace WebApplicationClinica
                 lnkHorariosMedicos.InnerText = "Horarios Médicos";
                 lnkHorariosMedicos.HRef = "FormularioTurnoDeTrabajo.aspx";
                 lnkMisTurnos.Visible = true;
+                lnkMisTurnos.InnerText = "Agenda Médicos";
+                lnkMisTurnos.HRef = "AgendaMedicos.aspx";
             }
             else if (Seguridad.EsRecepcionista(usuario))
             {
@@ -98,12 +101,14 @@ namespace WebApplicationClinica
                 lnkPacientes.Visible = true;
                 lnkMedicos.Visible = true;
                 lnkHorariosMedicos.Visible = true;
-                lnkHorariosMedicos.InnerText = "Agenda médicos";
-                lnkHorariosMedicos.HRef = "#";
+                lnkHorariosMedicos.InnerText = "Agenda Médicos";
+                lnkHorariosMedicos.HRef = "AgendaMedicos.aspx";
             }
             else if (Seguridad.EsMedico(usuario))
             {
                 lnkMisTurnos.Visible = true;
+                lnkMisTurnos.InnerText = "Mis Turnos";
+                lnkMisTurnos.HRef = "MisTurnosMedicos.aspx";
             }
         }
 
