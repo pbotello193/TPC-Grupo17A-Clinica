@@ -130,7 +130,7 @@ namespace negocio
             try
             {
 
-                if (!modificar.Activo && tieneTurnosDeTrabajoActivos(modificar.Id))
+                if (!modificar.Activo && tieneTurnos(modificar.Id))
                 {
                     throw new Exception("No se puede inactivar la especialidad porque tiene turnos de trabajo activos asociados.");
                 }
@@ -190,20 +190,28 @@ namespace negocio
         }
 
 
-        public void resetearEspecialidades(int idMedico)
+        public void eliminarEspecialidades(int idMedico, List<int> espSeleccionadas)
         {
-            //Para borrar las especialidades asociadas a un medico antes de actualizarlas
             AccesoDatos datosLocal = new AccesoDatos();
             try
             {
-                datosLocal.setearConsulta("DELETE FROM MedicoEspecialidad WHERE IdMedico = @IdMedico");
-                datosLocal.setearParametro("@IdMedico", idMedico);
+                if (espSeleccionadas.Count > 0)
+                {
+                    string idsQuery = string.Join(",", espSeleccionadas); //formatea la lista de [1,3.5] a "1,3,5" para la consulta
+                    datosLocal.setearConsulta("DELETE FROM MedicoEspecialidad WHERE IdMedico = @IdMedico AND IdEspecialidad NOT IN (" + idsQuery + ")");
+                }
+                else
+                {
+                    //Esto si se quitan todas las especialidades
+                    datosLocal.setearConsulta("DELETE FROM MedicoEspecialidad WHERE IdMedico = @IdMedico");
+                }
 
+                datosLocal.setearParametro("@IdMedico", idMedico);
                 datosLocal.ejecutarAccion();
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("No se pueden quitar especialidades que tengan turnos de trabajo asociados", ex);
             }
             finally
             {
@@ -213,25 +221,25 @@ namespace negocio
 
         public void asignarEspecialidad(int idMedico, int idEspecialidad)
         {
-            //Para guardar las especialidades de un medico
-            AccesoDatos datosLocal = new AccesoDatos();
             try
             {
-                datosLocal.setearConsulta("INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) VALUES (@IdMedico, @IdEspecialidad)");
-                datosLocal.setearParametro("@IdMedico", idMedico);
-                datosLocal.setearParametro("@IdEspecialidad", idEspecialidad);
+                //el sp tiene validacion para no grabarla si ya la tiene asignada
+                datos.setearProcedimiento("spAsignarEspecialidad");
+                datos.setearParametro("@IdMedico", idMedico);
+                datos.setearParametro("@IdEspecialidad", idEspecialidad);
 
-                datosLocal.ejecutarAccion();
+                datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Hubo un error al asignar la especialidad", ex);
             }
             finally
             {
-                datosLocal.cerrarConexion();
+                datos.cerrarConexion();
             }
         }
+
 
         public bool existeEspecialidad(string nombre, int idEspecialidad = 0)
         {
@@ -261,7 +269,7 @@ namespace negocio
             }
         }
 
-        private bool tieneTurnosDeTrabajoActivos(int idEspecialidad)
+        private bool tieneTurnos(int idEspecialidad)
         {
             AccesoDatos datosAux = new AccesoDatos();
             try
@@ -271,7 +279,7 @@ namespace negocio
                 datosAux.ejecutarLectura();
                 if (datosAux.Lector.Read())
                 {
-                    int cantidad = Convert.ToInt32(datosAux.Lector[0]);
+                    int cantidad = int.Parse((datosAux.Lector[0].ToString()));
                     return cantidad > 0;
                 }
                 return false;

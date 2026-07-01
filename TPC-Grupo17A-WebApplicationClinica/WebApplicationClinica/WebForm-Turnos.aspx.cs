@@ -190,7 +190,7 @@ namespace WebApplicationClinica
                 EmailService email = new EmailService();
                 string rutaPlantilla = Server.MapPath("~/MailTurnoConfirmado.html");
                 email.armarMailConfirmacion(turnoSeleccionado, rutaPlantilla);
-                //email.enviarEmail();
+                email.enviarEmail();
                 Session.Remove("listaHorariosDisponibles");
                 Response.Redirect("WebForm-Turnos.aspx", false);
             }
