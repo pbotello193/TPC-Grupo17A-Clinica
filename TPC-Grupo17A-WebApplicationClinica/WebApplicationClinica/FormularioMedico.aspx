@@ -36,9 +36,9 @@
                     <asp:CustomValidator ID="validadorMatricula" runat="server" ControlToValidate="txtMatricula" CssClass="validacion" Display="Dynamic"> </asp:CustomValidator>
                 </div>
                 <div class="mb-3">
-                    <label for="txtTelefono" class="form-label">Telefono</label>
+                    <label for="txtTelefono" class="form-label">Teléfono</label>
                     <asp:TextBox runat="server" ID="txtTelefono" CssClass="form-control" />
-                    <asp:RegularExpressionValidator ErrorMessage="Ingrese el numero sin guiones ni espacios" CssClass="validacion" Display="Dynamic" ControlToValidate="txtTelefono" ValidationExpression="^\d+$" runat="server" />
+                    <asp:RegularExpressionValidator ErrorMessage="Ingrese el número sin guiones ni espacios" CssClass="validacion" Display="Dynamic" ControlToValidate="txtTelefono" ValidationExpression="^\d+$" runat="server" />
                 </div>
                 <div class="mb-3">
                     <label for="txtEmail" class="form-label">Email</label>

@@ -3,9 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="container">   
+    <div class="container mt-4"   
         <div class="mb-3">
-            <h1>Médicos</h1>
+            <h2 class="mb-4">Médicos</h2>
             <asp:UpdatePanel runat="server">
                 <ContentTemplate>
                     <div class="d-flex gap-2 align-items-center mb-3">
@@ -64,8 +64,8 @@
             </asp:UpdatePanel>
         </div>
 
-        <div class="mb-3">
-            <a id="lnkAgregarMedico" runat="server" href="FormularioMedico.aspx" class="btn btn-primary">Agregar</a>
-        </div>
+        <div class="mb-3 ms-3">
+    <a id="lnkAgregarMedico" runat="server" href="FormularioMedico.aspx" class="btn btn-primary">Agregar</a>
+</div>
     </div>
 </asp:Content>

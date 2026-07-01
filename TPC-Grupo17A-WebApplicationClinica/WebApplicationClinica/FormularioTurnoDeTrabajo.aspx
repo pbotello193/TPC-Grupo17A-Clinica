@@ -3,8 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="container mt-3">
-        <h2>Turnos de Trabajo del Médico</h2>
+    <div class="container mt-4">
+    <h2 class="mb-4">Horarios de Trabajo del Médico</h2>
         
         <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false"></asp:Label>
 

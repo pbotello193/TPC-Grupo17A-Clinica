@@ -3,8 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="container">
-        <h1>Especialidades</h1>
+    <div class="container mt-4">
+        <h2 class="mb-4">Especialidades</h2>
         <div>
             <asp:UpdatePanel runat="server">
                 <ContentTemplate>
@@ -26,7 +26,7 @@
                         CssClass="table table-striped table-hover align-middle" DataKeyNames="Id" AutoGenerateColumns="false">
                         <Columns>
                             <asp:BoundField HeaderText="Especialidad" DataField="Nombre" />
-                            <asp:BoundField HeaderText="Descripcion" DataField="Descripcion" />
+                            <asp:BoundField HeaderText="Descripción" DataField="Descripcion" />
                             <asp:TemplateField HeaderText="Estado">
                                 <ItemTemplate>
                                     <span class='<%# (bool)Eval("Activo") ? "badge bg-success" : "badge bg-secondary" %>'>
@@ -37,7 +37,7 @@
 
                             <asp:TemplateField HeaderText="Acción">
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnVer" runat="server" CommandName="Select" CssClass="btn btn-sm btn-outline-primary"> Ver
+                                    <asp:LinkButton ID="btnVer" runat="server" CommandName="Select" CssClass="btn btn-sm btn-outline-primary"> Editar
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
