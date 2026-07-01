@@ -187,8 +187,8 @@ namespace negocio
         {
             try
             {
-                
-                datos.setearConsulta("INSERT INTO Medicos(Nombre, Apellido, Matricula, Telefono, Email) OUTPUT INSERTED.ID VALUES(@Nombre, @Apellido, @Matricula, @Telefono, @Email)");
+
+                datos.setearConsulta("INSERT INTO Medicos(Nombre, Apellido, Matricula, Telefono, Email, Activo) OUTPUT INSERTED.ID VALUES(@Nombre, @Apellido, @Matricula, @Telefono, @Email, @Activo)");
                 datos.setearParametro("@Nombre", nuevo.Nombre);
                 datos.setearParametro("@Apellido", nuevo.Apellido);
                 datos.setearParametro("@Matricula", nuevo.Matricula);
@@ -196,6 +196,7 @@ namespace negocio
                     throw new Exception("Ya existe un médico con esa matrícula.");
                 datos.setearParametro("@Telefono", nuevo.Telefono);
                 datos.setearParametro("@Email", nuevo.Email);
+                datos.setearParametro("@Activo", nuevo.Activo);
 
                 return datos.ejecutarAccionScalar(); //Prueba a ver si devuelve el id
 

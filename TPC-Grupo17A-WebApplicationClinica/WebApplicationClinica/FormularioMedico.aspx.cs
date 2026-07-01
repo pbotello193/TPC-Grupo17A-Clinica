@@ -16,6 +16,7 @@ namespace WebApplicationClinica
         protected void Page_Load(object sender, EventArgs e)
         {
             txtId.Enabled = false;
+            pnlUsuarioMedico.Visible = Request.QueryString["id"] == null;
             try
             {
                 if (!IsPostBack)
@@ -73,9 +74,15 @@ namespace WebApplicationClinica
                 Page.Validate();
                 if (!Page.IsValid)
                     return;
+
+                if (Request.QueryString["id"] == null && !ValidarUsuarioMedico())
+                    return;
+
                 Medico nuevo = new Medico();
                 MedicoNegocio medNegocio = new MedicoNegocio();
                 EspecialidadNegocio espNegocio = new EspecialidadNegocio();
+                UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+
                 // Si es una modificación asigno el id antes de validar sino siempre va con 0
                 if (Request.QueryString["id"] != null)
                 {
@@ -118,6 +125,11 @@ namespace WebApplicationClinica
                 else
                 {
                     int idMedicoAgregado = medNegocio.agregar(nuevo);
+                    Usuario usuarioMedico = new Usuario();
+                    usuarioMedico.User = txtUsuario.Text.Trim();
+                    usuarioMedico.Pass = txtPassword.Text.Trim();
+                    usuarioMedico.IdMedico = idMedicoAgregado;
+                    usuarioNegocio.agregarUsuarioMedico(usuarioMedico);
 
                     foreach (ListItem item in cblEspecialidades.Items)
                     {
@@ -133,6 +145,37 @@ namespace WebApplicationClinica
             {
                 throw ex; //manejar aca el mensaje de error de matricula duplicada
             }
+        }
+
+        private bool ValidarUsuarioMedico()
+        {
+            lblErrorUsuario.Visible = false;
+            string usuario = txtUsuario.Text.Trim();
+            string password = txtPassword.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(usuario))
+            {
+                lblErrorUsuario.Text = "Ingrese el usuario del médico.";
+                lblErrorUsuario.Visible = true;
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                lblErrorUsuario.Text = "Ingrese la contraseña del médico.";
+                lblErrorUsuario.Visible = true;
+                return false;
+            }
+
+            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+            if (usuarioNegocio.existeUsuario(usuario))
+            {
+                lblErrorUsuario.Text = "Ya existe un usuario con ese nombre.";
+                lblErrorUsuario.Visible = true;
+                return false;
+            }
+
+            return true;
         }
 
 

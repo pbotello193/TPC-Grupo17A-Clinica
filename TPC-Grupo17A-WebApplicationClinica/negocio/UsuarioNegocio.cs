@@ -43,5 +43,55 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public bool existeUsuario(string nombreUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM Usuarios WHERE Usuario = @Usuario");
+                datos.setearParametro("@Usuario", nombreUsuario);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    return Convert.ToInt32(datos.Lector[0]) > 0;
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void agregarUsuarioMedico(Usuario usuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("INSERT INTO Usuarios (Usuario, Pass, TipoUser, IdMedico, Activo) VALUES (@Usuario, @Pass, @TipoUser, @IdMedico, 1)");
+                datos.setearParametro("@Usuario", usuario.User);
+                datos.setearParametro("@Pass", usuario.Pass);
+                datos.setearParametro("@TipoUser", (int)TipoUsuario.Medico);
+                datos.setearParametro("@IdMedico", usuario.IdMedico);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
+
 }

@@ -46,6 +46,18 @@
                     <asp:RegularExpressionValidator ErrorMessage="Ingrese un Email valido" CssClass="validacion" Display="Dynamic" ControlToValidate="txtEmail" ValidationExpression="^\w+([-.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" runat="server" />
                 </div>
             </div>
+            <asp:Panel ID="pnlUsuarioMedico" runat="server">
+                <h5>Usuario de acceso</h5>
+                <div class="mb-3">
+                    <label for="txtUsuario" class="form-label">Usuario</label>
+                    <asp:TextBox runat="server" ID="txtUsuario" CssClass="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label for="txtPassword" class="form-label">Contraseña</label>
+                    <asp:TextBox runat="server" ID="txtPassword" CssClass="form-control" TextMode="Password" />
+                </div>
+                <asp:Label ID="lblErrorUsuario" runat="server" CssClass="validacion" Visible="false" />
+            </asp:Panel>
             <div>
                 <div class="mb-3">
                     <asp:Label ID="lblEspecialidades" runat="server" Text="Especialidades:" Font-Bold="true"></asp:Label>
