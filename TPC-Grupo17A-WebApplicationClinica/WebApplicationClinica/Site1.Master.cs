@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using negocio;
 
 namespace WebApplicationClinica
 {
@@ -11,8 +12,19 @@ namespace WebApplicationClinica
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ValidarSesion();
+
             if (!IsPostBack)
                 ActualizarLoginNavbar();
+        }
+
+        private void ValidarSesion()
+        {
+            if (Page is Login)
+                return;
+
+            if (!Seguridad.SesionActiva(Session["Usuario"]))
+                Response.Redirect("Login.aspx", false);
         }
 
         private void ActualizarLoginNavbar()
