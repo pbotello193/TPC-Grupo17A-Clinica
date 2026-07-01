@@ -82,6 +82,8 @@ namespace negocio
 
         public void agregar(Turno nuevo)
         {
+            nuevo.Estado = "Asignado"; // seteamos el estado inicial del turno como "Asignado"
+
             //Con esto se setea automaticamente la duracion de una hora a partir de HoraInicio
             nuevo.HoraFin = nuevo.HoraInicio.Add(new TimeSpan(1, 0, 0)); 
 
@@ -120,7 +122,7 @@ namespace negocio
                 datosInsercion.setearParametro("@IdPaciente", nuevo.Paciente.Id);
                 datosInsercion.setearParametro("@IdMedico", nuevo.Medico.Id);
                 datosInsercion.setearParametro("@IdEspecialidad", nuevo.Especialidad.Id);
-                datosInsercion.setearParametro("@Estado", nuevo.Estado ?? "Pendiente");
+                datosInsercion.setearParametro("@Estado", nuevo.Estado);
 
                 // El método ejecutarAccionScalar nos devuelve el ID generado por IDENTITY
                 nuevo.Id = datosInsercion.ejecutarAccionScalar();
@@ -141,7 +143,7 @@ namespace negocio
             try
             {
                 // Solo contamos turnos que no estén cancelados
-                string consulta = "SELECT COUNT(*) FROM Turnos WHERE IdMedico = @IdMedico AND Fecha = @Fecha AND HoraInicio = @HoraInicio AND Estado <> 'Cancelado'";
+                string consulta = "SELECT COUNT(*) FROM Turnos WHERE IdMedico = @IdMedico AND Fecha = @Fecha AND HoraInicio = @HoraInicio AND Estado NOT IN ('Cancelado', 'Reprogramado')";
                 datosAux.setearConsulta(consulta);
                 datosAux.setearParametro("@IdMedico", idMedico);
                 datosAux.setearParametro("@Fecha", fecha);
@@ -165,7 +167,7 @@ namespace negocio
             try
             {
                 // Solo contamos turnos que no estén cancelados
-                string consulta = "SELECT COUNT(*) FROM Turnos WHERE IdPaciente = @IdPaciente AND Fecha = @Fecha AND HoraInicio = @HoraInicio AND Estado <> 'Cancelado'";
+                string consulta = "SELECT COUNT(*) FROM Turnos WHERE IdPaciente = @IdPaciente AND Fecha = @Fecha AND HoraInicio = @HoraInicio AND Estado NOT IN ('Cancelado', 'Reprogramado')";
                 datosAux.setearConsulta(consulta);
                 datosAux.setearParametro("@IdPaciente", idPaciente);
                 datosAux.setearParametro("@Fecha", fecha);
@@ -180,6 +182,41 @@ namespace negocio
             finally
             {
                 datosAux.cerrarConexion();
+            }
+        }
+
+        public void cambiarEstado(int id, string estado, string diagnostico = null)
+        {
+            AccesoDatos datosUpdate = new AccesoDatos();
+            try
+            {
+                // se construye la consulta
+                string consulta = "UPDATE Turnos SET Estado = @Estado";
+                if (diagnostico != null)
+                {
+                    consulta += ", Diagnostico = @Diagnostico";
+                }
+                consulta += " WHERE Id = @Id";
+
+                // seteamos la consulta (esto limpia parámetros previos en AccesoDatos)
+                datosUpdate.setearConsulta(consulta);
+
+                // agregamos los parámetros después de haber seteado la consulta
+                datosUpdate.setearParametro("@Estado", estado);
+                datosUpdate.setearParametro("@Id", id);
+                if (diagnostico != null)
+                {
+                    datosUpdate.setearParametro("@Diagnostico", diagnostico);
+                }
+                datosUpdate.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datosUpdate.cerrarConexion();
             }
         }
     }
