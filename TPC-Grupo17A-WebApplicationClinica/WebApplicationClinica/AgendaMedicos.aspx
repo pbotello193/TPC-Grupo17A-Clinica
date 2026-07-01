@@ -48,7 +48,8 @@
                     AutoGenerateColumns="false"
                     ShowHeaderWhenEmpty="true"
                     EmptyDataText="No hay turnos para mostrar con los filtros seleccionados."
-                    DataKeyNames="Id">
+                    DataKeyNames="Id"
+                    OnRowCommand="dgvAgendaMedicos_RowCommand">
                     <Columns>
                         <asp:BoundField HeaderText="Fecha" DataField="Fecha" />
                         <asp:BoundField HeaderText="Hora" DataField="Hora" />
@@ -57,6 +58,33 @@
                         <asp:BoundField HeaderText="Especialidad" DataField="Especialidad" />
                         <asp:BoundField HeaderText="Estado" DataField="Estado" />
                         <asp:BoundField HeaderText="Motivo de consulta" DataField="Observaciones" />
+                        <asp:TemplateField HeaderText="Acción">
+                            <ItemTemplate>
+                                <asp:PlaceHolder runat="server" Visible='<%# Eval("Estado").ToString() == "Asignado" %>'>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Acción
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <asp:LinkButton ID="btnReprogramar" runat="server" CssClass="dropdown-item" 
+                                                    CommandName="ReprogramarTurno" CommandArgument='<%# Container.DataItemIndex %>'>
+                                                    Reprogramar
+                                                </asp:LinkButton>
+                                            </li>
+                                            <li>
+                                                <asp:LinkButton ID="btnCancelar" runat="server" CssClass="dropdown-item" 
+                                                    CommandName="CancelarTurno" CommandArgument='<%# Container.DataItemIndex %>'>
+                                                    Cancelar
+                                                </asp:LinkButton>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </asp:PlaceHolder>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+
                     </Columns>
                 </asp:GridView>
             </div>

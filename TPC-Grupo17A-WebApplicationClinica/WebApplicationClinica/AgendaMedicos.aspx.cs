@@ -27,7 +27,7 @@ namespace WebApplicationClinica
                     Response.Redirect(usuario.PaginaInicio, false);
                     return;
                 }
-
+                ConfigurarPermisos();
                 CargarFiltros();
                 CargarAgenda();
             }
@@ -127,5 +127,58 @@ namespace WebApplicationClinica
             txtFecha.Text = string.Empty;
             CargarAgenda();
         }
+
+        private void ConfigurarPermisos()
+        {
+            Usuario usuario = Session["Usuario"] as Usuario;
+
+            // Evaluamos si el usuario es Admin o Recepcionista
+            bool tienePermiso = Seguridad.EsAdmin(usuario) || Seguridad.EsRecepcionista(usuario);
+            // La columna 'Acción' es la octava columna en el GridView
+            if (dgvAgendaMedicos.Columns.Count > 7)
+            {
+                dgvAgendaMedicos.Columns[7].Visible = tienePermiso;
+            }
+        }
+        protected void dgvAgendaMedicos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "ReprogramarTurno" || e.CommandName == "CancelarTurno")
+            {
+                Usuario usuario = Session["Usuario"] as Usuario;
+                if (usuario == null || (!Seguridad.EsAdmin(usuario) && !Seguridad.EsRecepcionista(usuario)))
+                {
+                    Response.Redirect("Login.aspx", false);
+                    return;
+                }
+
+                int index = Convert.ToInt32(e.CommandArgument);
+                int idTurno = Convert.ToInt32(dgvAgendaMedicos.DataKeys[index].Value);
+                string nuevoEstado = e.CommandName == "ReprogramarTurno" ? "Reprogramado" : "Cancelado";
+
+                TurnoNegocio negocio = new TurnoNegocio();
+                try
+                {
+                    // Validación en servidor: Obtenemos el turno y chequeamos que el estado actual sea "Asignado"
+                    Turno turnoActual = negocio.listar().Find(t => t.Id == idTurno);
+                    if (turnoActual == null || turnoActual.Estado != "Asignado")
+                    {
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Solo se pueden reprogramar o cancelar turnos que se encuentren en estado Asignado.');", true);
+                        return;
+                    }
+
+                    negocio.cambiarEstado(idTurno, nuevoEstado);
+                    CargarAgenda();
+                }
+                catch (Exception ex)
+                {
+                    Session.Add("ErrorAgendaMedicos", ex);
+                    lblMensaje.Text = "Hubo un error al cambiar el estado del turno.";
+                    lblMensaje.Visible = true;
+                }
+            }
+        }
+
+
+
     }
 }
