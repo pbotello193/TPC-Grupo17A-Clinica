@@ -26,6 +26,10 @@ namespace dominio
             {
                 throw new Exception("El turno debe estar asignado a un médico válido.");
             }
+            if (HoraInicio.Minutes != 0 || HoraFin.Minutes != 0)
+            {
+                throw new Exception("Los turnos de trabajo deben comenzar y terminar en horas en punto.");
+            }
         }
     }
 }
