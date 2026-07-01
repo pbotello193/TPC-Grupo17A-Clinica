@@ -60,22 +60,22 @@ namespace WebApplicationClinica
         protected global::System.Web.UI.WebControls.DropDownList ddlDia;
 
         /// <summary>
-        /// Control txtHoraInicio.
+        /// Control ddlHoraInicio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtHoraInicio;
+        protected global::System.Web.UI.WebControls.DropDownList ddlHoraInicio;
 
         /// <summary>
-        /// Control txtHoraFin.
+        /// Control ddlHoraFin.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtHoraFin;
+        protected global::System.Web.UI.WebControls.DropDownList ddlHoraFin;
 
         /// <summary>
         /// Control btnAceptar.

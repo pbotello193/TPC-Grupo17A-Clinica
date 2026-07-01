@@ -43,15 +43,14 @@
                         <asp:ListItem Value="0" Text="Domingo" />
                     </asp:DropDownList>
                 </div>
-
                 <div class="mb-3">
                     <label class="form-label">Hora Inicio</label>
-                    <asp:TextBox runat="server" ID="txtHoraInicio" CssClass="form-control" TextMode="Time" />
+                    <asp:DropDownList ID="ddlHoraInicio" runat="server" CssClass="form-select"></asp:DropDownList>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Hora Fin</label>
-                    <asp:TextBox runat="server" ID="txtHoraFin" CssClass="form-control" TextMode="Time" />
+                    <asp:DropDownList ID="ddlHoraFin" runat="server" CssClass="form-select"></asp:DropDownList>
                 </div>
 
                 <div class="mb-3">

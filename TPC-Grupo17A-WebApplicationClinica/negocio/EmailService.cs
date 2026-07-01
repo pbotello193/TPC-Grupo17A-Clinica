@@ -45,19 +45,12 @@ namespace negocio
 
             email.Subject = "Confirmación de turno";
             string cuerpo = File.ReadAllText(ruta);
-
             cuerpo = cuerpo.Replace("{{PACIENTE}}", turno.Paciente.Nombre + " " + turno.Paciente.Apellido);
-
-            cuerpo = cuerpo.Replace("{{NUMERO}}", ""); //aca como 2do parametro recibe el numero de turno generado al asignar turno
-
+            cuerpo = cuerpo.Replace("{{NUMERO}}", turno.Id.ToString()); 
             cuerpo = cuerpo.Replace("{{ESPECIALIDAD}}", turno.Especialidad.Nombre);
-
             cuerpo = cuerpo.Replace("{{MEDICO}}", turno.Medico.Nombre + " " + turno.Medico.Apellido);
-
-            cuerpo = cuerpo.Replace("{{FECHA}}", turno.Fecha.ToString("dd/MM/yyyy"));
-
-            cuerpo = cuerpo.Replace("{{HORA}}", turno.Fecha.ToString("HH:mm"));
-
+            cuerpo = cuerpo.Replace("{{FECHA}}", turno.Fecha.ToString("dd/MM/yyyy"));            
+            cuerpo = cuerpo.Replace("{{HORA}}", turno.HoraInicio.ToString(@"hh\:mm"));
             cuerpo = cuerpo.Replace("{{OBSERVACIONES}}", turno.Observaciones);
 
             email.IsBodyHtml = true;
