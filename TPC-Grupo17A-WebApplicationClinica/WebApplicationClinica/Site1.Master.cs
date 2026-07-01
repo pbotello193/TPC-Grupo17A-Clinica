@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using negocio;
+using dominio;
 
 namespace WebApplicationClinica
 {
@@ -13,6 +14,7 @@ namespace WebApplicationClinica
         protected void Page_Load(object sender, EventArgs e)
         {
             ValidarSesion();
+            ValidarPermisosPorPagina();
 
             if (!IsPostBack)
                 ActualizarLoginNavbar();
@@ -27,12 +29,85 @@ namespace WebApplicationClinica
                 Response.Redirect("Login.aspx", false);
         }
 
+        private void ValidarPermisosPorPagina()
+        {
+            if (Page is Login)
+                return;
+
+            Usuario usuario = Session["Usuario"] as Usuario;
+            if (usuario == null || Seguridad.EsAdmin(usuario))
+                return;
+
+            string paginaActual = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+
+            if (!TienePermisoParaPagina(usuario, paginaActual))
+                Response.Redirect(usuario.PaginaInicio, false);
+        }
+
+        private bool TienePermisoParaPagina(Usuario usuario, string paginaActual)
+        {
+            if (Seguridad.EsRecepcionista(usuario))
+                return paginaActual == "InicioRecepcionista.aspx"
+                    || paginaActual == "WebForm-Turnos.aspx"
+                    || paginaActual == "WebForm-Paciente.aspx"
+                    || paginaActual == "FormularioPaciente.aspx"
+                    || paginaActual == "WebForm-Medico.aspx"
+                    || paginaActual == "FormularioMedico.aspx"
+                    || paginaActual == "FormularioTurnoDeTrabajo.aspx";
+
+            if (Seguridad.EsMedico(usuario))
+                return paginaActual == "InicioMedico.aspx"
+                    || paginaActual == "MisTurnosMedico.aspx";
+
+            return false;
+        }
+
         private void ActualizarLoginNavbar()
         {
-            if (Session["Usuario"] == null)
+            Usuario usuario = Session["Usuario"] as Usuario;
+
+            OcultarLinksPrivados();
+
+            if (usuario == null)
+            {
                 lnkLogin.Text = "Login";
-            else
-                lnkLogin.Text = "Cerrar sesión";
+                lnkInicio.HRef = "Login.aspx";
+                return;
+            }
+
+            lnkLogin.Text = "Cerrar sesión";
+            lnkInicio.HRef = usuario.PaginaInicio;
+
+            if (Seguridad.EsAdmin(usuario))
+            {
+                lnkTurnos.Visible = true;
+                lnkPacientes.Visible = true;
+                lnkMedicos.Visible = true;
+                lnkEspecialidades.Visible = true;
+                lnkHorariosMedicos.Visible = true;
+                lnkMisTurnos.Visible = true;
+            }
+            else if (Seguridad.EsRecepcionista(usuario))
+            {
+                lnkTurnos.Visible = true;
+                lnkPacientes.Visible = true;
+                lnkMedicos.Visible = true;
+                lnkHorariosMedicos.Visible = true;
+            }
+            else if (Seguridad.EsMedico(usuario))
+            {
+                lnkMisTurnos.Visible = true;
+            }
+        }
+
+        private void OcultarLinksPrivados()
+        {
+            lnkTurnos.Visible = false;
+            lnkPacientes.Visible = false;
+            lnkMedicos.Visible = false;
+            lnkEspecialidades.Visible = false;
+            lnkHorariosMedicos.Visible = false;
+            lnkMisTurnos.Visible = false;
         }
 
         protected void lnkLogin_Click(object sender, EventArgs e)

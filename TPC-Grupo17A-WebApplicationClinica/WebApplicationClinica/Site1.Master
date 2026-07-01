@@ -17,17 +17,18 @@
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="Default.aspx">Inicio</a>
+                <a id="lnkInicio" runat="server" class="navbar-brand" href="Default.aspx">Inicio</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link" href="WebForm-Turnos.aspx">Turnos</a>
-                        <a class="nav-link" href="WebForm-Paciente.aspx">Pacientes</a>
-                        <a class="nav-link" href="WebForm-Medico.aspx">Medicos</a>
-                        <a class="nav-link" href="ListaEspecialidades.aspx">Especialidades</a>
-                        <a class="nav-link" href="FormularioTurnoDeTrabajo.aspx">Horarios Médicos</a>
+                        <a id="lnkTurnos" runat="server" class="nav-link" href="WebForm-Turnos.aspx">Turnos</a>
+                        <a id="lnkPacientes" runat="server" class="nav-link" href="WebForm-Paciente.aspx">Pacientes</a>
+                        <a id="lnkMedicos" runat="server" class="nav-link" href="WebForm-Medico.aspx">Medicos</a>
+                        <a id="lnkEspecialidades" runat="server" class="nav-link" href="ListaEspecialidades.aspx">Especialidades</a>
+                        <a id="lnkHorariosMedicos" runat="server" class="nav-link" href="FormularioTurnoDeTrabajo.aspx">Horarios Médicos</a>
+                        <a id="lnkMisTurnos" runat="server" class="nav-link" href="MisTurnosMedico.aspx">Mis turnos</a>
                         <asp:LinkButton ID="lnkLogin" runat="server" CssClass="nav-link" OnClick="lnkLogin_Click" />
                     </div>
                 </div>
