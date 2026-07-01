@@ -28,11 +28,13 @@ namespace negocio
 
         public void setearConsulta(string consulta) 
         {
+            comando.Parameters.Clear();
             comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = consulta;
         }
         public void setearProcedimiento(string sp)
         {
+            comando.Parameters.Clear();//Porque sino los foreach en especialidades me rompen en la db
             comando.CommandType = System.Data.CommandType.StoredProcedure;
             comando.CommandText = sp;
         }

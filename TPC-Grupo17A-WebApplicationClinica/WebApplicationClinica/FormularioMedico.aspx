@@ -60,6 +60,10 @@
             </asp:Panel>
             <div>
                 <div class="mb-3">
+                    <!-- lbl para mostrar mjs de error -->
+                    <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" Font-Bold="true" Visible="false"></asp:Label>
+                </div>
+                <div class="mb-3">
                     <asp:Label ID="lblEspecialidades" runat="server" Text="Especialidades:" Font-Bold="true"></asp:Label>
                     <asp:CheckBoxList ID="cblEspecialidades" runat="server" DataTextField="Nombre" DataValueField="Id"></asp:CheckBoxList>
                 </div>

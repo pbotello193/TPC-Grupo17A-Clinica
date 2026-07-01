@@ -107,19 +107,24 @@ namespace WebApplicationClinica
                 {
                     nuevo.Activo = false;
                 }
+                List<int> especialidadesSeleccionadas = new List<int>();
+                foreach (ListItem item in cblEspecialidades.Items)
+                {
+                    if (item.Selected)
+                    {
+                        especialidadesSeleccionadas.Add(int.Parse(item.Value));
+                    }
+                }
 
                 if (Request.QueryString["id"] != null)
                 {
                     nuevo.Id = int.Parse(txtId.Text);
                     medNegocio.modificar(nuevo);
-                    espNegocio.resetearEspecialidades(nuevo.Id);
-
-                    foreach (ListItem item in cblEspecialidades.Items)
+                    //elimina las deseleccionadas y guarda las seleccionadas si es modificacion
+                    espNegocio.eliminarEspecialidades(nuevo.Id, especialidadesSeleccionadas);
+                    foreach (int idEsp in especialidadesSeleccionadas)
                     {
-                        if (item.Selected)
-                        {
-                            espNegocio.asignarEspecialidad(nuevo.Id, int.Parse(item.Value));
-                        }
+                        espNegocio.asignarEspecialidad(nuevo.Id, idEsp);
                     }
                 }
                 else
@@ -143,9 +148,11 @@ namespace WebApplicationClinica
             }
             catch (Exception ex)
             {
-                throw ex; //manejar aca el mensaje de error de matricula duplicada
+                lblMensaje.Text = ex.Message;
+                lblMensaje.Visible = true;
             }
         }
+        
 
         private bool ValidarUsuarioMedico()
         {

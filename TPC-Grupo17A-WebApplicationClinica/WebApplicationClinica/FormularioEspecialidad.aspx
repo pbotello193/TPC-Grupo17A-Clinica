@@ -27,10 +27,10 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <div class="mb-3">
-                            <!-- lbl para mostrar mjs de error -->
-                            <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
-                        </div>
+                        <!-- lbl para mostrar mjs de error -->
+                        <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" Font-Bold="true" Visible="false"></asp:Label>
+                    </div>
+                    <div class="mb-3">
                         <asp:Button ID="btnAceptar" class="btn btn-primary" runat="server" Text="Aceptar" OnClick="btnAceptar_Click" />
                         <a href="ListaEspecialidades.aspx" class="btn btn-danger">Cancelar</a>
                     </div>

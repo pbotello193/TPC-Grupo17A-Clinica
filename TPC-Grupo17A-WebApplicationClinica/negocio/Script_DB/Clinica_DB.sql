@@ -132,6 +132,23 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE spAsignarEspecialidad
+    @IdMedico INT,
+    @IdEspecialidad INT
+AS
+BEGIN
+    IF NOT EXISTS ( --evita que agregue si ya esta asociado
+        SELECT 1 
+        FROM MedicoEspecialidad 
+        WHERE IdMedico = @IdMedico AND IdEspecialidad = @IdEspecialidad
+    )
+    BEGIN
+        INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) 
+        VALUES (@IdMedico, @IdEspecialidad)
+    END
+END
+GO
+
 
 --Inserts para la tabla medicos
 

@@ -97,12 +97,14 @@ namespace WebApplicationClinica
                 //excepciones con la db
                 Session.Add("error", ex);
                 lblMensaje.Text = "Hubo un problema con la base de datos. Intente nuevamente mas tarde.";
+                lblMensaje.Visible = true;
             }
             catch (Exception ex)
             {
                 //excepciones generales
                 Session.Add("error", ex);
-                lblMensaje.Text = "Ocurrió un error al intentar guardar la especialidad.";
+                lblMensaje.Text = ex.Message;
+                lblMensaje.Visible = true;
             }
         }
 
