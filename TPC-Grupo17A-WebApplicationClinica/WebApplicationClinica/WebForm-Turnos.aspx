@@ -59,79 +59,68 @@
                         <asp:CommandField ShowSelectButton="true" SelectText="Seleccionar" ControlStyle-CssClass="btn btn-sm btn-outline-dark" />
                     </Columns>
                 </asp:GridView>
-
-                <div class="text-end mt-3">
-                    <asp:button id="btnbuscarhorarios" runat="server"
-                        text="buscar horarios disponibles"
-                        cssclass="btn btn-dark"
-                        onclick="btnbuscarhorarios_Click" />
-                </div>
             </div>
         </div>
 
-        <div class="card shadow-sm border-0 bg-light">
-            <div class="card-body p-4">
-                <h5 class="card-title mb-3">Horarios y médicos disponibles</h5>
-
-                <div class="mb-3">
-                    <!-- lbl para mostrar mjs de error -->
-                    <asp:Label ID="lblMensajeError" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
-                </div>
-
-
-                <div class="row g-4 mt-2">
-                    <div class="col-lg-4 col-md-5">
-                        <div class="card shadow-sm border-0 bg-white">
-                            <div class="card-body p-3">
-                                <asp:Calendar ID="calTurnos" runat="server"
-                                    OnSelectionChanged="calTurnos_SelectionChanged"
-                                    Width="100%"
-                                    BorderWidth="0px"
-                                    NextPrevFormat="ShortMonth"
-                                    Font-Names="Segoe UI, Helvetica, Arial, sans-serif"
-                                    Height="280px"
-                                    CssClass="table table-sm table-borderless text-center align-middle mb-0">
-
-                                    <TitleStyle CssClass="bg-primary text-white fw-bold p-2 rounded-top d-flex justify-content-between align-items-center text-decoration-none" ForeColor="White" BackColor="#0d6efd" />
-                                    <NextPrevStyle CssClass="text-white text-decoration-none fw-bold px-2" ForeColor="White" />
-                                    <DayHeaderStyle CssClass="text-muted small fw-bold border-bottom py-2" BackColor="White" />
-                                    <DayStyle CssClass="p-2 border border-light text-dark rounded-3 cursor-pointer" />
-                                    <SelectedDayStyle CssClass="bg-success text-white fw-bold rounded-3" BackColor="#198754" ForeColor="White" />
-                                    <TodayDayStyle CssClass="bg-warning-subtle text-warning-emphasis fw-bold rounded-3" />
-                                    <OtherMonthDayStyle CssClass="text-black-51 text-opacity-25 bg-light rounded-3" ForeColor="#cccccc" />
-                                    <WeekendDayStyle CssClass="bg-light-subtle text-muted rounded-3" />
-                                </asp:Calendar>
-                            </div>
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
+                <div class="card shadow-sm border-0 bg-light">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-3">Horarios y médicos disponibles</h5>
+                        <div class="mb-3">
+                            <!-- lbl para mostrar mjs de error -->
+                            <asp:Label ID="lblMensajeError" runat="server" ForeColor="Red" Font-Bold="true" Visible="false"></asp:Label>
                         </div>
-                    </div>
-
-                    <div class="col-lg-8 col-md-7">
-                        <div class="card shadow-sm border-0 bg-white h-100">
-                            <div class="card-body p-4">
-                                <h5 class="card-title mb-3 text-secondary fs-6 fw-bold"><i class="bi bi-clock me-2"></i>Horarios disponibles</h5>
-                                <div class="table-responsive">
-                                    <asp:GridView ID="dgvHorariosDisponibles" runat="server"
-                                        CssClass="table table-hover align-middle mb-0"
-                                        AutoGenerateColumns="false"
-                                        ShowHeaderWhenEmpty="true"
-                                        EmptyDataText="Seleccione una fecha"
-                                        OnSelectedIndexChanged="dgvHorariosDisponibles_SelectedIndexChanged">
-                                        <Columns>
-                                            <asp:BoundField HeaderText="Médico" DataField="Medico" />
-                                            <asp:BoundField HeaderText="Especialidad" DataField="Especialidad" />
-                                            <asp:BoundField HeaderText="Fecha" DataField="Fecha" />
-                                            <asp:BoundField HeaderText="Horario" DataField="Horario" />
-                                            <asp:CommandField ShowSelectButton="true" SelectText="Asignar turno" ControlStyle-CssClass="btn btn-sm btn-success fw-bold px-3" />
-                                        </Columns>
-                                    </asp:GridView>
+                        <div class="row g-4 mt-2">
+                            <div class="col-lg-4 col-md-5">
+                                <div class="card shadow-sm border-0 bg-white">
+                                    <div class="card-body p-3">
+                                        <asp:Calendar ID="calTurnos" runat="server"
+                                            OnSelectionChanged="calTurnos_SelectionChanged"
+                                            Width="100%"
+                                            BorderWidth="0px"
+                                            NextPrevFormat="ShortMonth"
+                                            Font-Names="Segoe UI, Helvetica, Arial, sans-serif"
+                                            Height="280px"
+                                            CssClass="table table-sm table-borderless text-center align-middle mb-0">
+                                            <TitleStyle CssClass="bg-primary text-white fw-bold p-2 rounded-top d-flex justify-content-between align-items-center text-decoration-none" ForeColor="White" BackColor="#0d6efd" />
+                                            <NextPrevStyle CssClass="text-white text-decoration-none fw-bold px-2" ForeColor="White" />
+                                            <DayHeaderStyle CssClass="text-muted small fw-bold border-bottom py-2" BackColor="White" />
+                                            <DayStyle CssClass="p-2 border border-light text-dark rounded-3 cursor-pointer" />
+                                            <SelectedDayStyle CssClass="bg-success text-white fw-bold rounded-3" BackColor="#198754" ForeColor="White" />
+                                            <TodayDayStyle CssClass="bg-warning-subtle text-warning-emphasis fw-bold rounded-3" />
+                                            <OtherMonthDayStyle CssClass="text-black-51 text-opacity-25 bg-light rounded-3" ForeColor="#cccccc" />
+                                            <WeekendDayStyle CssClass="bg-light-subtle text-muted rounded-3" />
+                                        </asp:Calendar>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-7">
+                                <div class="card shadow-sm border-0 bg-white h-100">
+                                    <div class="card-body p-4">
+                                        <h5 class="card-title mb-3 text-secondary fs-6 fw-bold"><i class="bi bi-clock me-2"></i>Horarios disponibles</h5>
+                                        <div class="table-responsive">
+                                            <asp:GridView ID="dgvHorariosDisponibles" runat="server"
+                                                CssClass="table table-hover align-middle mb-0"
+                                                AutoGenerateColumns="false"
+                                                ShowHeaderWhenEmpty="true"
+                                                EmptyDataText="Seleccione una fecha"
+                                                OnSelectedIndexChanged="dgvHorariosDisponibles_SelectedIndexChanged">
+                                                <Columns>
+                                                    <asp:BoundField HeaderText="Médico" DataField="Medico" />
+                                                    <asp:BoundField HeaderText="Especialidad" DataField="Especialidad" />
+                                                    <asp:BoundField HeaderText="Fecha" DataField="Fecha" />
+                                                    <asp:BoundField HeaderText="Horario" DataField="Horario" />
+                                                    <asp:CommandField ShowSelectButton="true" SelectText="Asignar turno" ControlStyle-CssClass="btn btn-sm btn-success fw-bold px-3" />
+                                                </Columns>
+                                            </asp:GridView>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
 
-
-            </div>
-        </div>
     </div>
 </asp:Content>
