@@ -69,13 +69,13 @@ namespace WebApplicationClinica
         protected global::System.Web.UI.WebControls.GridView dgvPacientesEncontrados;
 
         /// <summary>
-        /// Control btnBuscarHorarios.
+        /// Control btnbuscarhorarios.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscarHorarios;
+        protected global::System.Web.UI.WebControls.Button btnbuscarhorarios;
 
         /// <summary>
         /// Control lblMensajeError.
@@ -85,6 +85,15 @@ namespace WebApplicationClinica
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMensajeError;
+
+        /// <summary>
+        /// Control calTurnos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar calTurnos;
 
         /// <summary>
         /// Control dgvHorariosDisponibles.

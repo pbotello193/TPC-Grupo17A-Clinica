@@ -87,7 +87,7 @@ namespace WebApplicationClinica
         }
 
         //buscar medicos y horarios segun especialidad
-        protected void btnBuscarHorarios_Click(object sender, EventArgs e)
+        protected void btnbuscarhorarios_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(hfIdPaciente.Value) || ddlEspecialidad.SelectedValue == "0")
             {
@@ -103,6 +103,7 @@ namespace WebApplicationClinica
             List<Medico> medicosActivos = medicoNegocio.listarMedicosActivos();
             List<Turno> listaTurnosDisponibles = new List<Turno>();
 
+
             foreach (Medico medico in medicosActivos)
             {
                 //filtra los horarios para el medico
@@ -115,9 +116,9 @@ namespace WebApplicationClinica
                 {
                     //calcula los dias de diferencia entre hoy y la fecha elegida (+7 y %7 por si da negativo)
                     //estoy asumiendo que los turnos son a maximo 1 semana, sino hay que cambiarlo
-                    int diasDiferencia = ((int)agendaMedico.DiaDeLaSemana - (int)DateTime.Today.DayOfWeek + 7) % 7;
+                    int diasDiferencia = ((int)agendaMedico.DiaDeLaSemana - (int)DateTime.Today.DayOfWeek + 28) % 7;
                     //valida que el turno no sea pasado ni el mismo dia (si es o es hoy, asi que asigna el mismo dia de la siguiente semana)
-                    DateTime fechaReal = DateTime.Today.AddDays(diasDiferencia == 0 ? 7 : diasDiferencia);
+                    DateTime fechaReal = DateTime.Today.AddDays(diasDiferencia == 0 ? 28 : diasDiferencia);
 
                     //bucle para manejar bloques de 1 hora y que no exceda el horario de fin de turno del medico
                     while (agendaMedico.HoraInicio < agendaMedico.HoraFin)
@@ -200,6 +201,15 @@ namespace WebApplicationClinica
                 lblMensajeError.Text = ex.Message;
             }
         }
+        protected void calTurnos_SelectionChanged(object sender, EventArgs e)
+        {
+            cargarTurnosDisp();
+        }
+        private void cargarTurnosDisp()
+        {
+            //Metodo para buscar los turnos por fecha
+        }
 
+        
     }
 }
