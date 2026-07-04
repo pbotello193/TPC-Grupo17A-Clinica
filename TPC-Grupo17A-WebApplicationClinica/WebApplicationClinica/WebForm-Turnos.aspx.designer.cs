@@ -69,6 +69,24 @@ namespace WebApplicationClinica
         protected global::System.Web.UI.WebControls.GridView dgvPacientesEncontrados;
 
         /// <summary>
+        /// Control upTurnos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upTurnos;
+
+        /// <summary>
+        /// Control btnBuscarTurnos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBuscarTurnos;
+
+        /// <summary>
         /// Control lblMensajeError.
         /// </summary>
         /// <remarks>

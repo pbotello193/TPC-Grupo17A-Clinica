@@ -191,7 +191,7 @@ namespace WebApplicationClinica
                 EmailService email = new EmailService();
                 string rutaPlantilla = Server.MapPath("~/MailTurnoConfirmado.html");
                 email.armarMailConfirmacion(turnoSeleccionado, rutaPlantilla);
-                email.enviarEmail();
+                //email.enviarEmail();
                 Session.Remove("listaHorariosDisponibles");
                 Response.Redirect("WebForm-Turnos.aspx", false);
             }
@@ -205,99 +205,160 @@ namespace WebApplicationClinica
         {
             cargarTurnosDisp();
         }
-        private void cargarTurnosDisp()
+
+        protected void btnBuscarTurnos_Click(object sender, EventArgs e)
         {
-            //Valida que primero se seleccione un paciente para buscar el turno
-            if (string.IsNullOrEmpty(hfIdPaciente.Value) || hfIdPaciente.Value == "0")
+            try
             {
-                lblMensajeError.Visible = true;
-                lblMensajeError.Text = "Debe seleccionar un paciente";
-                dgvHorariosDisponibles.DataSource = null;
-                dgvHorariosDisponibles.DataBind();
-                return;
-            }
-            //Valida que primero se seleccione una especialidad para buscar el turno
-            if (string.IsNullOrEmpty(ddlEspecialidad.SelectedValue) || ddlEspecialidad.SelectedValue == "0")
-            {
-                lblMensajeError.Visible = true;
-                lblMensajeError.Text = "Debe seleccionar una especialidad.";
-                dgvHorariosDisponibles.DataSource = null;
-                dgvHorariosDisponibles.DataBind();
-                return;
-            }
-
-            //Si no hay fecha seleccionada se usa la actual por defecto
-            if (calTurnos.SelectedDate == DateTime.MinValue)
-            {
-                calTurnos.SelectedDate = DateTime.Today;
-            }
-
-            DateTime fechaSeleccionada = calTurnos.SelectedDate;
-            DayOfWeek diaSemanaSeleccionado = fechaSeleccionada.DayOfWeek;
-
-
-            int idPaciente = int.Parse((hfIdPaciente.Value));
-            int idEspecialidad = int.Parse(ddlEspecialidad.SelectedValue);
-            //int.TryParse(hfIdPaciente.Value, out idPaciente);
-
-
-            MedicoNegocio medicoNegocio = new MedicoNegocio();
-            TurnoDeTrabajoNegocio trabajoNegocio = new TurnoDeTrabajoNegocio();
-            List<Turno> listaTurnosDisponibles = new List<Turno>();
-
-
-            List<Medico> listaMedicos = medicoNegocio.listarMedicosPorEspecialidad(idEspecialidad);
-            foreach (Medico medico in listaMedicos)
-            {
-                //buscamos los turnos de trabajo disponibles
-                List<TurnoDeTrabajo> listaHorarios = trabajoNegocio.listarPorMedico(medico.Id);
-                //Hay que filtrar activos tambien? REVISAR
-                foreach (TurnoDeTrabajo horariosMedico in listaHorarios)
+                if (string.IsNullOrEmpty(hfIdPaciente.Value) || hfIdPaciente.Value == "0" ||
+                string.IsNullOrEmpty(ddlEspecialidad.SelectedValue) || ddlEspecialidad.SelectedValue == "0")
                 {
-                    //verifica que el dia seleccionado coincida con uno del medico
-                    if (horariosMedico.DiaDeLaSemana == diaSemanaSeleccionado)
-                    {
-                        TimeSpan horaInicio = horariosMedico.HoraInicio;
-                        TimeSpan horaFin = horariosMedico.HoraFin;
+                    lblMensajeError.Visible = true;
+                    lblMensajeError.Text = "⚠️ Debe seleccionar un paciente y una especialidad";
+                    dgvHorariosDisponibles.DataSource = null;
+                    dgvHorariosDisponibles.DataBind();
+                    return;
+                }
 
-                        while (horaInicio < horaFin)
+                int idEspecialidad = int.Parse(ddlEspecialidad.SelectedValue);
+
+                MedicoNegocio medicoNegocio = new MedicoNegocio();
+                TurnoDeTrabajoNegocio trabajoNegocio = new TurnoDeTrabajoNegocio();
+
+                //lista para usar en el calendario y hashset para evitar duplicardos
+                HashSet<DayOfWeek> diasDeAtencion = new HashSet<DayOfWeek>();
+
+                //lista para usar en el calendario
+                List<TurnoDeTrabajo> listaDiasEspecialidades = new List<TurnoDeTrabajo>();
+                //buscamos los medicos que tienen esa especialidad
+                List<Medico> listaMedicos = medicoNegocio.listarMedicosPorEspecialidad(idEspecialidad);
+
+                foreach (Medico medico in listaMedicos)
+                {
+                    //por cada medico de esa especialidad revisa sus turnos de trabajo 
+                    List<TurnoDeTrabajo> listaAgendas = trabajoNegocio.listarPorMedico(medico.Id);
+                    foreach (TurnoDeTrabajo disponible in listaAgendas)
+                    {//si algun turno de trabajo es de la especialidad lo agrega a las listas
+                        if (disponible.Especialidad.Id == idEspecialidad)
                         {
-                            Turno turnoDisponible = new Turno();
-                            turnoDisponible.Fecha = fechaSeleccionada;
-                            turnoDisponible.HoraInicio = horaInicio;
-                            turnoDisponible.Paciente = new Paciente();
-                            turnoDisponible.Paciente.Id = idPaciente;
-                            turnoDisponible.Medico = medico;
-                            turnoDisponible.Especialidad = horariosMedico.Especialidad;
-                            turnoDisponible.Observaciones = "";
-                            turnoDisponible.Estado = "Nuevo";
-
-                            //valida que no haya superposicion
-                            TurnoNegocio turnoNegocio = new TurnoNegocio();
-                            if (turnoNegocio.validarDisponibilidadMedico(medico.Id, fechaSeleccionada, horaInicio))
-                            {
-                                listaTurnosDisponibles.Add(turnoDisponible);
-                            }
-
-                            //avanza una hora
-                            horaInicio = horaInicio.Add(new TimeSpan(1, 0, 0));
+                            listaDiasEspecialidades.Add(disponible);
+                            diasDeAtencion.Add(disponible.DiaDeLaSemana);
                         }
                     }
                 }
+
+                //todo en session para no ir tanto a la db
+                Session["DiasDisponiblesEspecialidad"] = diasDeAtencion.ToList();
+                Session["listaDiasEspecialidades"] = listaDiasEspecialidades;
+                Session["listaMedicos"] = listaMedicos;
+
+                //limpieza para que no se rompa
+                calTurnos.SelectedDate = DateTime.MinValue;
+                dgvHorariosDisponibles.DataSource = null;
+                dgvHorariosDisponibles.DataBind();
             }
-
-            Session["listaHorariosDisponibles"] = listaTurnosDisponibles;
-            dgvHorariosDisponibles.DataSource = listaTurnosDisponibles.Select(t => new
+            catch (Exception ex)
             {
-                Medico = t.Medico.Apellido + ", " + t.Medico.Nombre,
-                Especialidad = t.Especialidad.Nombre,
-                Fecha = t.Fecha.ToString("dd/MM/yyyy"),
-                Horario = t.HoraInicio.ToString(@"hh\:mm")
-            }).ToList();
 
-            dgvHorariosDisponibles.DataBind();
+                Session.Add("error", ex);
+            }
         }
 
+        private void cargarTurnosDisp()
+        {
+            //fecha actual por defecto
+            try
+            {
+                //si no hay peciente ni especialidad seleccionada corta
+                if (string.IsNullOrEmpty(hfIdPaciente.Value) || hfIdPaciente.Value == "0" ||
+                    string.IsNullOrEmpty(ddlEspecialidad.SelectedValue) || ddlEspecialidad.SelectedValue == "0")
+                {
+                    lblMensajeError.Visible = true;
+                    lblMensajeError.Text = "⚠️ Debe seleccionar un paciente y una especialidad";
+                    dgvHorariosDisponibles.DataSource = null;
+                    dgvHorariosDisponibles.DataBind();
+                    return;
+                }
+                if (calTurnos.SelectedDate == DateTime.MinValue)
+                {
+                    calTurnos.SelectedDate = DateTime.Today;
+                }
 
+                //fecha y dia seleccionados
+                DateTime fechaSeleccionada = calTurnos.SelectedDate;
+                DayOfWeek diaSemanaSeleccionado = fechaSeleccionada.DayOfWeek;
+
+                int idPaciente = int.Parse(hfIdPaciente.Value);
+                List<Turno> listaTurnosDisponibles = new List<Turno>();
+
+                //traemos las listas
+                List<TurnoDeTrabajo> listaDiasEspecialidades = Session["listaDiasEspecialidades"] as List<TurnoDeTrabajo>;
+                List<Medico> listaMedicos = Session["listaMedicos"] as List<Medico>;
+
+                if (listaDiasEspecialidades != null && listaMedicos != null)
+                {
+                    TurnoNegocio turnoNegocio = new TurnoNegocio();
+
+                    //busca la especialidad en el dia de la semana seleccionado con el where/toList (para no hacer un for each)
+                    List<TurnoDeTrabajo> agendasDelDia = listaDiasEspecialidades.Where(a => a.DiaDeLaSemana == diaSemanaSeleccionado).ToList();
+
+                    foreach (TurnoDeTrabajo horariosMedico in agendasDelDia)
+                    {
+                        //buscamos el medico para guardarlo con el turno
+                        Medico medicoAux = new Medico();
+                        foreach (Medico m in listaMedicos)
+                        {
+                            if (m.Id == horariosMedico.IdMedico)
+                            {
+                                medicoAux = m;
+                                break; //una vez que encuentra el medico corta 
+                            }
+                        }
+                        if (!(medicoAux == null))
+                        {
+                            TimeSpan horaInicio = horariosMedico.HoraInicio;
+                            TimeSpan horaFin = horariosMedico.HoraFin;
+
+                            while (horaInicio < horaFin)
+                            {
+                                //verifica si hay un turno asignado a esa hora para no mostrarlo
+                                if (turnoNegocio.validarDisponibilidadMedico(medicoAux.Id, fechaSeleccionada, horaInicio))
+                                {
+                                    Turno turnoDisponible = new Turno();
+                                    turnoDisponible.Fecha = fechaSeleccionada;
+                                    turnoDisponible.HoraInicio = horaInicio;
+                                    turnoDisponible.Paciente = new Paciente { Id = idPaciente };
+                                    turnoDisponible.Medico = medicoAux;
+                                    turnoDisponible.Especialidad = horariosMedico.Especialidad;
+                                    turnoDisponible.Observaciones = "";
+                                    turnoDisponible.Estado = "Nuevo";
+
+                                    listaTurnosDisponibles.Add(turnoDisponible);
+                                }
+
+                                horaInicio = horaInicio.Add(new TimeSpan(1, 0, 0));
+                            }
+                        }
+
+                    }
+                }
+
+                //la dgv se carga con el ToList();
+                Session["listaHorariosDisponibles"] = listaTurnosDisponibles;
+                dgvHorariosDisponibles.DataSource = listaTurnosDisponibles.Select(t => new
+                {
+                    Medico = t.Medico.Apellido + ", " + t.Medico.Nombre,
+                    Especialidad = t.Especialidad.Nombre,
+                    Fecha = t.Fecha.ToString("dd/MM/yyyy"),
+                    Horario = t.HoraInicio.ToString(@"hh\:mm")
+                }).ToList();
+
+                dgvHorariosDisponibles.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+            }
+        }
     }
 }
