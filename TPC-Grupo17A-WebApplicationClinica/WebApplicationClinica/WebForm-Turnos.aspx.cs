@@ -17,6 +17,11 @@ namespace WebApplicationClinica
             {
                 cargarEspecialidades();
                 cargarPacientesActivos();
+                //limpieza para que no aparezca desde la ultima busqueda
+                Session["DiasDisponiblesEspecialidad"] = null;
+                Session["AgendasEspecialidadCache"] = null;
+                Session["MedicosEspecialidadCache"] = null;
+                Session["listaHorariosDisponibles"] = null;
             }
         }
 
@@ -251,17 +256,13 @@ namespace WebApplicationClinica
                 Session["DiasDisponiblesEspecialidad"] = diasDeAtencion.ToList();
                 Session["listaDiasEspecialidades"] = listaDiasEspecialidades;
                 Session["listaMedicos"] = listaMedicos;
-
-                //limpieza para que no se rompa
-                calTurnos.SelectedDate = DateTime.MinValue;
-                dgvHorariosDisponibles.DataSource = null;
-                dgvHorariosDisponibles.DataBind();
             }
             catch (Exception ex)
             {
 
                 Session.Add("error", ex);
             }
+
         }
 
         private void cargarTurnosDisp()
@@ -358,6 +359,40 @@ namespace WebApplicationClinica
             catch (Exception ex)
             {
                 Session.Add("error", ex);
+            }
+        }
+        //metodo del calendario para marcar los dias en el calendario
+        protected void calTurnos_DayRender(object sender, DayRenderEventArgs e)
+        {
+            //deshabilita los días pasados
+                if (e.Day.Date < DateTime.Today)
+            {
+                e.Day.IsSelectable = false;
+                //le sumaeste estilo al dia para opacarlo
+                e.Cell.CssClass += " text-muted opacity-50 bg-light-subtle";
+                return;
+            }
+
+            //trae la lista de session
+            List<DayOfWeek> diasDisponibles = Session["DiasDisponiblesEspecialidad"] as List<DayOfWeek>;
+
+            if (diasDisponibles != null)
+            {
+                //busca la coincidencia con el dia del calendario
+                if (diasDisponibles.Contains(e.Day.Date.DayOfWeek))
+                {
+                    //para contrastar con el dia que se esta viendo
+                    if (!e.Day.IsSelected)
+                    {
+                        e.Cell.CssClass += " bg-primary-subtle text-primary-emphasis fw-bold border border-primary-subtle cursor-pointer";
+                    }
+                }
+                else
+                {
+                    //inhabilita los dias donde no hay turnos
+                    e.Day.IsSelectable = false;
+                    e.Cell.CssClass += " text-black-50 opacity-25";
+                }
             }
         }
     }

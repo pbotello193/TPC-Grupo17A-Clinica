@@ -90,7 +90,8 @@
                                             NextMonthText="<i class='bi bi-chevron-right'></i>"
                                             Font-Names="Segoe UI, Helvetica, Arial, sans-serif"
                                             Height="280px"
-                                            CssClass="table table-sm table-borderless text-center align-middle mb-0">
+                                            CssClass="table table-sm table-borderless text-center align-middle mb-0"
+                                            OnDayRender="calTurnos_DayRender"   >
                                             <TitleStyle CssClass="bg-primary text-white fw-bold p-2 rounded-top text-decoration-none" ForeColor="White" BackColor="#0d6efd" />
                                             <NextPrevStyle CssClass="text-white text-decoration-none fw-bold px-2" ForeColor="White" />
                                             <DayHeaderStyle CssClass="text-muted small fw-bold border-bottom py-2" BackColor="White" />
