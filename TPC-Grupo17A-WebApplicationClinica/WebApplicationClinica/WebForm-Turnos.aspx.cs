@@ -197,7 +197,7 @@ namespace WebApplicationClinica
 
                     EmailService email = new EmailService();
                     //plantilla modificada para reprogramacion
-                    string rutaPlantilla = Server.MapPath("~/MailTurnoConfirmado.html");
+                    string rutaPlantilla = Server.MapPath("~/MailTurnoReprogramado.html");
                     turnoSeleccionado.Id = idTurnoReprogramado;
                     turnoSeleccionado.Estado = "Reprogramado";
                     email.armarMailConfirmacion(turnoSeleccionado, rutaPlantilla);

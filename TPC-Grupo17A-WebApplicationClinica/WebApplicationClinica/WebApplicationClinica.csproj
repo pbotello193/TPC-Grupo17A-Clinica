@@ -80,6 +80,7 @@
     <Content Include="ListaEspecialidades.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="MailTurnoConfirmado.html" />
+    <Content Include="MailTurnoReprogramado.html" />
     <Content Include="MisTurnosMedicos.aspx" />
     <Content Include="Web.config" />
     <Content Include="WebForm-Medico.aspx" />
