@@ -1,11 +1,13 @@
-﻿using System;
+﻿using dominio;
+using negocio;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using negocio;
-using dominio;
+using static System.Collections.Specialized.BitVector32;
 
 namespace WebApplicationClinica
 {
@@ -193,15 +195,26 @@ namespace WebApplicationClinica
                     int idTurnoReprogramado = (int)Session["IdTurno"];
 
                     //aca el nuevo metodo
-                    negocio.reprogramarTurno(idTurnoReprogramado, turnoSeleccionado.Fecha, turnoSeleccionado.HoraInicio, txtObservaciones.Text);
+                    //Recupero el paciento de la lista en session para cargarlo en el turno
+                    List<Paciente> listaPacientes = (List<Paciente>)Session["listaPacientesTurnos"];
+                    turnoSeleccionado.Paciente = listaPacientes.Find(x => x.Id == turnoSeleccionado.Paciente.Id) ?? turnoSeleccionado.Paciente;
+                    if (!string.IsNullOrEmpty(txtObservaciones.Text.Trim()))
+                    {
+                        turnoSeleccionado.Observaciones = txtObservaciones.Text.Trim();
+                    }
+                    else
+                    {
+                        turnoSeleccionado.Observaciones = "";
+                    }
 
+                    negocio.reprogramarTurno(idTurnoReprogramado, turnoSeleccionado.Fecha, turnoSeleccionado.HoraInicio, txtObservaciones.Text);
                     EmailService email = new EmailService();
                     //plantilla modificada para reprogramacion
                     string rutaPlantilla = Server.MapPath("~/MailTurnoReprogramado.html");
                     turnoSeleccionado.Id = idTurnoReprogramado;
                     turnoSeleccionado.Estado = "Reprogramado";
-                    email.armarMailConfirmacion(turnoSeleccionado, rutaPlantilla);
-                    //email.enviarEmail();
+                    email.armarMailReprogramado(turnoSeleccionado, rutaPlantilla);
+                    email.enviarEmail();
 
                     //limpiamos para evitar conflicto
                     Session.Remove("IdTurnoReprogramar");
@@ -230,7 +243,7 @@ namespace WebApplicationClinica
                     EmailService email = new EmailService();
                     string rutaPlantilla = Server.MapPath("~/MailTurnoConfirmado.html");
                     email.armarMailConfirmacion(turnoSeleccionado, rutaPlantilla);
-                    //email.enviarEmail();
+                    email.enviarEmail();
                     Session.Remove("listaHorariosDisponibles");
                     Response.Redirect("WebForm-Turnos.aspx", false);
                 }

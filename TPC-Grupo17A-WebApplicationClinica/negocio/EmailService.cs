@@ -56,6 +56,26 @@ namespace negocio
             email.IsBodyHtml = true;
             email.Body = cuerpo;
         }
+        public void armarMailReprogramado(Turno turno, string ruta)
+        {
+            email = new MailMessage();
+
+            email.From = new MailAddress("clinica@mailtrap.io");
+            email.To.Add(turno.Paciente.Email);
+
+            email.Subject = "Confirmación de turno reprogramado";
+            string cuerpo = File.ReadAllText(ruta);
+            cuerpo = cuerpo.Replace("{{PACIENTE}}", turno.Paciente.Nombre + " " + turno.Paciente.Apellido);
+            cuerpo = cuerpo.Replace("{{NUMERO}}", turno.Id.ToString()); 
+            cuerpo = cuerpo.Replace("{{ESPECIALIDAD}}", turno.Especialidad.Nombre);
+            cuerpo = cuerpo.Replace("{{MEDICO}}", turno.Medico.Nombre + " " + turno.Medico.Apellido);
+            cuerpo = cuerpo.Replace("{{FECHA}}", turno.Fecha.ToString("dd/MM/yyyy"));            
+            cuerpo = cuerpo.Replace("{{HORA}}", turno.HoraInicio.ToString(@"hh\:mm"));
+            cuerpo = cuerpo.Replace("{{OBSERVACIONES}}", turno.Observaciones);
+
+            email.IsBodyHtml = true;
+            email.Body = cuerpo;
+        }
         public void enviarEmail()
         {
             try

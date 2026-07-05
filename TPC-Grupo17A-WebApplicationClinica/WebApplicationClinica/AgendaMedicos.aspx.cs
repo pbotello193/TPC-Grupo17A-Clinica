@@ -157,21 +157,28 @@ namespace WebApplicationClinica
 
                 try
                 {
-                    // Validación en servidor: Obtenemos el turno y chequeamos que el estado actual sea "Asignado"
                     Turno turnoActual = negocio.listar().Find(t => t.Id == idTurno);
-                    if (turnoActual == null || turnoActual.Estado != "Asignado")
-                    {
-                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Solo se pueden reprogramar o cancelar turnos que se encuentren en estado Asignado.');", true);
-                        return;
-                    }
+                    if (turnoActual == null) return;
                     if (e.CommandName == "ReprogramarTurno")
                     {
-                        //si es reprogramacion de turno lleva el id a la pagina de turnos para editarlo
-                        Response.Redirect($"WebForm-Turnos.aspx?idTurno=" + idTurno, false);
+                        //deja reprogramar solo si tiene estado asignado
+                        if (turnoActual.Estado != "Asignado")
+                        {
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Solo se pueden reprogramar turnos que se encuentren en estado Asignado.');", true);
+                            return;
+                        }
+                        Response.Redirect($"WebForm-Turnos.aspx?idTurno={idTurno}", false);
                     }
                     else if (e.CommandName == "CancelarTurno")
                     {
+                        //permite cancelar asignados o reprogramados
+                        if (turnoActual.Estado != "Asignado" && turnoActual.Estado != "Reprogramado")
+                        {
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Solo se pueden cancelar turnos en estado Asignado o Reprogramado.');", true);
+                            return;
+                        }
                         negocio.cambiarEstado(idTurno, "Cancelado");
+                        //habria que rehabilitar el horario al cancelar un turno?
                         CargarAgenda();
                     }
                 }

@@ -87,11 +87,11 @@ namespace negocio
             //Con esto se setea automaticamente la duracion de una hora a partir de HoraInicio
             nuevo.HoraFin = nuevo.HoraInicio.Add(new TimeSpan(1, 0, 0)); 
 
-            // Validar que el turno no esté vencido (Fecha y hora de inicio deben ser a futuro)
+            // Valida que no sea anterior a la fecha actual
             DateTime fechaTurnoCompleta = nuevo.Fecha.Date + nuevo.HoraInicio;
             if (fechaTurnoCompleta <= DateTime.Now)
             {
-                throw new Exception("No se puede registrar un turno para una fecha u hora que ya ha pasado.");
+                throw new Exception("No se puede registrar un turno para una fecha u hora que ya ha pasado");
             }
 
             // Validar que el médico no tenga otro turno el mismo día a la misma hora
