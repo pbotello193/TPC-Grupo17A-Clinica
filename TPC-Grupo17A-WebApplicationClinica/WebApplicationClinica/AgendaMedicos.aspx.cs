@@ -167,7 +167,7 @@ namespace WebApplicationClinica
                     if (e.CommandName == "ReprogramarTurno")
                     {
                         //si es reprogramacion de turno lleva el id a la pagina de turnos para editarlo
-                        Response.Redirect($"WebForm-Turnos.aspx?id=" + idTurno, false);
+                        Response.Redirect($"WebForm-Turnos.aspx?idTurno=" + idTurno, false);
                     }
                     else if (e.CommandName == "CancelarTurno")
                     {

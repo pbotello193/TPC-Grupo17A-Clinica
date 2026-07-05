@@ -17,11 +17,22 @@ namespace WebApplicationClinica
             {
                 cargarEspecialidades();
                 cargarPacientesActivos();
-                //limpieza para que no aparezca desde la ultima busqueda
-                Session["DiasDisponiblesEspecialidad"] = null;
-                Session["AgendasEspecialidadCache"] = null;
-                Session["MedicosEspecialidadCache"] = null;
-                Session["listaHorariosDisponibles"] = null;
+
+                if (Request.QueryString["idTurno"] != null)
+                {
+                    int idTurno = int.Parse(Request.QueryString["idTurno"]);
+                    Session["IdTurno"] = idTurno; // Guardamos en Session para el paso final
+                    cargarTurnoReprogramar(idTurno);
+                }
+                else
+                {
+                    //limpieza para que no aparezca desde la ultima busqueda o id de una reprogramacion
+                    Session["DiasDisponiblesEspecialidad"] = null;
+                    Session["AgendasEspecialidadCache"] = null;
+                    Session["MedicosEspecialidadCache"] = null;
+                    Session["listaHorariosDisponibles"] = null;
+                    Session.Remove("IdTurno"); //por si quedo un id en session y molesta
+                }
             }
         }
 
@@ -85,7 +96,7 @@ namespace WebApplicationClinica
             {
                 hfIdPaciente.Value = pacienteSeleccionado.Id.ToString();
                 txtBuscarPaciente.Text = pacienteSeleccionado.Apellido + ", " + pacienteSeleccionado.Nombre;
-                lblPacienteSeleccionado.Text = "Paciente seleccionado: " + pacienteSeleccionado.Apellido + ", " + pacienteSeleccionado.Nombre + " - DNI " + pacienteSeleccionado.Dni;
+                lblPacienteSeleccionado.Text = "Paciente seleccionado: " + pacienteSeleccionado.Apellido + ", " + pacienteSeleccionado.Nombre + " - DNI: " + pacienteSeleccionado.Dni;
                 lblPacienteSeleccionado.Visible = true;
                 dgvPacientesEncontrados.Visible = false;
             }
@@ -175,30 +186,54 @@ namespace WebApplicationClinica
 
             try
             {
-                int idPaciente = int.Parse((hfIdPaciente.Value));
+                TurnoNegocio negocio = new TurnoNegocio();
 
-                if (Session["listaPacientesTurnos"] != null)
-                {//Recupero el paciento de la lista en session para cargarlo en el turno
-                    List<Paciente> listaPacientes = (List<Paciente>)Session["listaPacientesTurnos"];
-                    turnoSeleccionado.Paciente = listaPacientes.Find(x => x.Id == idPaciente) ?? turnoSeleccionado.Paciente;
-                }
-                if (!string.IsNullOrEmpty(txtObservaciones.Text.Trim()))
+                if (Session["IdTurno"] != null)
                 {
-                    turnoSeleccionado.Observaciones = txtObservaciones.Text.Trim();
+                    int idTurnoReprogramado = (int)Session["IdTurno"];
+
+                    //aca el nuevo metodo
+                    negocio.reprogramarTurno(idTurnoReprogramado, turnoSeleccionado.Fecha, turnoSeleccionado.HoraInicio, txtObservaciones.Text);
+
+                    EmailService email = new EmailService();
+                    //plantilla modificada para reprogramacion
+                    string rutaPlantilla = Server.MapPath("~/MailTurnoConfirmado.html");
+                    turnoSeleccionado.Id = idTurnoReprogramado;
+                    turnoSeleccionado.Estado = "Reprogramado";
+                    email.armarMailConfirmacion(turnoSeleccionado, rutaPlantilla);
+                    //email.enviarEmail();
+
+                    //limpiamos para evitar conflicto
+                    Session.Remove("IdTurnoReprogramar");
+                    Session.Remove("listaHorariosDisponibles");
+                    Response.Redirect("AgendaMedicos.aspx", false);
                 }
                 else
                 {
-                    turnoSeleccionado.Observaciones = "";
-                }
-                TurnoNegocio negocio = new TurnoNegocio();
-                negocio.agregar(turnoSeleccionado);
+                    int idPaciente = int.Parse((hfIdPaciente.Value));
 
-                EmailService email = new EmailService();
-                string rutaPlantilla = Server.MapPath("~/MailTurnoConfirmado.html");
-                email.armarMailConfirmacion(turnoSeleccionado, rutaPlantilla);
-                //email.enviarEmail();
-                Session.Remove("listaHorariosDisponibles");
-                Response.Redirect("WebForm-Turnos.aspx", false);
+                    if (Session["listaPacientesTurnos"] != null)
+                    {//Recupero el paciento de la lista en session para cargarlo en el turno
+                        List<Paciente> listaPacientes = (List<Paciente>)Session["listaPacientesTurnos"];
+                        turnoSeleccionado.Paciente = listaPacientes.Find(x => x.Id == idPaciente) ?? turnoSeleccionado.Paciente;
+                    }
+                    if (!string.IsNullOrEmpty(txtObservaciones.Text.Trim()))
+                    {
+                        turnoSeleccionado.Observaciones = txtObservaciones.Text.Trim();
+                    }
+                    else
+                    {
+                        turnoSeleccionado.Observaciones = "";
+                    }
+                    negocio.agregar(turnoSeleccionado);
+
+                    EmailService email = new EmailService();
+                    string rutaPlantilla = Server.MapPath("~/MailTurnoConfirmado.html");
+                    email.armarMailConfirmacion(turnoSeleccionado, rutaPlantilla);
+                    //email.enviarEmail();
+                    Session.Remove("listaHorariosDisponibles");
+                    Response.Redirect("WebForm-Turnos.aspx", false);
+                }
             }
             catch (Exception ex)
             {
@@ -367,7 +402,7 @@ namespace WebApplicationClinica
         protected void calTurnos_DayRender(object sender, DayRenderEventArgs e)
         {
             //deshabilita los días pasados
-                if (e.Day.Date < DateTime.Today)
+            if (e.Day.Date < DateTime.Today)
             {
                 e.Day.IsSelectable = false;
                 //le sumaeste estilo al dia para opacarlo
@@ -395,6 +430,29 @@ namespace WebApplicationClinica
                     e.Day.IsSelectable = false;
                     e.Cell.CssClass += " text-black-50 opacity-25";
                 }
+            }
+        }
+        private void cargarTurnoReprogramar(int idTurno)
+        {
+            TurnoNegocio negocio = new TurnoNegocio();
+            //usamos el find asi devuelve y corta a la primer coicidencia
+            Turno turno = negocio.listar().Find(t => t.Id == idTurno);
+
+            if (turno != null)
+            {
+                //traemos los datos pero bloqueamos cambiar el paciente y la especialidad
+                hfIdPaciente.Value = turno.Paciente.Id.ToString();
+                txtBuscarPaciente.Text = turno.Paciente.Apellido + ", " + turno.Paciente.Nombre;
+                txtBuscarPaciente.Enabled = false;
+                ddlEspecialidad.SelectedValue = turno.Especialidad.Id.ToString();
+                ddlEspecialidad.Enabled = false;
+                lblPacienteSeleccionado.Text = "Seleccione un nuevo día y horario para el paciente: " + turno.Paciente.Apellido + ", " + turno.Paciente.Nombre + " - DNI: " + turno.Paciente.Dni;
+                lblPacienteSeleccionado.Visible = true;
+                //permitimos cambiar las observaciones y la fecha/ hora obviamente
+                txtObservaciones.Text = turno.Observaciones;
+                //ya dejamos el calendario cargado con la disponibilidad
+                //no me estaria funcionando...
+                cargarTurnosDisp();
             }
         }
     }
