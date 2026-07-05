@@ -153,9 +153,8 @@ namespace WebApplicationClinica
 
                 int index = Convert.ToInt32(e.CommandArgument);
                 int idTurno = Convert.ToInt32(dgvAgendaMedicos.DataKeys[index].Value);
-                string nuevoEstado = e.CommandName == "ReprogramarTurno" ? "Reprogramado" : "Cancelado";
-
                 TurnoNegocio negocio = new TurnoNegocio();
+
                 try
                 {
                     // Validación en servidor: Obtenemos el turno y chequeamos que el estado actual sea "Asignado"
@@ -165,14 +164,21 @@ namespace WebApplicationClinica
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Solo se pueden reprogramar o cancelar turnos que se encuentren en estado Asignado.');", true);
                         return;
                     }
-
-                    negocio.cambiarEstado(idTurno, nuevoEstado);
-                    CargarAgenda();
+                    if (e.CommandName == "ReprogramarTurno")
+                    {
+                        //si es reprogramacion de turno lleva el id a la pagina de turnos para editarlo
+                        Response.Redirect($"WebForm-Turnos.aspx?id=" + idTurno, false);
+                    }
+                    else if (e.CommandName == "CancelarTurno")
+                    {
+                        negocio.cambiarEstado(idTurno, "Cancelado");
+                        CargarAgenda();
+                    }
                 }
                 catch (Exception ex)
                 {
                     Session.Add("ErrorAgendaMedicos", ex);
-                    lblMensaje.Text = "Hubo un error al cambiar el estado del turno.";
+                    lblMensaje.Text = "Hubo un error al procesar la solicitud del turno.";
                     lblMensaje.Visible = true;
                 }
             }

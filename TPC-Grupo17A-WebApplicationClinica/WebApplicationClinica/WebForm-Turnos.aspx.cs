@@ -213,6 +213,7 @@ namespace WebApplicationClinica
 
         protected void btnBuscarTurnos_Click(object sender, EventArgs e)
         {
+            lblMensajeError.Visible = false;
             try
             {
                 if (string.IsNullOrEmpty(hfIdPaciente.Value) || hfIdPaciente.Value == "0" ||
@@ -231,7 +232,8 @@ namespace WebApplicationClinica
                 TurnoDeTrabajoNegocio trabajoNegocio = new TurnoDeTrabajoNegocio();
 
                 //lista para usar en el calendario y hashset para evitar duplicardos
-                HashSet<DayOfWeek> diasDeAtencion = new HashSet<DayOfWeek>();
+                //HashSet<DayOfWeek> diasDeAtencion = new HashSet<DayOfWeek>();
+                List<DayOfWeek> diasDeAtencion = new List<DayOfWeek>();
 
                 //lista para usar en el calendario
                 List<TurnoDeTrabajo> listaDiasEspecialidades = new List<TurnoDeTrabajo>();

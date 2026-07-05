@@ -219,5 +219,33 @@ namespace negocio
                 datosUpdate.cerrarConexion();
             }
         }
+        public void reprogramarTurno(int idTurno, DateTime nuevaFecha, TimeSpan nuevaHoraInicio, string observaciones)
+        {
+            //de nuevo para asegurar que guarde el turno de una hora
+            TimeSpan nuevaHoraFin = nuevaHoraInicio.Add(new TimeSpan(1, 0, 0));
+
+            AccesoDatos datosUpdate = new AccesoDatos();
+            try
+            {
+                string consulta = "UPDATE Turnos SET Fecha = @Fecha, HoraInicio = @HoraInicio, HoraFin = @HoraFin, Observaciones = @Observaciones, Estado = 'Reprogramado' WHERE Id = @Id";
+
+                datosUpdate.setearConsulta(consulta);
+                datosUpdate.setearParametro("@Fecha", nuevaFecha);
+                datosUpdate.setearParametro("@HoraInicio", nuevaHoraInicio);
+                datosUpdate.setearParametro("@HoraFin", nuevaHoraFin);
+                datosUpdate.setearParametro("@Observaciones", observaciones ?? "");
+                datosUpdate.setearParametro("@Id", idTurno);
+
+                datosUpdate.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datosUpdate.cerrarConexion();
+            }
+        }
     }
 }
