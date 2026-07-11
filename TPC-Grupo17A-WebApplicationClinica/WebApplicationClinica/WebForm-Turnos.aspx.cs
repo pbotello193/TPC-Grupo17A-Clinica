@@ -192,9 +192,8 @@ namespace WebApplicationClinica
 
                 if (Session["IdTurno"] != null)
                 {
+                    //Si hay id en session va por el camino de reprogramar turno
                     int idTurnoReprogramado = (int)Session["IdTurno"];
-
-                    //aca el nuevo metodo
                     //Recupero el paciento de la lista en session para cargarlo en el turno
                     List<Paciente> listaPacientes = (List<Paciente>)Session["listaPacientesTurnos"];
                     turnoSeleccionado.Paciente = listaPacientes.Find(x => x.Id == turnoSeleccionado.Paciente.Id) ?? turnoSeleccionado.Paciente;
@@ -214,7 +213,7 @@ namespace WebApplicationClinica
                     turnoSeleccionado.Id = idTurnoReprogramado;
                     turnoSeleccionado.Estado = "Reprogramado";
                     email.armarMailReprogramado(turnoSeleccionado, rutaPlantilla);
-                    email.enviarEmail();
+                    //email.enviarEmail();
 
                     //limpiamos para evitar conflicto
                     Session.Remove("IdTurnoReprogramar");
@@ -238,12 +237,14 @@ namespace WebApplicationClinica
                     {
                         turnoSeleccionado.Observaciones = "";
                     }
-                    negocio.agregar(turnoSeleccionado);
+                    //aca se obtiene el id del usuario en session para guardar quien asigna el turno
+                    Usuario usuarioLogueado = Session["Usuario"] as Usuario;
+                    negocio.agregar(turnoSeleccionado, usuarioLogueado.Id);
 
                     EmailService email = new EmailService();
                     string rutaPlantilla = Server.MapPath("~/MailTurnoConfirmado.html");
                     email.armarMailConfirmacion(turnoSeleccionado, rutaPlantilla);
-                    email.enviarEmail();
+                    //email.enviarEmail();
                     Session.Remove("listaHorariosDisponibles");
                     Response.Redirect("WebForm-Turnos.aspx", false);
                 }

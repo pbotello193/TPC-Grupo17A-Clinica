@@ -80,7 +80,7 @@ namespace negocio
             return lista.FindAll(x => x.Medico.Id == idMedico);
         }
 
-        public void agregar(Turno nuevo)
+        public void agregar(Turno nuevo, int idUsuarioAsignacion) //nuevo parametro apra guardar quien asigno el turno
         {
             nuevo.Estado = "Asignado"; // seteamos el estado inicial del turno como "Asignado"
 
@@ -110,9 +110,9 @@ namespace negocio
             AccesoDatos datosInsercion = new AccesoDatos();
             try
             {
-                string consulta = "INSERT INTO Turnos (Fecha, HoraInicio, HoraFin, Observaciones, IdPaciente, IdMedico, IdEspecialidad, Estado) " +
+                string consulta = "INSERT INTO Turnos (Fecha, HoraInicio, HoraFin, Observaciones, IdPaciente, IdMedico, IdEspecialidad, Estado, FechaAsignacion, IdUsuarioAsignacion) " +
                                   "OUTPUT INSERTED.ID " +
-                                  "VALUES (@Fecha, @HoraInicio, @HoraFin, @Observaciones, @IdPaciente, @IdMedico, @IdEspecialidad, @Estado)";
+                                  "VALUES (@Fecha, @HoraInicio, @HoraFin, @Observaciones, @IdPaciente, @IdMedico, @IdEspecialidad, @Estado, @FechaAsignacion, @IdUsuarioAsignacion)";
 
                 datosInsercion.setearConsulta(consulta);
                 datosInsercion.setearParametro("@Fecha", nuevo.Fecha);
@@ -123,6 +123,8 @@ namespace negocio
                 datosInsercion.setearParametro("@IdMedico", nuevo.Medico.Id);
                 datosInsercion.setearParametro("@IdEspecialidad", nuevo.Especialidad.Id);
                 datosInsercion.setearParametro("@Estado", nuevo.Estado);
+                datosInsercion.setearParametro("@FechaAsignacion", DateTime.Now);
+                datosInsercion.setearParametro("@IdUsuarioAsignacion", idUsuarioAsignacion);
 
                 // El método ejecutarAccionScalar nos devuelve el ID generado por IDENTITY
                 nuevo.Id = datosInsercion.ejecutarAccionScalar();
