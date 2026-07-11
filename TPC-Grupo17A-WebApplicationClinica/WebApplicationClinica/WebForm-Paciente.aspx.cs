@@ -52,10 +52,19 @@ namespace WebApplicationClinica
             dgvPacientes.DataBind();
         }
 
-        protected void dgvPacientes_SelectedIndexChanged(object sender, EventArgs e)
+        protected void dgvPacientes_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
         {
-            string id = dgvPacientes.SelectedDataKey.Value.ToString();
-            Response.Redirect("FormularioPaciente.aspx?id=" + id);
+            if (e.CommandName == "VerHistorial")
+            {
+                string id = e.CommandArgument.ToString();
+                Response.Redirect("HistorialTurnosPaciente.aspx?id=" + id, false);
+            }
+            else if (e.CommandName == "Editar")
+            {
+                string id = e.CommandArgument.ToString();
+                Response.Redirect("FormularioPaciente.aspx?id=" + id); 
+            }
         }
+
     }
 }

@@ -28,9 +28,9 @@
                 CssClass="table table-striped table-hover align-middle"
                 DataKeyNames="Id"
                 AutoGenerateColumns="false"
+                OnRowCommand="dgvPacientes_RowCommand"
                 ShowHeaderWhenEmpty="true"
-                EmptyDataText="No se encontraron pacientes."
-                OnSelectedIndexChanged="dgvPacientes_SelectedIndexChanged">
+                EmptyDataText="No se encontraron pacientes.">
                 <Columns>
                     <asp:BoundField HeaderText="Apellido" DataField="Apellido" />
                     <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
@@ -51,7 +51,10 @@
 
                     <asp:TemplateField HeaderText="Acción">
                         <ItemTemplate>
-                            <asp:LinkButton ID="btnVer" runat="server" CommandName="Select" CssClass="btn btn-sm btn-outline-primary">
+                            <asp:LinkButton ID="btnHistorial" runat="server" CommandName="VerHistorial" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-outline-primary">
+                                Historial de turnos
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="btnEditar" runat="server" CommandName="Editar" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-outline-primary">
                                 Editar
                             </asp:LinkButton>
                         </ItemTemplate>
