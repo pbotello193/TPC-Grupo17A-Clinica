@@ -7,7 +7,7 @@
     <div class="container mt-4">
         <div class="mb-4 d-flex justify-content-between align-items-center bg-light p-3 rounded-3 shadow-sm">
             <div>
-                <h2 class="mb-2 text-dark">Historial de turnos</h2>
+                <h2 class="fw-bold mb-2 text-dark">Historial de turnos</h2>
                 <div class="align-items-center">
                     <label class="form-label d-inline-block fw-bold text-secondary mb-0">Paciente: </label>
                     <asp:Label ID="lblNombrePaciente" runat="server" CssClass="fw-bold text-dark me-2" />
@@ -28,35 +28,42 @@
                         OnRowCommand="dgvTurnos_RowCommand"
                         ShowHeaderWhenEmpty="true"
                         EmptyDataText="Sin turnos registrados.">
-                        <columns>
+                        <Columns>
                             <asp:TemplateField HeaderText="Fecha">
-                                <itemtemplate>
+                                <ItemTemplate>
                                     <%# Eval("Fecha", "{0:dd/MM/yyyy}") %>
-                                </itemtemplate>
+                                </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Horario">
-                                <itemtemplate>
+                                <ItemTemplate>
                                     <%# ((TimeSpan)Eval("HoraInicio")).ToString(@"hh\:mm") %>
-                                </itemtemplate>
+                                </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Médico">
-                                <itemtemplate>
+                                <ItemTemplate>
                                     <%# Eval("Medico.Apellido") %>, <%# Eval("Medico.Nombre") %>
-                                </itemtemplate>
+                                </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField HeaderText="Especialidad" DataField="Especialidad.Nombre" />
-                            
+                            <asp:TemplateField HeaderText="Estado">
+                                <ItemTemplate>
+                                    <span class='<%# badgeEstado(Eval("Estado").ToString()) %>'>
+                                        <%# Eval("Estado") %>
+                                    </span>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
                             <asp:TemplateField HeaderText="Acción">
-                                <itemtemplate>
+                                <ItemTemplate>
                                     <asp:LinkButton ID="btnVerDetalle" runat="server"
                                         CommandName="VerDetalle"
                                         CommandArgument='<%# Eval("Id") %>'
                                         CssClass="btn btn-sm btn-primary shadow-sm">
                                         Ver Detalle
                                     </asp:LinkButton>
-                                </itemtemplate>
+                                </ItemTemplate>
                             </asp:TemplateField>
-                        </columns>
+                        </Columns>
                     </asp:GridView>
                 </div>
             </div>

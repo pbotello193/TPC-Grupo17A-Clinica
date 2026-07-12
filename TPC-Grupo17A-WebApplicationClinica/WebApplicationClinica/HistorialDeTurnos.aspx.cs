@@ -81,6 +81,7 @@ namespace WebApplicationClinica
             lblDetalleMedico.Text = turno.Medico.Apellido + ", " + turno.Medico.Nombre + " - Matricula: " + turno.Medico.Matricula;
             lblDetalleEspecialidad.Text = turno.Especialidad.Nombre;
             lblDetalleEstado.Text = turno.Estado;
+            lblDetalleEstado.CssClass = badgeEstado(turno.Estado) + "";
             lblDetalleObservaciones.Text = string.IsNullOrEmpty(turno.Observaciones) ? "" : turno.Observaciones;
             lblDetalleDiagnostico.Text = string.IsNullOrEmpty(turno.Diagnostico) ? "" : turno.Diagnostico;
             lblDetalleAsignado.Text = turno.UsuarioAsignacion != null ? turno.UsuarioAsignacion.User : "";
@@ -93,6 +94,19 @@ namespace WebApplicationClinica
         {
             pnlDetalleTurno.Visible = false; //lo pone en false para cerrarlo
             divDgvTurnos.Attributes["class"] = "col-12"; //vuelve a la grilla de tamaño completa
+        }
+        // metodo para la clase del badge segun el estado (color)
+        protected string badgeEstado(string estado)
+        {
+            switch (estado)
+            {
+                case "Asignado": return "badge bg-info text-bg-info";
+                case "Asistió": return "badge bg-primary text-bg-info";
+                case "Reprogramado": return "badge bg-warning text-bg-info";
+                case "Cancelado": return "badge bg-danger text-bg-info";
+                case "No asistió": return "badge bg-black";
+                default: return "badge bg-secondary-subtle text-bg-info";
+            }
         }
 
     }
