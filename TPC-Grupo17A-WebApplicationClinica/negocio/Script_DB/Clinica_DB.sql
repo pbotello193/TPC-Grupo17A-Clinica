@@ -152,6 +152,41 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE SP_ListarTurnosPorPaciente
+    @IdPaciente INT
+AS
+BEGIN
+    SELECT T.Id, T.Fecha, T.HoraInicio, T.HoraFin, T.Observaciones, T.Diagnostico, T.Estado, T.FechaAsignacion,
+        P.Id AS IdPaciente,
+        P.Nombre AS NombrePaciente,
+        P.Apellido AS ApellidoPaciente,
+        P.DNI AS DniPaciente,
+        P.Telefono AS TelefonoPaciente,
+        P.Email AS EmailPaciente,
+
+        M.Id AS IdMedico,
+        M.Nombre AS NombreMedico, 
+        M.Apellido AS ApellidoMedico, 
+        M.Matricula AS MatriculaMedico,
+        M.Telefono AS TelefonoMedico,
+        M.Email AS EmailMedico,
+
+        E.Id AS IdEspecialidad,
+        E.Nombre AS NombreEspecialidad,
+
+        U.Id AS IdUsuarioAsignacion,
+        U.Usuario AS NombreUsuarioAsignacion
+
+    FROM Turnos T
+    INNER JOIN Pacientes P ON T.IdPaciente = P.Id
+    INNER JOIN Medicos M ON T.IdMedico = M.Id
+    INNER JOIN Especialidades E ON T.IdEspecialidad = E.Id
+    LEFT JOIN Usuarios U ON T.IdUsuarioAsignacion = U.Id
+    WHERE T.IdPaciente = @IdPaciente
+    ORDER BY T.Fecha DESC, T.HoraInicio DESC;
+END
+GO
+
 
 --Inserts para la tabla medicos
 

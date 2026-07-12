@@ -125,7 +125,7 @@ namespace negocio
                 datosInsercion.setearParametro("@IdPaciente", nuevo.Paciente.Id);
                 datosInsercion.setearParametro("@IdMedico", nuevo.Medico.Id);
                 datosInsercion.setearParametro("@IdEspecialidad", nuevo.Especialidad.Id);
-                datosInsercion.setearParametro("@Estado", nuevo.Estado); 
+                datosInsercion.setearParametro("@Estado", nuevo.Estado);
                 datosInsercion.setearParametro("@FechaAsignacion", nuevo.FechaAsignacion);
                 datosInsercion.setearParametro("@IdUsuarioAsignacion", nuevo.UsuarioAsignacion.Id);
 
@@ -252,7 +252,77 @@ namespace negocio
                 datosUpdate.cerrarConexion();
             }
         }
+        public List<Turno> listarPorPaciente(int idPaciente)
+        {
+            List<Turno> lista = new List<Turno>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("SP_ListarTurnosPorPaciente");
+                datos.setearParametro("@IdPaciente", idPaciente);
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Turno aux = new Turno();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Fecha = (DateTime)datos.Lector["Fecha"];
+                    aux.HoraInicio = (TimeSpan)datos.Lector["HoraInicio"];
+                    aux.HoraFin = (TimeSpan)datos.Lector["HoraFin"];
+                    aux.Observaciones = datos.Lector["Observaciones"] == DBNull.Value ? "" : (string)datos.Lector["Observaciones"];
+                    aux.Diagnostico = datos.Lector["Diagnostico"] == DBNull.Value ? "" : (string)datos.Lector["Diagnostico"];
+                    aux.Estado = (string)datos.Lector["Estado"];
+                    aux.FechaAsignacion = (DateTime)datos.Lector["FechaAsignacion"];
 
+                    aux.Paciente = new Paciente
+                    {
+                        Id = (int)datos.Lector["IdPaciente"],
+                        Nombre = (string)datos.Lector["NombrePaciente"],
+                        Apellido = (string)datos.Lector["ApellidoPaciente"],
+                        Dni = (string)datos.Lector["DniPaciente"],
+                        Telefono = (string)datos.Lector["TelefonoPaciente"],
+                        Email = (string)datos.Lector["EmailPaciente"]
+                    };
 
+                    aux.Medico = new Medico
+                    {
+                        Id = (int)datos.Lector["IdMedico"],
+                        Nombre = (string)datos.Lector["NombreMedico"],
+                        Apellido = (string)datos.Lector["ApellidoMedico"],
+                        Matricula = (string)datos.Lector["MatriculaMedico"],
+                        Telefono = (string)datos.Lector["TelefonoMedico"],
+                        Email = (string)datos.Lector["EmailMedico"]
+                    };
+
+                    aux.Especialidad = new Especialidad
+                    {
+                        Id = (int)datos.Lector["IdEspecialidad"],
+                        Nombre = (string)datos.Lector["NombreEspecialidad"]
+                    };
+
+                    //este check es porque como antes no se guardaba esto ahora trae null y rompen
+                    if (datos.Lector["IdUsuarioAsignacion"] != DBNull.Value)
+                    {
+                        aux.UsuarioAsignacion = new Usuario
+                        {
+                            Id = (int)datos.Lector["IdUsuarioAsignacion"],
+                            User = (string)datos.Lector["NombreUsuarioAsignacion"]
+                        };
+                    }
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
     }
 }

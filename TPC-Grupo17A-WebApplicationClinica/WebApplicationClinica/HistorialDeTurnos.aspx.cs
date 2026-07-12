@@ -12,7 +12,8 @@ namespace WebApplicationClinica
     public partial class HistorialDeTurnos : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        { 
+        {
+
         }
     }
 }
