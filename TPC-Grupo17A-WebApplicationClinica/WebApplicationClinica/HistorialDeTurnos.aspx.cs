@@ -60,9 +60,41 @@ namespace WebApplicationClinica
         {
             if (e.CommandName == "VerDetalle")
             {
-                //crear el metodo que va a invocar aca, deberia llevar el id de turno
+                int idTurno = int.Parse(e.CommandArgument.ToString());
+                //aca le pone eso en la clase asi achica la dgv y el panel se muestra al costado
+                divDgvTurnos.Attributes["class"] = "col-7"; //divDgvTurnos es el id que le puse en el front con el runnat="server"
+                mostrarDetalleTurno(idTurno);
             }
         }
+
+        private void mostrarDetalleTurno(int idTurno)
+        {
+            //usamos la lista en session para buscar el turno
+            List<Turno> lista = Session["listaTurnosPaciente"] as List<Turno>;
+            if (lista == null) return;//Por si caducó la session
+
+            Turno turno = lista.Find(t => t.Id == idTurno);
+            if (turno == null) return;
+
+            lblDetalleFecha.Text = turno.Fecha.ToString("dd/MM/yyyy");
+            lblDetalleHorario.Text = turno.HoraInicio.ToString(@"hh\:mm") + " - " + turno.HoraFin.ToString(@"hh\:mm");
+            lblDetalleMedico.Text = turno.Medico.Apellido + ", " + turno.Medico.Nombre + " - Matricula: " + turno.Medico.Matricula;
+            lblDetalleEspecialidad.Text = turno.Especialidad.Nombre;
+            lblDetalleEstado.Text = turno.Estado;
+            lblDetalleObservaciones.Text = string.IsNullOrEmpty(turno.Observaciones) ? "" : turno.Observaciones;
+            lblDetalleDiagnostico.Text = string.IsNullOrEmpty(turno.Diagnostico) ? "" : turno.Diagnostico;
+            lblDetalleAsignado.Text = turno.UsuarioAsignacion != null ? turno.UsuarioAsignacion.User : "";
+            lblDetalleFechaAsignacion.Text = turno.FechaAsignacion.ToString("dd/MM/yyyy HH:mm");
+
+            pnlDetalleTurno.Visible = true; //Aca ponemos el panel en true para mostrar los detalles
+        }
+
+        protected void btnCerrarDetalle_Click(object sender, EventArgs e)
+        {
+            pnlDetalleTurno.Visible = false; //lo pone en false para cerrarlo
+            divDgvTurnos.Attributes["class"] = "col-12"; //vuelve a la grilla de tamaño completa
+        }
+
     }
 
 }
