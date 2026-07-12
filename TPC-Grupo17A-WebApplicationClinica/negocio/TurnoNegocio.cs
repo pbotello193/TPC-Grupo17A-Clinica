@@ -80,12 +80,12 @@ namespace negocio
             return lista.FindAll(x => x.Medico.Id == idMedico);
         }
 
-        public void agregar(Turno nuevo, int idUsuarioAsignacion) //nuevo parametro apra guardar quien asigno el turno
+        public void agregar(Turno nuevo, Usuario usuarioAsignacion) //nuevo parametro apra guardar quien asigno el turno
         {
             nuevo.Estado = "Asignado"; // seteamos el estado inicial del turno como "Asignado"
 
             //Con esto se setea automaticamente la duracion de una hora a partir de HoraInicio
-            nuevo.HoraFin = nuevo.HoraInicio.Add(new TimeSpan(1, 0, 0)); 
+            nuevo.HoraFin = nuevo.HoraInicio.Add(new TimeSpan(1, 0, 0));
 
             // Valida que no sea anterior a la fecha actual
             DateTime fechaTurnoCompleta = nuevo.Fecha.Date + nuevo.HoraInicio;
@@ -105,6 +105,9 @@ namespace negocio
             {
                 throw new Exception("El paciente ya tiene un turno agendado para ese día y horario.");
             }
+            //guardamos la info de hora y usuario que lo creo
+            nuevo.UsuarioAsignacion = usuarioAsignacion;
+            nuevo.FechaAsignacion = DateTime.Now;
 
             // Si pasa las validaciones, procedemos al insert
             AccesoDatos datosInsercion = new AccesoDatos();
@@ -122,9 +125,9 @@ namespace negocio
                 datosInsercion.setearParametro("@IdPaciente", nuevo.Paciente.Id);
                 datosInsercion.setearParametro("@IdMedico", nuevo.Medico.Id);
                 datosInsercion.setearParametro("@IdEspecialidad", nuevo.Especialidad.Id);
-                datosInsercion.setearParametro("@Estado", nuevo.Estado);
-                datosInsercion.setearParametro("@FechaAsignacion", DateTime.Now);
-                datosInsercion.setearParametro("@IdUsuarioAsignacion", idUsuarioAsignacion);
+                datosInsercion.setearParametro("@Estado", nuevo.Estado); 
+                datosInsercion.setearParametro("@FechaAsignacion", nuevo.FechaAsignacion);
+                datosInsercion.setearParametro("@IdUsuarioAsignacion", nuevo.UsuarioAsignacion.Id);
 
                 // El método ejecutarAccionScalar nos devuelve el ID generado por IDENTITY
                 nuevo.Id = datosInsercion.ejecutarAccionScalar();
@@ -249,5 +252,7 @@ namespace negocio
                 datosUpdate.cerrarConexion();
             }
         }
+
+
     }
 }

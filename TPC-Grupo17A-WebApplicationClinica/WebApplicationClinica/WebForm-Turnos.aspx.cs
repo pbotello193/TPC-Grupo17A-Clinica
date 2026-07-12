@@ -239,7 +239,7 @@ namespace WebApplicationClinica
                     }
                     //aca se obtiene el id del usuario en session para guardar quien asigna el turno
                     Usuario usuarioLogueado = Session["Usuario"] as Usuario;
-                    negocio.agregar(turnoSeleccionado, usuarioLogueado.Id);
+                    negocio.agregar(turnoSeleccionado, usuarioLogueado);
 
                     EmailService email = new EmailService();
                     string rutaPlantilla = Server.MapPath("~/MailTurnoConfirmado.html");

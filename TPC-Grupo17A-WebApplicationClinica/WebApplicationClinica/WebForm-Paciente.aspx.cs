@@ -57,7 +57,7 @@ namespace WebApplicationClinica
             if (e.CommandName == "VerHistorial")
             {
                 string id = e.CommandArgument.ToString();
-                Response.Redirect("HistorialTurnosPaciente.aspx?id=" + id, false);
+                Response.Redirect("HistorialDeTurnos.aspx?idPaciente=" + id, false);
             }
             else if (e.CommandName == "Editar")
             {
