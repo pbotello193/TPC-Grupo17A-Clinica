@@ -70,7 +70,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="card-title mb-0">Horarios y médicos disponibles</h5>
                             <asp:Button ID="btnBuscarTurnos" runat="server"
-                                Text="🔍 Buscar Días Disponibles"
+                                Text="Buscar horarios disponibles"
                                 CssClass="btn btn-primary btn-sm fw-bold px-3 shadow-sm"
                                 OnClick="btnBuscarTurnos_Click" />
                         </div>
