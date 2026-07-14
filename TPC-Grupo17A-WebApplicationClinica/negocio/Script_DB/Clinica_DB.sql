@@ -103,6 +103,11 @@ CREATE TABLE Usuarios (
     Pass VARCHAR(50) NOT NULL,
     TipoUser INT NOT NULL,
     IdMedico INT NULL, --null porque solo se completa para medicos
+    Nombre VARCHAR(50) NULL,
+    Apellido VARCHAR(50) NULL,
+    DNI VARCHAR(20) NULL,
+    Telefono VARCHAR(20) NULL,
+    Email VARCHAR(100) NULL,
     Activo BIT NOT NULL DEFAULT 1,
     CONSTRAINT UQ_Usuarios_Usuario UNIQUE (Usuario),
     CONSTRAINT FK_Usuarios_Roles FOREIGN KEY (TipoUser) REFERENCES Roles(Id),
@@ -245,10 +250,10 @@ VALUES
     (3, 'Medico', 'InicioMedico.aspx', 1);
 GO
 
-INSERT INTO Usuarios (Usuario, Pass, TipoUser, IdMedico, Activo)
+INSERT INTO Usuarios (Usuario, Pass, TipoUser, IdMedico, Nombre, Apellido, DNI, Telefono, Email, Activo)
 VALUES
-    ('admin', 'admin', 1, NULL, 1),
-    ('recepcion', 'recepcion', 2, NULL, 1),
+    ('admin', 'admin', 1, NULL, 'Camila', 'Suarez', '30111222', '1122334455', 'camila.suarez@clinica.com', 1),
+    ('recepcion', 'recepcion', 2, NULL, 'Valentina', 'Rodriguez', '32222333', '1133445566', 'valentina.rodriguez@clinica.com', 1),
     ('cgomez', 'cgomez', 3, 1, 1),
     ('mrodriguez', 'mrodriguez', 3, 2, 1),
     ('jmartinez', 'jmartinez', 3, 3, 1),

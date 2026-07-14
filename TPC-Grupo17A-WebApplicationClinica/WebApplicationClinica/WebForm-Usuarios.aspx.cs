@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using negocio;
 
 namespace WebApplicationClinica
 {
@@ -11,7 +12,14 @@ namespace WebApplicationClinica
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+                cargarPersonalAdministrativo();
+        }
+        private void cargarPersonalAdministrativo()
+        {
+            UsuarioNegocio negocio = new UsuarioNegocio();
+            dgvUsuarios.DataSource = negocio.listarPersonalAdministrativo();
+            dgvUsuarios.DataBind();
         }
     }
 }

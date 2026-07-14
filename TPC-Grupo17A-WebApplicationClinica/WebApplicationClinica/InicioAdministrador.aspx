@@ -95,8 +95,8 @@
                         <div class="rounded-circle bg-info-subtle bg-opacity-10 text-info-emphasis d-inline-flex align-items-center justify-content-center mb-3" style="width: 56px; height: 56px;">
                             <i class="bi bi-person-gear fs-3"></i>
                         </div>
-                        <h5 class="card-title fw-bold">Usuarios</h5>
-                        <p class="card-text text-muted">Administrar cuentas de acceso.</p>
+                        <h5 class="card-title fw-bold">Personal Administrativo</h5>
+                        <p class="card-text text-muted">Administrar usuarios administradores y recepcionistas.</p>
                         <a href="WebForm-Usuarios.aspx" class="btn btn-dark mt-auto align-self-start" aria-disabled="true">Ingresar</a>
                     </div>
                 </div>

@@ -28,7 +28,7 @@ namespace negocio
                     usuario.PaginaInicio = (string)datos.Lector["PaginaInicio"];
                     usuario.IdMedico = datos.Lector["IdMedico"] == DBNull.Value ? (int?)null : (int)datos.Lector["IdMedico"];
                     usuario.NombreMostrar = (string)datos.Lector["NombreMostrar"];
-                    
+
                     return true;
                 }
 
@@ -92,6 +92,44 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-    }
+    
+    public List<Usuario> listarPersonalAdministrativo()
+        {
+            List<Usuario> lista = new List<Usuario>();
+            AccesoDatos datos = new AccesoDatos();
 
+            try
+            {
+                datos.setearConsulta("SELECT U.Id, U.Usuario, U.TipoUser, R.Nombre AS Rol, U.Nombre, U.Apellido, U.DNI, U.Telefono, U.Email, U.Activo FROM Usuarios U INNER JOIN Roles R ON R.Id = U.TipoUser WHERE U.TipoUser IN (1, 2) ORDER BY U.Apellido, U.Nombre");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Usuario aux = new Usuario();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.User = (string)datos.Lector["Usuario"];
+                    aux.TipoUsuario = (TipoUsuario)(int)datos.Lector["TipoUser"];
+                    aux.Rol = (string)datos.Lector["Rol"];
+                    aux.Nombre = datos.Lector["Nombre"] == DBNull.Value ? "" : (string)datos.Lector["Nombre"];
+                    aux.Apellido = datos.Lector["Apellido"] == DBNull.Value ? "" : (string)datos.Lector["Apellido"];
+                    aux.DNI = datos.Lector["DNI"] == DBNull.Value ? "" : (string)datos.Lector["DNI"];
+                    aux.Telefono = datos.Lector["Telefono"] == DBNull.Value ? "" : (string)datos.Lector["Telefono"];
+                    aux.Email = datos.Lector["Email"] == DBNull.Value ? "" : (string)datos.Lector["Email"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+    }
 }
