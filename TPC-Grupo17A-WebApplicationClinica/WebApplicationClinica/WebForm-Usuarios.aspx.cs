@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using dominio;
 using negocio;
 
 namespace WebApplicationClinica
@@ -18,7 +19,47 @@ namespace WebApplicationClinica
         private void cargarPersonalAdministrativo()
         {
             UsuarioNegocio negocio = new UsuarioNegocio();
-            dgvUsuarios.DataSource = negocio.listarPersonalAdministrativo();
+            List<Usuario> lista = negocio.listarPersonalAdministrativo();
+
+            if (ddlEstadoUsuarios.SelectedValue == "activos")
+                lista = lista.FindAll(x => x.Activo);
+            else if (ddlEstadoUsuarios.SelectedValue == "inactivos")
+                lista = lista.FindAll(x => !x.Activo);
+
+            if (ddlRolUsuarios.SelectedValue == "admin")
+                lista = lista.FindAll(x => x.TipoUsuario == TipoUsuario.Administrador);
+            else if (ddlRolUsuarios.SelectedValue == "recepcion")
+                lista = lista.FindAll(x => x.TipoUsuario == TipoUsuario.Recepcionista);
+
+            Session["listaPersonalAdministrativo"] = lista;
+            dgvUsuarios.DataSource = lista;
+            dgvUsuarios.DataBind();
+        }
+
+        protected void ddlEstadoUsuarios_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtBuscar.Text = string.Empty;
+            cargarPersonalAdministrativo();
+        }
+
+        protected void ddlRolUsuarios_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtBuscar.Text = string.Empty;
+            cargarPersonalAdministrativo();
+        }
+
+        protected void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            List<Usuario> lista = (List<Usuario>)Session["listaPersonalAdministrativo"];
+            string filtro = txtBuscar.Text.Trim().ToUpper();
+
+            List<Usuario> listaFiltrada = lista.FindAll(x =>
+                x.Apellido.ToUpper().Contains(filtro) ||
+                x.Nombre.ToUpper().Contains(filtro) ||
+                x.DNI.Contains(filtro)
+            );
+
+            dgvUsuarios.DataSource = listaFiltrada;
             dgvUsuarios.DataBind();
         }
     }
