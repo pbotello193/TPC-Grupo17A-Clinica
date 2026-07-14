@@ -94,6 +94,7 @@ namespace WebApplicationClinica
                 lnkMisTurnos.Visible = true;
                 lnkMisTurnos.InnerText = "Agenda Médicos";
                 lnkMisTurnos.HRef = "AgendaMedicos.aspx";
+                lnkUsuarios.Visible = true;
             }
             else if (Seguridad.EsRecepcionista(usuario))
             {
@@ -120,6 +121,7 @@ namespace WebApplicationClinica
             lnkEspecialidades.Visible = false;
             lnkHorariosMedicos.Visible = false;
             lnkMisTurnos.Visible = false;
+            lnkUsuarios.Visible = false;
         }
 
         protected void lnkLogin_Click(object sender, EventArgs e)

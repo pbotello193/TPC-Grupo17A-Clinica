@@ -105,6 +105,15 @@ namespace WebApplicationClinica
         protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkMisTurnos;
 
         /// <summary>
+        /// Control lnkUsuarios.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkUsuarios;
+
+        /// <summary>
         /// Control lnkLogin.
         /// </summary>
         /// <remarks>
