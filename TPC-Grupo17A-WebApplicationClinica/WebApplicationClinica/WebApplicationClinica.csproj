@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AgendaMedicos.aspx" />
+    <Content Include="AtencionTurno.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="FormularioEspecialidad.aspx" />
     <Content Include="FormularioMedico.aspx" />
@@ -97,6 +98,13 @@
     </Compile>
     <Compile Include="AgendaMedicos.aspx.designer.cs">
       <DependentUpon>AgendaMedicos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AtencionTurno.aspx.cs">
+      <DependentUpon>AtencionTurno.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AtencionTurno.aspx.designer.cs">
+      <DependentUpon>AtencionTurno.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
