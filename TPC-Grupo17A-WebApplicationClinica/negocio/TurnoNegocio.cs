@@ -324,5 +324,54 @@ namespace negocio
             }
 
         }
+        public List<Turno> listarAgendaMedico(int idMedico)
+        {
+            List<Turno> lista = new List<Turno>();
+            AccesoDatos datosLocal = new AccesoDatos();
+
+            try
+            {
+                string consulta = "SELECT T.Id, T.Fecha, T.HoraInicio, T.HoraFin, T.Observaciones, T.Estado, P.Id AS IdPaciente, P.Nombre AS NombrePaciente, P.Apellido AS ApellidoPaciente, " +
+                                    "E.Id AS IdEspecialidad, E.Nombre AS Especialidad FROM Turnos T INNER JOIN Pacientes P ON P.Id = T.IdPaciente INNER JOIN Especialidades E ON E.Id = T.IdEspecialidad " +
+                                    "WHERE T.IdMedico = @IdMedico AND T.Estado IN ('Asignado', 'Reprogramado') ORDER BY T.Fecha, T.HoraInicio";
+
+                datosLocal.setearConsulta(consulta);
+                datosLocal.setearParametro("@IdMedico", idMedico);
+                datosLocal.ejecutarLectura();
+
+                while (datosLocal.Lector.Read())
+                {
+                    Turno aux = new Turno();
+
+                    aux.Id = (int)datosLocal.Lector["Id"];
+                    aux.Fecha = (DateTime)datosLocal.Lector["Fecha"];
+                    aux.HoraInicio = (TimeSpan)datosLocal.Lector["HoraInicio"];
+                    aux.HoraFin = (TimeSpan)datosLocal.Lector["HoraFin"];
+                    aux.Observaciones = datosLocal.Lector["Observaciones"].ToString();
+                    aux.Estado = datosLocal.Lector["Estado"].ToString();
+
+                    aux.Paciente = new Paciente();
+                    aux.Paciente.Id = (int)datosLocal.Lector["IdPaciente"];
+                    aux.Paciente.Nombre = datosLocal.Lector["NombrePaciente"].ToString();
+                    aux.Paciente.Apellido = datosLocal.Lector["ApellidoPaciente"].ToString();
+
+                    aux.Especialidad = new Especialidad();
+                    aux.Especialidad.Id = (int)datosLocal.Lector["IdEspecialidad"];
+                    aux.Especialidad.Nombre = datosLocal.Lector["Especialidad"].ToString();
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datosLocal.cerrarConexion();
+            }
+        }
     }
 }
