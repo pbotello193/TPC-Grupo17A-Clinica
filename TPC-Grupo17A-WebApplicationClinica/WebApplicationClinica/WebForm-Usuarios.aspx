@@ -54,7 +54,7 @@
         </div>
 
         <div class="mb-3">
-            <a href="#" class="btn btn-primary">Agregar Usuario</a>
+            <a href="FormularioUsuario.aspx" class="btn btn-primary">Agregar Usuario</a>
         </div>
     </div>
 </asp:Content>

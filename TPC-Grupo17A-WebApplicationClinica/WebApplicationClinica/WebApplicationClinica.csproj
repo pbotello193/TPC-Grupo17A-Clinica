@@ -73,6 +73,7 @@
     <Content Include="FormularioMedico.aspx" />
     <Content Include="FormularioPaciente.aspx" />
     <Content Include="FormularioTurnoDeTrabajo.aspx" />
+    <Content Include="FormularioUsuario.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HistorialDeTurnos.aspx" />
     <Content Include="InicioAdministrador.aspx" />
@@ -131,6 +132,13 @@
     </Compile>
     <Compile Include="FormularioTurnoDeTrabajo.aspx.designer.cs">
       <DependentUpon>FormularioTurnoDeTrabajo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormularioUsuario.aspx.cs">
+      <DependentUpon>FormularioUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioUsuario.aspx.designer.cs">
+      <DependentUpon>FormularioUsuario.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
