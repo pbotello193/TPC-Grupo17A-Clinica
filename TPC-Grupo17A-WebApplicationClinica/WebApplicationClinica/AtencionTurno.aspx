@@ -9,7 +9,7 @@
                 <h2 class="fw-bold mb-1 text-dark">Consulta Médica</h2>
                 <div class="align-items-center">
                     <label class="form-label d-inline-block fw-bold text-secondary mb-0">Paciente: </label>
-                    <asp:Label ID="lblNombrePaciente" runat="server" CssClass="fw-bold text-primary me-3 fs-5" />
+                    <asp:Label ID="lblNombrePaciente" runat="server" CssClass="fw-bold text-dark me-3 fs-5" />
                 </div>
             </div>
             <a href="MisTurnosMedicos.aspx" class="btn btn-outline-secondary shadow-sm">Volver a la Agenda</a>
@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="bg-light border-4 border-primary mb-2 p-2 rounded-3">
-                            <label class="d-block fw-bold small text-secondary mb-1">Observaciones:</label>
+                            <label class="d-block fw-bold small text-secondary mb-1">Observaciones previas:</label>
                             <asp:Label ID="lblObservaciones" runat="server" CssClass="text-dark d-block text-wrap" />
                         </div>
                     </div>
@@ -56,11 +56,12 @@
                         <div class="mb-4">
                             <label for="txtDiagnostico" class="form-label fw-bold text-dark mb-2">Diagnóstico, Tratamiento e Indicaciones</label>
                             <asp:TextBox ID="txtDiagnostico" runat="server" TextMode="MultiLine" Rows="7" CssClass="form-control shadow-sm" />
+                            <asp:Label ID="lblMensajeError" runat="server" ForeColor="Red" Font-Bold="true" Visible="false"></asp:Label>
+                        </div>
 
                         <div class="pt-3 border-top d-flex justify-content-center gap-3">
                             <asp:Button ID="btnGuardarAsistio" runat="server" Text="Registrar Atención"
-                                CssClass="btn btn-primary fw-bold shadow-sm py-2 px-4" ValidationGroup="GrupoAsistencia"
-                                OnClick="btnGuardarAsistio_Click" />
+                                CssClass="btn btn-primary fw-semibold shadow-sm py-2 px-4" OnClick="btnGuardarAsistio_Click" />
 
                             <asp:Button ID="btnRegistrarInasistencia" runat="server" Text="Registrar Inasistencia"
                                 CssClass="btn btn-outline-danger fw-semibold py-2 px-4" OnClick="btnRegistrarInasistencia_Click" />

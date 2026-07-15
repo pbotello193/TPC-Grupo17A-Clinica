@@ -19,7 +19,7 @@
                     CssClass="table table-striped table-hover align-middle m-0"
                     AutoGenerateColumns="false"
                     ShowHeaderWhenEmpty="true"
-                    EmptyDataText="No tiene turnos asignados para hoy."
+                    EmptyDataText="No tiene mas turnos asignados para hoy."
                     DataKeyNames="Id"
                     OnRowCommand="dgvMisTurnos_RowCommand">
                     <Columns>

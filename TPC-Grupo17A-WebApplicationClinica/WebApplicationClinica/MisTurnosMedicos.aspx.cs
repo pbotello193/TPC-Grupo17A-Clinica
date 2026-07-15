@@ -63,12 +63,21 @@ namespace WebApplicationClinica
 
         protected void dgvMisTurnos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            try
+            {
             if (e.CommandName == "AbrirTurno")
             {
                 string idTurno = e.CommandArgument.ToString();
                 Response.Redirect("AtencionTurno.aspx?id=" + idTurno, false);
             }
-        }
+   
 
+            }
+            catch (Exception ex)
+            {
+                lblMensajeError.Text = ex.Message;
+                lblMensajeError.Visible = true;
+            }
+        }
     }
 }
