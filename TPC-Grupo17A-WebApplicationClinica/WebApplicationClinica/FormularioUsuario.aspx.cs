@@ -14,7 +14,34 @@ namespace WebApplicationClinica
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            try
+            {
+                string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
 
+                if (id != "" && !IsPostBack)
+                {
+                    UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+                    Usuario usuario = usuarioNegocio.obtenerPersonalAdministrativoPorId(int.Parse(id));
+
+                    if (usuario != null)
+                    {
+                        ddlRol.SelectedValue = ((int)usuario.TipoUsuario).ToString();
+                        txtApellido.Text = usuario.Apellido;
+                        txtNombre.Text = usuario.Nombre;
+                        txtDni.Text = usuario.DNI;
+                        txtTelefono.Text = usuario.Telefono;
+                        txtEmail.Text = usuario.Email;
+                        txtUsuario.Text = usuario.User;
+                        txtPassword.Text = usuario.Pass;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                lblErrorGeneral.Text = "No se pudo cargar el personal administrativo.";
+                lblErrorGeneral.Visible = true;
+            }
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)

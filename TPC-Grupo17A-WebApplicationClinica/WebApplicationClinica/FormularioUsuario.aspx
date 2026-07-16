@@ -6,7 +6,6 @@
     <div class="container">
         <div class="row">
             <div class="col-6">
-                <h2 class="mb-4">Agregar personal administrativo</h2>
 
                 <div class="mb-3">
                     <asp:Label ID="lblErrorGeneral" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
@@ -68,11 +67,14 @@
 
 
                 <div class="mb-3">
-                    <asp:Button Text="Aceptar" runat="server" ID="btnAceptar" class="btn btn-primary" OnClick="btnAceptar_Click"/>
+                    <asp:Button Text="Aceptar" runat="server" ID="btnAceptar" class="btn btn-primary" OnClick="btnAceptar_Click" />
                     <a href="WebForm-Usuarios.aspx" class="btn btn-danger">Cancelar</a>
                 </div>
             </div>
         </div>
     </div>
 </asp:Content>
+
+
+
 

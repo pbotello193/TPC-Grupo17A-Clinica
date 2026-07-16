@@ -62,5 +62,14 @@ namespace WebApplicationClinica
             dgvUsuarios.DataSource = listaFiltrada;
             dgvUsuarios.DataBind();
         }
+
+        protected void dgvUsuarios_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Editar")
+            {
+                string id = e.CommandArgument.ToString();
+                Response.Redirect("FormularioUsuario.aspx?id=" + id, false);
+            }
+        }
     }
 }

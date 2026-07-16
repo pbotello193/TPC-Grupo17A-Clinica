@@ -33,6 +33,8 @@
             <asp:GridView ID="dgvUsuarios" runat="server"
                 CssClass="table table-striped table-hover align-middle"
                 AutoGenerateColumns="false"
+                DataKeyNames="Id"
+                OnRowCommand="dgvUsuarios_RowCommand"
                 ShowHeaderWhenEmpty="true"
                 EmptyDataText="No se encontró personal administrativo.">
                 <Columns>
@@ -47,6 +49,13 @@
                             <span class='<%# (bool)Eval("Activo") ? "badge bg-success" : "badge bg-secondary" %>'>
                                 <%# (bool)Eval("Activo") ? "Activo" : "Inactivo" %>
                             </span>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Acción">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="btnEditar" runat="server" CommandName="Editar" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-outline-primary">
+            Editar
+        </asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

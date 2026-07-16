@@ -29,6 +29,7 @@ namespace WebApplicationClinica
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
                 if (id != "" && !IsPostBack)
                 {
+                    pnlId.Visible = true;
                     List<Medico> listaMedicos = (List<Medico>)Session["listaMedicos"];
                     Medico aux = listaMedicos.Find(x => x.Id == int.Parse(id));
 
