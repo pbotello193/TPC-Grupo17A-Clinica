@@ -60,6 +60,7 @@ namespace WebApplicationClinica
                     lblEspecialidad.Text = seleccionado.Especialidad.Nombre;
                     lblObservaciones.Text = string.IsNullOrEmpty(seleccionado.Observaciones) ? "" : seleccionado.Observaciones;
                     txtDiagnostico.Text = seleccionado.Diagnostico ?? "";
+                    cargarHistorialClinico(seleccionado.Paciente.Id, seleccionado.Id);
 
                     //Aca evitamos que pueda registrar diagnostico y asistencia/inasistencia si no es un turno del dia
                     if (seleccionado.Fecha.Date != DateTime.Today)
@@ -79,6 +80,43 @@ namespace WebApplicationClinica
                 Response.Redirect("MisTurnosMedicos.aspx", false);
             }
         }
+
+        private void cargarHistorialClinico(int idPaciente, int idTurnoActual)
+        {
+            TurnoNegocio negocio = new TurnoNegocio();
+            try
+            {
+                // Obtenemos todos los turnos del paciente
+                List<Turno> historial = negocio.listarPorPaciente(idPaciente);
+
+                // Filtros, turno actual (id), estado asistio y orden por fecha descendiente
+                var atencionesAnteriores = historial
+                    .Where(t => t.Id != idTurnoActual && t.Estado == "Asistió")
+                    .OrderByDescending(t => t.Fecha)
+                    .ThenByDescending(t => t.HoraInicio)
+                    .ToList();
+
+                if (atencionesAnteriores.Count > 0)
+                {
+                    rptHistorialClinico.DataSource = atencionesAnteriores;
+                    rptHistorialClinico.DataBind();
+                    rptHistorialClinico.Visible = true;
+                    lblSinHistorial.Visible = false;
+                }
+                else
+                {
+                    rptHistorialClinico.Visible = false;
+                    lblSinHistorial.Visible = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("Error al cargar historial", ex);
+                lblMensajeError.Text = "No se pudo cargar el historial clínico: " + ex.Message;
+                lblMensajeError.Visible = true;
+            }
+        }
+
 
         protected void btnGuardarAsistio_Click(object sender, EventArgs e)
         {

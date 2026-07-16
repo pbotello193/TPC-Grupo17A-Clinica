@@ -66,8 +66,8 @@ CREATE TABLE Turnos (
     IdEspecialidad INT NOT NULL,
     Estado VARCHAR(50) NOT NULL DEFAULT 'Pendiente', 
 	FechaAsignacion DATETIME NOT NULL DEFAULT GETDATE(),
-	IdUsuarioAsignacion INT NULL
-	CONSTRAINT FK_Turnos_Usuarios FOREIGN KEY REFERENCES Usuarios(Id),
+	IdUsuarioAsignacion INT NULL,
+    CONSTRAINT FK_Turnos_Usuarios FOREIGN KEY (IdUsuarioAsignacion) REFERENCES Usuarios(Id),
     CONSTRAINT FK_Turno_Paciente FOREIGN KEY (IdPaciente) REFERENCES Pacientes(Id),
     CONSTRAINT FK_Turno_Medico FOREIGN KEY (IdMedico) REFERENCES Medicos(Id),
     CONSTRAINT FK_Turno_Especialidad FOREIGN KEY (IdEspecialidad) REFERENCES Especialidades(Id)

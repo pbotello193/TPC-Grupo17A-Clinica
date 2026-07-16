@@ -71,5 +71,54 @@
             </div>
 
         </div>
+                <!-- Historial Clínico del Paciente -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card shadow-sm border-0 bg-white rounded-3">
+                    <div class="card-header bg-info text-white py-2 d-flex justify-content-between align-items-center">
+                        <span class="fw-bold fs-5"><i class="bi bi-journal-medical me-2"></i>Historial Clínico del Paciente</span>
+                    </div>
+                    <div class="card-body p-4">
+                        <!-- Repeater de ASP.NET enlazado al acordeón de Bootstrap -->
+                        <asp:Repeater ID="rptHistorialClinico" runat="server">
+                            <HeaderTemplate>
+                                <div class="accordion" id="accordionHistorial">
+                            </HeaderTemplate>
+                            <ItemTemplate>
+                                <div class="accordion-item mb-2 border rounded">
+                                    <h2 class="accordion-header" id='heading<%# Eval("Id") %>'>
+                                        <!-- Botón que funciona como tarjeta resumida -->
+                                        <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target='#collapse<%# Eval("Id") %>' aria-expanded="false" aria-controls='collapse<%# Eval("Id") %>'>
+                                            <div class="d-flex w-100 justify-content-between me-3 text-secondary">
+                                                <span><i class="bi bi-calendar-event me-1"></i><strong><%# Convert.ToDateTime(Eval("Fecha")).ToString("dd/MM/yyyy") %></strong></span>
+                                                <span><strong>Esp:</strong> <%# Eval("Especialidad.Nombre") %></span>
+                                                <span class="text-truncate" style="max-width: 300px;"><strong>Motivo:</strong> <%# Eval("Observaciones") %></span>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <!-- Contenido oculto que se expande al clickear -->
+                                    <div id='collapse<%# Eval("Id") %>' class="accordion-collapse collapse" aria-labelledby='heading<%# Eval("Id") %>' data-bs-parent="#accordionHistorial">
+                                        <div class="accordion-body bg-white">
+                                            <h6 class="fw-bold text-primary mb-2">Diagnóstico e Indicaciones:</h6>
+                                            <p class="mb-0 text-dark">
+                                                <%# string.IsNullOrEmpty(Eval("Diagnostico") as string) ? "<em class='text-muted'>No se registró diagnóstico.</em>" : Eval("Diagnostico") %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                </div>
+                            </FooterTemplate>
+                        </asp:Repeater>
+                        
+                        <!-- Mensaje por si es la primera vez que se atiende -->
+                        <asp:Label ID="lblSinHistorial" runat="server" CssClass="text-muted fw-semibold" Visible="false">
+                            <i class="bi bi-info-circle me-1"></i> El paciente no posee atenciones médicas previas registradas en el sistema.
+                        </asp:Label>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </asp:Content>
