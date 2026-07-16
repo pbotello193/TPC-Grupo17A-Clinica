@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Text.RegularExpressions;
+using negocio;
 
 namespace WebApplicationClinica
 {
@@ -12,6 +14,126 @@ namespace WebApplicationClinica
         protected void Page_Load(object sender, EventArgs e)
         {
 
+        }
+        protected void btnAceptar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!ValidarPersonalAdministrativo())
+                    return;
+
+                if (!ValidarUsuarioAdministrativo())
+                    return;
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                lblErrorGeneral.Text = "No se pudo validar el personal administrativo. Revise los datos ingresados o intente nuevamente.";
+                lblErrorGeneral.Visible = true;
+            }
+        }
+        private bool ValidarPersonalAdministrativo()
+        {
+            LimpiarMensajesValidacionUsuario();
+
+            if (ddlRol.SelectedValue == "" || txtNombre.Text.Trim() == "" || txtApellido.Text.Trim() == "" || txtDni.Text.Trim() == "" || txtTelefono.Text.Trim() == "" || txtEmail.Text.Trim() == "")
+            {
+                lblErrorGeneral.Text = "Complete todos los campos.";
+                lblErrorGeneral.Visible = true;
+                return false;
+            }
+
+            if (ddlRol.SelectedValue == "")
+            {
+                lblErrorRol.Text = "Seleccione un rol.";
+                lblErrorRol.Visible = true;
+                return false;
+            }
+
+            string apellido = txtApellido.Text.Trim();
+            if (!Regex.IsMatch(apellido, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ' ]{2,30}$"))
+            {
+                lblErrorApellido.Text = "El apellido debe tener entre 2 y 30 caracteres y solo puede contener letras y espacios.";
+                lblErrorApellido.Visible = true;
+                return false;
+            }
+
+            string nombre = txtNombre.Text.Trim();
+            if (!Regex.IsMatch(nombre, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ' ]{2,30}$"))
+            {
+                lblErrorNombre.Text = "El nombre debe tener entre 2 y 30 caracteres y solo puede contener letras y espacios.";
+                lblErrorNombre.Visible = true;
+                return false;
+            }
+
+            string dni = txtDni.Text.Trim();
+            if (!Regex.IsMatch(dni, @"^[0-9]{7,8}$"))
+            {
+                lblErrorDni.Text = "El DNI debe contener entre 7 y 8 números, sin puntos ni espacios.";
+                lblErrorDni.Visible = true;
+                return false;
+            }
+
+            string telefono = txtTelefono.Text.Trim();
+            if (!Regex.IsMatch(telefono, @"^\+?[0-9]{10,13}$"))
+            {
+                lblErrorTelefono.Text = "El teléfono debe contener entre 10 y 13 números. Puede comenzar con el signo +.";
+                lblErrorTelefono.Visible = true;
+                return false;
+            }
+
+            string email = txtEmail.Text.Trim().ToLower();
+            if (email.Length > 50 || !Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                lblErrorEmail.Text = "Ingrese un correo electrónico válido de hasta 50 caracteres.";
+                lblErrorEmail.Visible = true;
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidarUsuarioAdministrativo()
+        {
+            string usuario = txtUsuario.Text.Trim();
+            string password = txtPassword.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(usuario))
+            {
+                lblErrorUsuario.Text = "Ingrese el usuario.";
+                lblErrorUsuario.Visible = true;
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                lblErrorPassword.Text = "Ingrese la contraseña.";
+                lblErrorPassword.Visible = true;
+                return false;
+            }
+
+            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+            if (usuarioNegocio.existeUsuario(usuario))
+            {
+                lblErrorUsuario.Text = "Ya existe un usuario con ese nombre.";
+                lblErrorUsuario.Visible = true;
+                return false;
+            }
+
+            return true;
+        }
+
+        private void LimpiarMensajesValidacionUsuario()
+        {
+            lblErrorGeneral.Visible = false;
+            lblErrorRol.Visible = false;
+            lblErrorNombre.Visible = false;
+            lblErrorApellido.Visible = false;
+            lblErrorDni.Visible = false;
+            lblErrorTelefono.Visible = false;
+            lblErrorEmail.Visible = false;
+            lblErrorUsuario.Visible = false;
+            lblErrorPassword.Visible = false;
         }
     }
 }

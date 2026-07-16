@@ -15,6 +15,7 @@
                 <div class="mb-3">
                     <label for="ddlRol" class="form-label">Rol</label>
                     <asp:DropDownList ID="ddlRol" runat="server" CssClass="form-select">
+                        <asp:ListItem Text="Seleccione un rol" Value="" />
                         <asp:ListItem Text="Administrador" Value="1" />
                         <asp:ListItem Text="Recepcionista" Value="2" />
                     </asp:DropDownList>
@@ -67,7 +68,7 @@
 
 
                 <div class="mb-3">
-                    <asp:Button Text="Aceptar" runat="server" ID="btnAceptar" class="btn btn-primary" />
+                    <asp:Button Text="Aceptar" runat="server" ID="btnAceptar" class="btn btn-primary" OnClick="btnAceptar_Click"/>
                     <a href="WebForm-Usuarios.aspx" class="btn btn-danger">Cancelar</a>
                 </div>
             </div>
