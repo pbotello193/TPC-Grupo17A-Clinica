@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Text.RegularExpressions;
+using dominio;
 using negocio;
 
 namespace WebApplicationClinica
@@ -15,6 +16,7 @@ namespace WebApplicationClinica
         {
 
         }
+
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
             try
@@ -24,11 +26,26 @@ namespace WebApplicationClinica
 
                 if (!ValidarUsuarioAdministrativo())
                     return;
+
+                Usuario usuario = new Usuario();
+                UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+
+                usuario.TipoUsuario = (TipoUsuario)int.Parse(ddlRol.SelectedValue);
+                usuario.Apellido = txtApellido.Text.Trim();
+                usuario.Nombre = txtNombre.Text.Trim();
+                usuario.DNI = txtDni.Text.Trim();
+                usuario.Telefono = txtTelefono.Text.Trim();
+                usuario.Email = txtEmail.Text.Trim().ToLower();
+                usuario.User = txtUsuario.Text.Trim();
+                usuario.Pass = txtPassword.Text.Trim();
+
+                usuarioNegocio.agregarPersonalAdministrativo(usuario);
+                Response.Redirect("WebForm-Usuarios.aspx", false);
             }
             catch (Exception ex)
             {
                 Session.Add("error", ex);
-                lblErrorGeneral.Text = "No se pudo validar el personal administrativo. Revise los datos ingresados o intente nuevamente.";
+                lblErrorGeneral.Text = "No se pudo guardar el personal administrativo. Revise los datos ingresados o intente nuevamente.";
                 lblErrorGeneral.Visible = true;
             }
         }

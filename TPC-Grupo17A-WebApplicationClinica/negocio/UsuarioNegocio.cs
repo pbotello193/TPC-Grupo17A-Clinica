@@ -92,8 +92,36 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-    
-    public List<Usuario> listarPersonalAdministrativo()
+
+        public void agregarPersonalAdministrativo(Usuario usuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("INSERT INTO Usuarios (Usuario, Pass, TipoUser, IdMedico, Nombre, Apellido, DNI, Telefono, Email, Activo) VALUES (@Usuario, @Pass, @TipoUser, NULL, @Nombre, @Apellido, @DNI, @Telefono, @Email, 1)");
+                datos.setearParametro("@Usuario", usuario.User);
+                datos.setearParametro("@Pass", usuario.Pass);
+                datos.setearParametro("@TipoUser", (int)usuario.TipoUsuario);
+                datos.setearParametro("@Nombre", usuario.Nombre);
+                datos.setearParametro("@Apellido", usuario.Apellido);
+                datos.setearParametro("@DNI", usuario.DNI);
+                datos.setearParametro("@Telefono", usuario.Telefono);
+                datos.setearParametro("@Email", usuario.Email);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<Usuario> listarPersonalAdministrativo()
         {
             List<Usuario> lista = new List<Usuario>();
             AccesoDatos datos = new AccesoDatos();
