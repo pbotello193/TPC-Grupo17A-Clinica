@@ -17,6 +17,7 @@ namespace negocio
             try
             {
                 string consulta = "SELECT T.Id, T.Fecha, T.HoraInicio, T.HoraFin, T.Observaciones, T.Diagnostico, T.Estado, " +
+                                  "T.Indicaciones, T.Receta, T.EstudiosSolicitados, T.SignosVitales, " +
                                   "P.Id AS IdPaciente, P.Nombre AS NombrePaciente, P.Apellido AS ApellidoPaciente, P.Email AS EmailPaciente, P.DNI AS DniPaciente, P.Telefono AS TelefonoPaciente, " +
                                   "M.Id AS IdMedico, M.Nombre AS NombreMedico, M.Apellido AS ApellidoMedico, M.Matricula AS MatriculaMedico, M.Telefono AS TelefonoMedico, M.Email AS EmailMedico, " +
                                   "E.Id AS IdEspecialidad, E.Nombre AS NombreEspecialidad " +
@@ -36,6 +37,10 @@ namespace negocio
                     aux.HoraFin = (TimeSpan)datos.Lector["HoraFin"];
                     aux.Observaciones = (string)datos.Lector["Observaciones"];
                     aux.Diagnostico = datos.Lector["Diagnostico"] == DBNull.Value ? "" : (string)datos.Lector["Diagnostico"];
+                    aux.Indicaciones = datos.Lector["Indicaciones"] == DBNull.Value ? "" : (string)datos.Lector["Indicaciones"];
+                    aux.Receta = datos.Lector["Receta"] == DBNull.Value ? "" : (string)datos.Lector["Receta"];
+                    aux.EstudiosSolicitados = datos.Lector["EstudiosSolicitados"] == DBNull.Value ? "" : (string)datos.Lector["EstudiosSolicitados"];
+                    aux.SignosVitales = datos.Lector["SignosVitales"] == DBNull.Value ? "" : (string)datos.Lector["SignosVitales"];
                     aux.Estado = (string)datos.Lector["Estado"];
                     aux.Paciente = new Paciente
                     {
@@ -272,6 +277,11 @@ namespace negocio
                     aux.Diagnostico = datos.Lector["Diagnostico"] == DBNull.Value ? "" : (string)datos.Lector["Diagnostico"];
                     aux.Estado = (string)datos.Lector["Estado"];
                     aux.FechaAsignacion = (DateTime)datos.Lector["FechaAsignacion"];
+                    aux.Indicaciones = datos.Lector["Indicaciones"] == DBNull.Value ? "" : (string)datos.Lector["Indicaciones"];
+                    aux.Receta = datos.Lector["Receta"] == DBNull.Value ? "" : (string)datos.Lector["Receta"];
+                    aux.EstudiosSolicitados = datos.Lector["EstudiosSolicitados"] == DBNull.Value ? "" : (string)datos.Lector["EstudiosSolicitados"];
+                    aux.SignosVitales = datos.Lector["SignosVitales"] == DBNull.Value ? "" : (string)datos.Lector["SignosVitales"];
+
 
                     aux.Paciente = new Paciente
                     {
@@ -371,6 +381,30 @@ namespace negocio
             finally
             {
                 datosLocal.cerrarConexion();
+            }
+        }
+        public void registrarAtencion(int idTurno, string diagnostico, string indicaciones, string receta, string estudiosSolicitados, string signosVitales)
+        {
+            AccesoDatos datosUpdate = new AccesoDatos();
+            try
+            {
+                string consulta = "UPDATE Turnos SET Estado = 'Asistió', Diagnostico = @Diagnostico, Indicaciones = @Indicaciones, Receta = @Receta, EstudiosSolicitados = @EstudiosSolicitados, SignosVitales = @SignosVitales WHERE Id = @Id";
+                datosUpdate.setearConsulta(consulta);
+                datosUpdate.setearParametro("@Diagnostico", diagnostico ?? "");
+                datosUpdate.setearParametro("@Indicaciones", indicaciones ?? "");
+                datosUpdate.setearParametro("@Receta", receta ?? "");
+                datosUpdate.setearParametro("@EstudiosSolicitados", estudiosSolicitados ?? "");
+                datosUpdate.setearParametro("@SignosVitales", signosVitales ?? "");
+                datosUpdate.setearParametro("@Id", idTurno);
+                datosUpdate.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datosUpdate.cerrarConexion();
             }
         }
     }

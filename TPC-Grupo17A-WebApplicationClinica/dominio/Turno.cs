@@ -18,10 +18,12 @@ namespace dominio
         public Medico Medico { get; set; }
         public Especialidad Especialidad { get; set; }
         public string Estado { get; set; }
-        //nuevas propiedades para guardar y leer info de quien asigno el turno
         public Usuario UsuarioAsignacion { get; set; }
         public DateTime FechaAsignacion { get; set; }
-
+        public string Indicaciones { get; set; }
+        public string Receta { get; set; }
+        public string EstudiosSolicitados { get; set; }
+        public string SignosVitales { get; set; }
 
     }
 }

@@ -12,7 +12,6 @@ namespace WebApplicationClinica
     public partial class AtencionTurno : System.Web.UI.Page
     {
         private int idTurnoSeleccionado;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Usuario"] == null)
@@ -20,21 +19,18 @@ namespace WebApplicationClinica
                 Response.Redirect("Login.aspx", false);
                 return;
             }
-
             Usuario usuario = Session["Usuario"] as Usuario;
             if (usuario.TipoUsuario != TipoUsuario.Medico || !usuario.IdMedico.HasValue)
             {
                 Response.Redirect("Default.aspx", false);
                 return;
             }
-
             if (Request.QueryString["id"] != null)
             {
                 idTurnoSeleccionado = int.Parse((Request.QueryString["id"]));
-
                 if (!IsPostBack)
                 {
-                    cargarDatosTurno(usuario.IdMedico.Value);//lo trae con el id del usuario en session
+                    cargarDatosTurno(usuario.IdMedico.Value);
                 }
             }
             else
@@ -42,16 +38,13 @@ namespace WebApplicationClinica
                 Response.Redirect("MisTurnosMedicos.aspx", false);
             }
         }
-
         private void cargarDatosTurno(int idMedico)
         {
             TurnoNegocio negocio = new TurnoNegocio();
-
             try
             {
                 List<Turno> turnos = negocio.listarPorMedico(idMedico);
                 Turno seleccionado = turnos.Find(t => t.Id == idTurnoSeleccionado);
-
                 if (seleccionado != null)
                 {
                     lblNombrePaciente.Text = seleccionado.Paciente.Apellido + ", " + seleccionado.Paciente.Nombre;
@@ -59,15 +52,20 @@ namespace WebApplicationClinica
                     lblHora.Text = seleccionado.HoraInicio.ToString(@"hh\:mm");
                     lblEspecialidad.Text = seleccionado.Especialidad.Nombre;
                     lblObservaciones.Text = string.IsNullOrEmpty(seleccionado.Observaciones) ? "" : seleccionado.Observaciones;
-                    txtDiagnostico.Text = seleccionado.Diagnostico ?? "";
-                    cargarHistorialClinico(seleccionado.Paciente.Id, seleccionado.Id);
 
-                    //Aca evitamos que pueda registrar diagnostico y asistencia/inasistencia si no es un turno del dia
+                    txtDiagnostico.Text = seleccionado.Diagnostico ?? "";
+                    txtIndicaciones.Text = seleccionado.Indicaciones ?? "";
+                    txtReceta.Text = seleccionado.Receta ?? "";
+                    txtEstudios.Text = seleccionado.EstudiosSolicitados ?? "";
+                    txtSignosVitales.Text = seleccionado.SignosVitales ?? "";
+                    // Bloqueo si el turno no es del día de hoy
                     if (seleccionado.Fecha.Date != DateTime.Today)
                     {
                         btnGuardarAsistio.Enabled = false;
                         btnRegistrarInasistencia.Enabled = false;
                     }
+                    // Cargar el historial clínico del paciente
+                    cargarHistorialClinico(seleccionado.Paciente.Id, seleccionado.Id);
                 }
                 else
                 {
@@ -80,22 +78,18 @@ namespace WebApplicationClinica
                 Response.Redirect("MisTurnosMedicos.aspx", false);
             }
         }
-
         private void cargarHistorialClinico(int idPaciente, int idTurnoActual)
         {
             TurnoNegocio negocio = new TurnoNegocio();
             try
             {
-                // Obtenemos todos los turnos del paciente
                 List<Turno> historial = negocio.listarPorPaciente(idPaciente);
 
-                // Filtros, turno actual (id), estado asistio y orden por fecha descendiente
                 var atencionesAnteriores = historial
                     .Where(t => t.Id != idTurnoActual && t.Estado == "Asistió")
                     .OrderByDescending(t => t.Fecha)
                     .ThenByDescending(t => t.HoraInicio)
                     .ToList();
-
                 if (atencionesAnteriores.Count > 0)
                 {
                     rptHistorialClinico.DataSource = atencionesAnteriores;
@@ -116,15 +110,17 @@ namespace WebApplicationClinica
                 lblMensajeError.Visible = true;
             }
         }
-
-
         protected void btnGuardarAsistio_Click(object sender, EventArgs e)
         {
             TurnoNegocio negocio = new TurnoNegocio();
             try
             {
                 string diagnostico = txtDiagnostico.Text;
-                negocio.cambiarEstado(idTurnoSeleccionado, "Asistió", diagnostico);
+                string indicaciones = txtIndicaciones.Text;
+                string receta = txtReceta.Text;
+                string estudios = txtEstudios.Text;
+                string signosVitales = txtSignosVitales.Text;
+                negocio.registrarAtencion(idTurnoSeleccionado, diagnostico, indicaciones, receta, estudios, signosVitales);
                 Response.Redirect("MisTurnosMedicos.aspx", false);
             }
             catch (Exception ex)
@@ -132,10 +128,9 @@ namespace WebApplicationClinica
                 Session.Add("Error al registrar la atencion", ex);
                 lblMensajeError.Text = ex.Message;
                 lblMensajeError.Visible = true;
-                return; //para no abandonar de una la pagina
+                return;
             }
         }
-
         protected void btnRegistrarInasistencia_Click(object sender, EventArgs e)
         {
             TurnoNegocio negocio = new TurnoNegocio();
@@ -149,9 +144,8 @@ namespace WebApplicationClinica
                 Session.Add("Error al registrar la atencion", ex);
                 lblMensajeError.Text = ex.Message;
                 lblMensajeError.Visible = true;
-                return; //para no abandonar de una la pagina
+                return;
             }
         }
-
     }
 }

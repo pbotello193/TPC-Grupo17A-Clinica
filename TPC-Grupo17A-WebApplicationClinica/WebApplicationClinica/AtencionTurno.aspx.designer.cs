@@ -60,6 +60,15 @@ namespace WebApplicationClinica
         protected global::System.Web.UI.WebControls.Label lblObservaciones;
 
         /// <summary>
+        /// Control txtSignosVitales.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSignosVitales;
+
+        /// <summary>
         /// Control txtDiagnostico.
         /// </summary>
         /// <remarks>
@@ -67,6 +76,33 @@ namespace WebApplicationClinica
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDiagnostico;
+
+        /// <summary>
+        /// Control txtIndicaciones.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtIndicaciones;
+
+        /// <summary>
+        /// Control txtReceta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtReceta;
+
+        /// <summary>
+        /// Control txtEstudios.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEstudios;
 
         /// <summary>
         /// Control lblMensajeError.
