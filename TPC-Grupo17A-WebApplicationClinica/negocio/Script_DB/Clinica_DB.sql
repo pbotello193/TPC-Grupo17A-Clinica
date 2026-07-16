@@ -4,6 +4,7 @@ GO
 USE Clinica_DB;
 GO
 
+-- 1. Tabla Pacientes
 CREATE TABLE Pacientes (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL,
@@ -17,8 +18,7 @@ CREATE TABLE Pacientes (
 );
 GO
 
-
-
+-- 2. Tabla Medicos
 CREATE TABLE Medicos (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL,
@@ -26,18 +26,20 @@ CREATE TABLE Medicos (
     Matricula VARCHAR(50) NOT NULL,
     Telefono VARCHAR(50) NOT NULL,
     Email VARCHAR(150) NOT NULL,
-	Activo BIT NOT NULL
+    Activo BIT NOT NULL
 );
 GO
 
+-- 3. Tabla Especialidades
 CREATE TABLE Especialidades (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL,
     Descripcion VARCHAR(250) NOT NULL,
-	Activo BIT NOT NULL
+    Activo BIT NOT NULL
 );
-
 GO
+
+-- 4. Tabla MedicoEspecialidad
 CREATE TABLE MedicoEspecialidad (
     IdMedico INT NOT NULL,
     IdEspecialidad INT NOT NULL,
@@ -53,7 +55,36 @@ CREATE TABLE MedicoEspecialidad (
         FOREIGN KEY (IdEspecialidad)
         REFERENCES Especialidades(Id)
 );
+GO
 
+-- 5. Tablas para Roles y Usuarios (Deben crearse antes que Turnos por la clave foranea)
+CREATE TABLE Roles (
+    Id INT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    PaginaInicio VARCHAR(100) NOT NULL,
+    Activo BIT NOT NULL DEFAULT 1
+);
+GO
+
+CREATE TABLE Usuarios (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Usuario VARCHAR(50) NOT NULL,
+    Pass VARCHAR(50) NOT NULL,
+    TipoUser INT NOT NULL,
+    IdMedico INT NULL, -- null porque solo se completa para medicos
+    Nombre VARCHAR(50) NULL,
+    Apellido VARCHAR(50) NULL,
+    DNI VARCHAR(20) NULL,
+    Telefono VARCHAR(20) NULL,
+    Email VARCHAR(100) NULL,
+    Activo BIT NOT NULL DEFAULT 1,
+    CONSTRAINT UQ_Usuarios_Usuario UNIQUE (Usuario),
+    CONSTRAINT FK_Usuarios_Roles FOREIGN KEY (TipoUser) REFERENCES Roles(Id),
+    CONSTRAINT FK_Usuarios_Medicos FOREIGN KEY (IdMedico) REFERENCES Medicos(Id)
+);
+GO
+
+-- 6. Tabla Turnos (Incluye diagnóstico amplio y referencia a Usuarios)
 CREATE TABLE Turnos (
     Id INT IDENTITY(1000,1) PRIMARY KEY, 
     Fecha DATE NOT NULL,
@@ -61,12 +92,16 @@ CREATE TABLE Turnos (
     HoraFin TIME NOT NULL,
     Observaciones VARCHAR(300) NOT NULL,
     Diagnostico VARCHAR(500) NULL,
+    Indicaciones VARCHAR(1000) NULL,
+    Receta VARCHAR(1000) NULL,
+    EstudiosSolicitados VARCHAR(1000) NULL,
+    SignosVitales VARCHAR(200) NULL,
     IdPaciente INT NOT NULL,
     IdMedico INT NOT NULL,
     IdEspecialidad INT NOT NULL,
     Estado VARCHAR(50) NOT NULL DEFAULT 'Pendiente', 
-	FechaAsignacion DATETIME NOT NULL DEFAULT GETDATE(),
-	IdUsuarioAsignacion INT NULL,
+    FechaAsignacion DATETIME NOT NULL DEFAULT GETDATE(),
+    IdUsuarioAsignacion INT NULL,
     CONSTRAINT FK_Turnos_Usuarios FOREIGN KEY (IdUsuarioAsignacion) REFERENCES Usuarios(Id),
     CONSTRAINT FK_Turno_Paciente FOREIGN KEY (IdPaciente) REFERENCES Pacientes(Id),
     CONSTRAINT FK_Turno_Medico FOREIGN KEY (IdMedico) REFERENCES Medicos(Id),
@@ -74,6 +109,7 @@ CREATE TABLE Turnos (
 );
 GO
 
+-- 7. Tabla TurnosDeTrabajo
 CREATE TABLE TurnosDeTrabajo (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     IdMedico INT NOT NULL,
@@ -88,33 +124,9 @@ CREATE TABLE TurnosDeTrabajo (
 );
 GO
 
---Tablas login
-CREATE TABLE Roles (
-    Id INT PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL,
-    PaginaInicio VARCHAR(100) NOT NULL,
-    Activo BIT NOT NULL DEFAULT 1
-);
-GO
-
-CREATE TABLE Usuarios (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Usuario VARCHAR(50) NOT NULL,
-    Pass VARCHAR(50) NOT NULL,
-    TipoUser INT NOT NULL,
-    IdMedico INT NULL, --null porque solo se completa para medicos
-    Nombre VARCHAR(50) NULL,
-    Apellido VARCHAR(50) NULL,
-    DNI VARCHAR(20) NULL,
-    Telefono VARCHAR(20) NULL,
-    Email VARCHAR(100) NULL,
-    Activo BIT NOT NULL DEFAULT 1,
-    CONSTRAINT UQ_Usuarios_Usuario UNIQUE (Usuario),
-    CONSTRAINT FK_Usuarios_Roles FOREIGN KEY (TipoUser) REFERENCES Roles(Id),
-    CONSTRAINT FK_Usuarios_Medicos FOREIGN KEY (IdMedico) REFERENCES Medicos(Id)
-);
-GO
-
+-- ----------------------------------------------------
+-- STORED PROCEDURES
+-- ----------------------------------------------------
 
 CREATE PROCEDURE SP_EliminarLogicoTurnoDeTrabajo
     @Id INT
@@ -145,7 +157,7 @@ CREATE PROCEDURE spAsignarEspecialidad
     @IdEspecialidad INT
 AS
 BEGIN
-    IF NOT EXISTS ( --evita que agregue si ya esta asociado
+    IF NOT EXISTS (
         SELECT 1 
         FROM MedicoEspecialidad 
         WHERE IdMedico = @IdMedico AND IdEspecialidad = @IdEspecialidad
@@ -162,6 +174,7 @@ CREATE PROCEDURE SP_ListarTurnosPorPaciente
 AS
 BEGIN
     SELECT T.Id, T.Fecha, T.HoraInicio, T.HoraFin, T.Observaciones, T.Diagnostico, T.Estado, T.FechaAsignacion,
+        T.Indicaciones, T.Receta, T.EstudiosSolicitados, T.SignosVitales,
         P.Id AS IdPaciente,
         P.Nombre AS NombrePaciente,
         P.Apellido AS ApellidoPaciente,
@@ -192,9 +205,11 @@ BEGIN
 END
 GO
 
+-- ----------------------------------------------------
+-- INSERTS DE DATOS INICIALES
+-- ----------------------------------------------------
 
---Inserts para la tabla medicos
-
+-- Inserts Medicos
 INSERT INTO Medicos (Nombre, Apellido, Matricula, Telefono, Email, Activo)
 VALUES
     ('Carlos', 'Gomez', 'M-45892', '1134567890', 'carlos.gomez@clinica.com', 1),
@@ -204,8 +219,7 @@ VALUES
     ('Jorge Luis', 'Lopez', 'M-96325', '1155667788', 'jorge.lopez@clinica.com', 1);
 GO
 
---Inserts para especialidades
-
+-- Inserts Especialidades
 INSERT INTO Especialidades (Nombre, Descripcion, Activo)
 VALUES ('Pediatria', 'Atencion medica integral para bebes, ninos y adolescentes.', 1);
 INSERT INTO Especialidades (Nombre, Descripcion, Activo)
@@ -218,8 +232,7 @@ INSERT INTO Especialidades (Nombre, Descripcion, Activo)
 VALUES ('Ginecologia', 'Atencion a la salud del sistema reproductor femenino.', 0);
 GO
 
---Inserts para MedicoEspecialidad
-
+-- Inserts MedicoEspecialidad
 INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) VALUES (1, 1);
 INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) VALUES (2, 2);
 INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) VALUES (2, 5);
@@ -229,8 +242,7 @@ INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) VALUES (5, 1);
 INSERT INTO MedicoEspecialidad (IdMedico, IdEspecialidad) VALUES (5, 3);
 GO
 
--- Inserts para la tabla pacientes
-
+-- Inserts Pacientes
 INSERT INTO Pacientes (Nombre, Apellido, DNI, FechaNacimiento, Telefono, Email, Direccion, Activo)
 VALUES
     ('Sofia', 'Pereyra', '30111222', '1983-04-12', '1150011001', 'sofia.pereyra@mail.com', 'Av. Rivadavia 1234', 1),
@@ -241,8 +253,7 @@ VALUES
     ('Luciano', 'Molina', '29123456', '1981-01-09', '1150011006', 'luciano.molina@mail.com', 'Corrientes 1550', 0);
 GO
 
-
---Inserts roles y usuarios
+-- Inserts Roles y Usuarios
 INSERT INTO Roles (Id, Nombre, PaginaInicio, Activo)
 VALUES
     (1, 'Administrador', 'InicioAdministrador.aspx', 1),
