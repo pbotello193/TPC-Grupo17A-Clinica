@@ -11,14 +11,14 @@
                 <asp:DropDownList ID="ddlEstadoUsuarios" runat="server" CssClass="form-select w-auto" AutoPostBack="true" OnSelectedIndexChanged="ddlEstadoUsuarios_SelectedIndexChanged">
                     <asp:ListItem Text="Activos" Value="activos" />
                     <asp:ListItem Text="Inactivos" Value="inactivos" />
-                    <asp:ListItem Text="Todos" Value="todos" />
-                </asp:DropDownList>
+                        <asp:ListItem Text="Todos" Value="todos" />
+</asp:DropDownList>
 
-                <asp:DropDownList ID="ddlRolUsuarios" runat="server" CssClass="form-select w-auto" AutoPostBack="true" OnSelectedIndexChanged="ddlRolUsuarios_SelectedIndexChanged">
-                    <asp:ListItem Text="Todos" Value="todos" />
-                    <asp:ListItem Text="Administradores" Value="admin" />
-                    <asp:ListItem Text="Recepcionistas" Value="recepcion" />
-                </asp:DropDownList>
+<asp:DropDownList ID="ddlRolUsuarios" runat="server" CssClass="form-select w-auto" AutoPostBack="true" OnSelectedIndexChanged="ddlRolUsuarios_SelectedIndexChanged">
+    <asp:ListItem Text="Todos" Value="todos" />
+    <asp:ListItem Text="Administradores" Value="admin" />
+    <asp:ListItem Text="Recepcionistas" Value="recepcion" />
+</asp:DropDownList>
 
                 <asp:TextBox ID="txtBuscar" runat="server"
                     CssClass="form-control"
@@ -26,7 +26,6 @@
                     OnTextChanged="txtBuscar_TextChanged"
                     placeholder="Buscar por apellido, nombre o DNI" />
             </div>
-
         </div>
 
         <div class="mb-3">
@@ -54,8 +53,8 @@
                     <asp:TemplateField HeaderText="Acción">
                         <ItemTemplate>
                             <asp:LinkButton ID="btnEditar" runat="server" CommandName="Editar" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-outline-primary">
-            Editar
-        </asp:LinkButton>
+                                Editar
+                            </asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

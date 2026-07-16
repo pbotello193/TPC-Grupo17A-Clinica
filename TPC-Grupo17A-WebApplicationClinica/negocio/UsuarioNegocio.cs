@@ -44,14 +44,15 @@ namespace negocio
             }
         }
 
-        public bool existeUsuario(string nombreUsuario)
+        public bool existeUsuario(string nombreUsuario, int idExcluir = 0)
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearConsulta("SELECT COUNT(*) FROM Usuarios WHERE Usuario = @Usuario");
+                datos.setearConsulta("SELECT COUNT(*) FROM Usuarios WHERE Usuario = @Usuario AND Id <> @IdExcluir");
                 datos.setearParametro("@Usuario", nombreUsuario);
+                datos.setearParametro("@IdExcluir", idExcluir);
                 datos.ejecutarLectura();
 
                 if (datos.Lector.Read())
@@ -69,14 +70,15 @@ namespace negocio
             }
         }
 
-        public bool existeDniPersonalAdministrativo(string dni)
+        public bool existeDniPersonalAdministrativo(string dni, int idExcluir = 0)
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearConsulta("SELECT COUNT(*) FROM Usuarios WHERE DNI = @DNI AND TipoUser IN (1, 2)");
+                datos.setearConsulta("SELECT COUNT(*) FROM Usuarios WHERE DNI = @DNI AND TipoUser IN (1, 2) AND Id <> @IdExcluir");
                 datos.setearParametro("@DNI", dni);
+                datos.setearParametro("@IdExcluir", idExcluir);
                 datos.ejecutarLectura();
 
                 if (datos.Lector.Read())
@@ -105,6 +107,35 @@ namespace negocio
                 datos.setearParametro("@Pass", usuario.Pass);
                 datos.setearParametro("@TipoUser", (int)TipoUsuario.Medico);
                 datos.setearParametro("@IdMedico", usuario.IdMedico);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void modificarPersonalAdministrativo(Usuario usuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE Usuarios SET Usuario = @Usuario, Pass = @Pass, TipoUser = @TipoUser, Nombre = @Nombre, Apellido = @Apellido, DNI = @DNI, Telefono = @Telefono, Email = @Email WHERE Id = @Id AND TipoUser IN (1, 2)");
+                datos.setearParametro("@Id", usuario.Id);
+                datos.setearParametro("@Usuario", usuario.User);
+                datos.setearParametro("@Pass", usuario.Pass);
+                datos.setearParametro("@TipoUser", (int)usuario.TipoUsuario);
+                datos.setearParametro("@Nombre", usuario.Nombre);
+                datos.setearParametro("@Apellido", usuario.Apellido);
+                datos.setearParametro("@DNI", usuario.DNI);
+                datos.setearParametro("@Telefono", usuario.Telefono);
+                datos.setearParametro("@Email", usuario.Email);
 
                 datos.ejecutarAccion();
             }

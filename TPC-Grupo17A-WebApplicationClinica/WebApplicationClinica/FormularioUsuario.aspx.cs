@@ -57,6 +57,9 @@ namespace WebApplicationClinica
                 Usuario usuario = new Usuario();
                 UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
 
+                if (Request.QueryString["id"] != null)
+                    usuario.Id = int.Parse(Request.QueryString["id"].ToString());
+
                 usuario.TipoUsuario = (TipoUsuario)int.Parse(ddlRol.SelectedValue);
                 usuario.Apellido = txtApellido.Text.Trim();
                 usuario.Nombre = txtNombre.Text.Trim();
@@ -66,7 +69,11 @@ namespace WebApplicationClinica
                 usuario.User = txtUsuario.Text.Trim();
                 usuario.Pass = txtPassword.Text.Trim();
 
-                usuarioNegocio.agregarPersonalAdministrativo(usuario);
+                if (Request.QueryString["id"] != null)
+                    usuarioNegocio.modificarPersonalAdministrativo(usuario);
+                else
+                    usuarioNegocio.agregarPersonalAdministrativo(usuario);
+
                 Response.Redirect("WebForm-Usuarios.aspx", false);
             }
             catch (Exception ex)
@@ -76,6 +83,7 @@ namespace WebApplicationClinica
                 lblErrorGeneral.Visible = true;
             }
         }
+
         private bool ValidarPersonalAdministrativo()
         {
             LimpiarMensajesValidacionUsuario();
@@ -111,7 +119,6 @@ namespace WebApplicationClinica
             }
 
             string dni = txtDni.Text.Trim();
-
             if (!Regex.IsMatch(dni, @"^[0-9]{7,8}$"))
             {
                 lblErrorDni.Text = "El DNI debe contener entre 7 y 8 números, sin puntos ni espacios.";
@@ -120,7 +127,7 @@ namespace WebApplicationClinica
             }
 
             UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
-            if (usuarioNegocio.existeDniPersonalAdministrativo(dni))
+            if (usuarioNegocio.existeDniPersonalAdministrativo(dni, obtenerIdActual()))
             {
                 lblErrorDni.Text = "Ya existe personal administrativo registrado con ese DNI.";
                 lblErrorDni.Visible = true;
@@ -166,7 +173,7 @@ namespace WebApplicationClinica
             }
 
             UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
-            if (usuarioNegocio.existeUsuario(usuario))
+            if (usuarioNegocio.existeUsuario(usuario, obtenerIdActual()))
             {
                 lblErrorUsuario.Text = "Ya existe un usuario con ese nombre.";
                 lblErrorUsuario.Visible = true;
@@ -176,6 +183,14 @@ namespace WebApplicationClinica
             return true;
         }
 
+
+        private int obtenerIdActual()
+        {
+            if (Request.QueryString["id"] != null)
+                return int.Parse(Request.QueryString["id"].ToString());
+
+            return 0;
+        }
         private void LimpiarMensajesValidacionUsuario()
         {
             lblErrorGeneral.Visible = false;
