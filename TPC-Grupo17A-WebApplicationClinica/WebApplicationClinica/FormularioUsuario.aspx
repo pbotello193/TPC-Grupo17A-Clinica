@@ -1,4 +1,4 @@
-ï»¿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="FormularioUsuario.aspx.cs" Inherits="WebApplicationClinica.FormularioUsuario" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="FormularioUsuario.aspx.cs" Inherits="WebApplicationClinica.FormularioUsuario" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -10,6 +10,12 @@
                 <div class="mb-3">
                     <asp:Label ID="lblErrorGeneral" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
                 </div>
+                <asp:Panel ID="pnlId" runat="server" Visible="false">
+                    <div class="mb-3">
+                        <label for="txtId" class="form-label">Id</label>
+                        <asp:TextBox runat="server" ID="txtId" CssClass="form-control" Enabled="false" />
+                    </div>
+                </asp:Panel>
 
                 <div class="mb-3">
                     <label for="ddlRol" class="form-label">Rol</label>
@@ -40,7 +46,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="txtTelefono" class="form-label">TelÃ©fono</label>
+                    <label for="txtTelefono" class="form-label">Teléfono</label>
                     <asp:TextBox runat="server" ID="txtTelefono" CssClass="form-control" />
                     <asp:Label ID="lblErrorTelefono" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
                 </div>
@@ -60,7 +66,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="txtPassword" class="form-label">ContraseÃ±a</label>
+                    <label for="txtPassword" class="form-label">Contraseña</label>
                     <asp:TextBox runat="server" ID="txtPassword" CssClass="form-control" TextMode="Password" />
                     <asp:Label ID="lblErrorPassword" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
                 </div>
@@ -69,6 +75,7 @@
                 <div class="mb-3">
                     <asp:Button Text="Aceptar" runat="server" ID="btnAceptar" class="btn btn-primary" OnClick="btnAceptar_Click" />
                     <a href="WebForm-Usuarios.aspx" class="btn btn-danger">Cancelar</a>
+                    <asp:Button ID="btnCambiarEstado" runat="server" CssClass="btn btn-secondary" Visible="false" OnClick="btnCambiarEstado_Click" />
                 </div>
             </div>
         </div>

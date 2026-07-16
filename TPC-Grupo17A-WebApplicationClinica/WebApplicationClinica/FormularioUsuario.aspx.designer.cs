@@ -1,10 +1,10 @@
-Ôªø//------------------------------------------------------------------------------
-// <generado autom√°ticamente>
-//     Este c√≥digo fue generado por una herramienta.
+//------------------------------------------------------------------------------
+// <generado autom·ticamente>
+//     Este cÛdigo fue generado por una herramienta.
 //
-//     Los cambios en este archivo podr√≠an causar un comportamiento incorrecto y se perder√°n si
-//     se vuelve a generar el c√≥digo. 
-// </generado autom√°ticamente>
+//     Los cambios en este archivo podrÌan causar un comportamiento incorrecto y se perder·n si
+//     se vuelve a generar el cÛdigo. 
+// </generado autom·ticamente>
 //------------------------------------------------------------------------------
 
 namespace WebApplicationClinica
@@ -18,17 +18,35 @@ namespace WebApplicationClinica
         /// Control lblErrorGeneral.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblErrorGeneral;
+
+        /// <summary>
+        /// Control pnlId.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlId;
+
+        /// <summary>
+        /// Control txtId.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtId;
 
         /// <summary>
         /// Control ddlRol.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlRol;
 
@@ -36,8 +54,8 @@ namespace WebApplicationClinica
         /// Control lblErrorRol.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblErrorRol;
 
@@ -45,8 +63,8 @@ namespace WebApplicationClinica
         /// Control txtApellido.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtApellido;
 
@@ -54,8 +72,8 @@ namespace WebApplicationClinica
         /// Control lblErrorApellido.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblErrorApellido;
 
@@ -63,8 +81,8 @@ namespace WebApplicationClinica
         /// Control txtNombre.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNombre;
 
@@ -72,8 +90,8 @@ namespace WebApplicationClinica
         /// Control lblErrorNombre.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblErrorNombre;
 
@@ -81,8 +99,8 @@ namespace WebApplicationClinica
         /// Control txtDni.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDni;
 
@@ -90,8 +108,8 @@ namespace WebApplicationClinica
         /// Control lblErrorDni.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblErrorDni;
 
@@ -99,8 +117,8 @@ namespace WebApplicationClinica
         /// Control txtTelefono.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTelefono;
 
@@ -108,8 +126,8 @@ namespace WebApplicationClinica
         /// Control lblErrorTelefono.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblErrorTelefono;
 
@@ -117,8 +135,8 @@ namespace WebApplicationClinica
         /// Control txtEmail.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
 
@@ -126,8 +144,8 @@ namespace WebApplicationClinica
         /// Control lblErrorEmail.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblErrorEmail;
 
@@ -135,8 +153,8 @@ namespace WebApplicationClinica
         /// Control txtUsuario.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtUsuario;
 
@@ -144,8 +162,8 @@ namespace WebApplicationClinica
         /// Control lblErrorUsuario.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblErrorUsuario;
 
@@ -153,8 +171,8 @@ namespace WebApplicationClinica
         /// Control txtPassword.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPassword;
 
@@ -162,8 +180,8 @@ namespace WebApplicationClinica
         /// Control lblErrorPassword.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblErrorPassword;
 
@@ -171,9 +189,18 @@ namespace WebApplicationClinica
         /// Control btnAceptar.
         /// </summary>
         /// <remarks>
-        /// Campo generado autom√°ticamente.
-        /// Para modificarlo, mueva la declaraci√≥n del campo del archivo del dise√±ador al archivo de c√≥digo subyacente.
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAceptar;
+
+        /// <summary>
+        /// Control btnCambiarEstado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado autom·ticamente.
+        /// Para modificarlo, mueva la declaraciÛn del campo del archivo del diseÒador al archivo de cÛdigo subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCambiarEstado;
     }
 }

@@ -1,4 +1,4 @@
-Ôªøusing System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -20,11 +20,17 @@ namespace WebApplicationClinica
 
                 if (id != "" && !IsPostBack)
                 {
+                    pnlId.Visible = true;
                     UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
                     Usuario usuario = usuarioNegocio.obtenerPersonalAdministrativoPorId(int.Parse(id));
 
                     if (usuario != null)
                     {
+                        btnCambiarEstado.Visible = true;
+                        btnCambiarEstado.Text = usuario.Activo ? "Dar de baja" : "Reactivar";
+                        btnCambiarEstado.CssClass = usuario.Activo ? "btn btn-secondary" : "btn btn-success";
+
+                        txtId.Text = usuario.Id.ToString();
                         ddlRol.SelectedValue = ((int)usuario.TipoUsuario).ToString();
                         txtApellido.Text = usuario.Apellido;
                         txtNombre.Text = usuario.Nombre;
@@ -103,7 +109,7 @@ namespace WebApplicationClinica
             }
 
             string apellido = txtApellido.Text.Trim();
-            if (!Regex.IsMatch(apellido, @"^[a-zA-Z√°√©√≠√≥√∫√Å√â√ç√ì√ö√±√ë√º√ú' ]{2,30}$"))
+            if (!Regex.IsMatch(apellido, @"^[a-zA-Z·ÈÌÛ˙¡…Õ”⁄Ò—¸‹' ]{2,30}$"))
             {
                 lblErrorApellido.Text = "El apellido debe tener entre 2 y 30 caracteres y solo puede contener letras y espacios.";
                 lblErrorApellido.Visible = true;
@@ -111,7 +117,7 @@ namespace WebApplicationClinica
             }
 
             string nombre = txtNombre.Text.Trim();
-            if (!Regex.IsMatch(nombre, @"^[a-zA-Z√°√©√≠√≥√∫√Å√â√ç√ì√ö√±√ë√º√ú' ]{2,30}$"))
+            if (!Regex.IsMatch(nombre, @"^[a-zA-Z·ÈÌÛ˙¡…Õ”⁄Ò—¸‹' ]{2,30}$"))
             {
                 lblErrorNombre.Text = "El nombre debe tener entre 2 y 30 caracteres y solo puede contener letras y espacios.";
                 lblErrorNombre.Visible = true;
@@ -121,7 +127,7 @@ namespace WebApplicationClinica
             string dni = txtDni.Text.Trim();
             if (!Regex.IsMatch(dni, @"^[0-9]{7,8}$"))
             {
-                lblErrorDni.Text = "El DNI debe contener entre 7 y 8 n√∫meros, sin puntos ni espacios.";
+                lblErrorDni.Text = "El DNI debe contener entre 7 y 8 n˙meros, sin puntos ni espacios.";
                 lblErrorDni.Visible = true;
                 return false;
             }
@@ -137,7 +143,7 @@ namespace WebApplicationClinica
             string telefono = txtTelefono.Text.Trim();
             if (!Regex.IsMatch(telefono, @"^\+?[0-9]{10,13}$"))
             {
-                lblErrorTelefono.Text = "El tel√©fono debe contener entre 10 y 13 n√∫meros. Puede comenzar con el signo +.";
+                lblErrorTelefono.Text = "El telÈfono debe contener entre 10 y 13 n˙meros. Puede comenzar con el signo +.";
                 lblErrorTelefono.Visible = true;
                 return false;
             }
@@ -145,7 +151,7 @@ namespace WebApplicationClinica
             string email = txtEmail.Text.Trim().ToLower();
             if (email.Length > 50 || !Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
-                lblErrorEmail.Text = "Ingrese un correo electr√≥nico v√°lido de hasta 50 caracteres.";
+                lblErrorEmail.Text = "Ingrese un correo electrÛnico v·lido de hasta 50 caracteres.";
                 lblErrorEmail.Visible = true;
                 return false;
             }
@@ -167,7 +173,7 @@ namespace WebApplicationClinica
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                lblErrorPassword.Text = "Ingrese la contrase√±a.";
+                lblErrorPassword.Text = "Ingrese la contraseÒa.";
                 lblErrorPassword.Visible = true;
                 return false;
             }
@@ -190,6 +196,22 @@ namespace WebApplicationClinica
                 return int.Parse(Request.QueryString["id"].ToString());
 
             return 0;
+        }
+
+        protected void btnCambiarEstado_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+                usuarioNegocio.cambiarEstadoPersonalAdministrativo(int.Parse(txtId.Text));
+                Response.Redirect("WebForm-Usuarios.aspx", false);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                lblErrorGeneral.Text = "No se pudo cambiar el estado del personal administrativo.";
+                lblErrorGeneral.Visible = true;
+            }
         }
         private void LimpiarMensajesValidacionUsuario()
         {

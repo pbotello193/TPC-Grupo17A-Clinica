@@ -217,6 +217,26 @@ namespace negocio
             }
         }
 
+        public void cambiarEstadoPersonalAdministrativo(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE Usuarios SET Activo = CASE WHEN Activo = 1 THEN 0 ELSE 1 END WHERE Id = @Id AND TipoUser IN (1, 2)");
+                datos.setearParametro("@Id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public List<Usuario> listarPersonalAdministrativo()
         {
             List<Usuario> lista = new List<Usuario>();
