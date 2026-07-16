@@ -4,11 +4,11 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<div class="container mt-4 pb-5">
-        
+    <div class="container mt-4 pb-5">
+
         <div class="mb-4 d-flex justify-content-between align-items-center bg-light p-3 rounded-3 shadow-sm">
             <div>
-                <h2 class="fw-bold mb-1 text-dark">Mi Agenda Médica</h2>
+                <h2 class="fw-bold mb-1 text-dark">Agenda Médica</h2>
                 <asp:Label ID="lblMensajeError" runat="server" CssClass="alert alert-danger d-block" Visible="false"></asp:Label>
             </div>
         </div>
@@ -29,13 +29,21 @@
                         <asp:BoundField HeaderText="Especialidad" DataField="Especialidad" />
                         <asp:BoundField HeaderText="Motivo de Consulta" DataField="Observaciones" />
 
+                        <asp:TemplateField HeaderText="Estado">
+                            <ItemTemplate>
+                                <span class='<%# badgeEstado(Eval("Estado").ToString()) %>'>
+                                    <%# Eval("Estado") %>
+                                </span>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
                         <asp:TemplateField HeaderText="Acción">
                             <ItemTemplate>
-                                <asp:LinkButton ID="btnAbrirTurno" runat="server" 
-                                    Text="Abrir turno" 
-                                    CssClass="btn btn-sm btn-success px-3 text-white fw-semibold shadow-sm" 
-                                    CommandName="AbrirTurno" 
-                                    CommandArgument='<%# Eval("Id") %>' />
+                                <asp:LinkButton ID="btnAbrirTurno" runat="server"
+                                    Text="Abrir turno"
+                                    CssClass="btn btn-sm btn-success px-3 text-white fw-semibold shadow-sm"
+                                    CommandName="AbrirTurno"
+                                    CommandArgument='<%# Eval("Id") %>'/>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

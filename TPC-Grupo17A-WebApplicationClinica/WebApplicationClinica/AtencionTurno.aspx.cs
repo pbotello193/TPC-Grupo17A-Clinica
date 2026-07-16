@@ -60,6 +60,13 @@ namespace WebApplicationClinica
                     lblEspecialidad.Text = seleccionado.Especialidad.Nombre;
                     lblObservaciones.Text = string.IsNullOrEmpty(seleccionado.Observaciones) ? "" : seleccionado.Observaciones;
                     txtDiagnostico.Text = seleccionado.Diagnostico ?? "";
+
+                    //Aca evitamos que pueda registrar diagnostico y asistencia/inasistencia si no es un turno del dia
+                    if (seleccionado.Fecha.Date != DateTime.Today)
+                    {
+                        btnGuardarAsistio.Enabled = false;
+                        btnRegistrarInasistencia.Enabled = false;
+                    }
                 }
                 else
                 {
@@ -75,20 +82,20 @@ namespace WebApplicationClinica
 
         protected void btnGuardarAsistio_Click(object sender, EventArgs e)
         {
-                TurnoNegocio negocio = new TurnoNegocio();
-                try
-                {
-                    string diagnostico = txtDiagnostico.Text;
-                    negocio.cambiarEstado(idTurnoSeleccionado, "Asistió", diagnostico);
-                    Response.Redirect("MisTurnosMedicos.aspx", false);
-                }
-                catch (Exception ex)
-                {
-                    Session.Add("Error al registrar la atencion", ex);
-                    lblMensajeError.Text = ex.Message;
-                    lblMensajeError.Visible = true;
-                    return; //para no abandonar de una la pagina
-                }
+            TurnoNegocio negocio = new TurnoNegocio();
+            try
+            {
+                string diagnostico = txtDiagnostico.Text;
+                negocio.cambiarEstado(idTurnoSeleccionado, "Asistió", diagnostico);
+                Response.Redirect("MisTurnosMedicos.aspx", false);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("Error al registrar la atencion", ex);
+                lblMensajeError.Text = ex.Message;
+                lblMensajeError.Visible = true;
+                return; //para no abandonar de una la pagina
+            }
         }
 
         protected void btnRegistrarInasistencia_Click(object sender, EventArgs e)

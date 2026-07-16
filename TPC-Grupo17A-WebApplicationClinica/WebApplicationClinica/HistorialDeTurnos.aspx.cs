@@ -100,12 +100,13 @@ namespace WebApplicationClinica
         {
             switch (estado)
             {
-                case "Asignado": return "badge bg-info text-bg-info";
-                case "Asistió": return "badge bg-primary text-bg-info";
-                case "Reprogramado": return "badge bg-warning text-bg-info";
-                case "Cancelado": return "badge bg-danger text-bg-info";
-                case "No asistió": return "badge bg-black";
-                default: return "badge bg-secondary-subtle text-bg-info";
+                case "Asignado": return "badge bg-primary text-white px-2 py-1.5";
+                case "Asistió": return "badge bg-success text-white px-2 py-1.5";
+                case "Reprogramado": return "badge bg-warning text-dark px-2 py-1.5";
+                case "Cancelado": return "badge bg-danger text-white px-2 py-1.5";
+                case "No asistió"://REsivsar cual es el estado correcto
+                case "No Asistió": return "badge bg-secondary text-white px-2 py-1.5";
+                default: return "badge bg-secondary text-white px-2 py-1.5";
             }
         }
 

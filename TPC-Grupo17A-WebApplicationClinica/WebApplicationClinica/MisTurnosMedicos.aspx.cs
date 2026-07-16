@@ -79,5 +79,19 @@ namespace WebApplicationClinica
                 lblMensajeError.Visible = true;
             }
         }
+
+        protected string badgeEstado(string estado)
+        {
+            switch (estado)
+            {
+                case "Asignado": return "badge bg-primary text-white px-2 py-1.5";
+                case "Asistió": return "badge bg-success text-white px-2 py-1.5";
+                case "Reprogramado": return "badge bg-warning text-dark px-2 py-1.5";
+                case "Cancelado": return "badge bg-danger text-white px-2 py-1.5";
+                case "No asistió":
+                case "No Asistió": return "badge bg-secondary text-white px-2 py-1.5";
+                default: return "badge bg-secondary text-white px-2 py-1.5";
+            }
+        }
     }
 }
