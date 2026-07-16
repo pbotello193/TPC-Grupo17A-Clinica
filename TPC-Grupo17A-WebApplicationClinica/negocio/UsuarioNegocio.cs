@@ -69,6 +69,31 @@ namespace negocio
             }
         }
 
+        public bool existeDniPersonalAdministrativo(string dni)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM Usuarios WHERE DNI = @DNI AND TipoUser IN (1, 2)");
+                datos.setearParametro("@DNI", dni);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    return Convert.ToInt32(datos.Lector[0]) > 0;
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public void agregarUsuarioMedico(Usuario usuario)
         {
             AccesoDatos datos = new AccesoDatos();

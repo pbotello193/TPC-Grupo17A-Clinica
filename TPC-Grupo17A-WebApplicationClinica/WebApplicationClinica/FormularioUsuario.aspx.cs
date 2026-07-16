@@ -84,9 +84,18 @@ namespace WebApplicationClinica
             }
 
             string dni = txtDni.Text.Trim();
+
             if (!Regex.IsMatch(dni, @"^[0-9]{7,8}$"))
             {
                 lblErrorDni.Text = "El DNI debe contener entre 7 y 8 números, sin puntos ni espacios.";
+                lblErrorDni.Visible = true;
+                return false;
+            }
+
+            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+            if (usuarioNegocio.existeDniPersonalAdministrativo(dni))
+            {
+                lblErrorDni.Text = "Ya existe personal administrativo registrado con ese DNI.";
                 lblErrorDni.Visible = true;
                 return false;
             }
@@ -154,3 +163,4 @@ namespace WebApplicationClinica
         }
     }
 }
+
