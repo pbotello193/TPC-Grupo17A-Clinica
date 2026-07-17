@@ -11,21 +11,13 @@ namespace WebApplicationClinica
 
         protected void btnEnviar_Click(object sender, EventArgs e)
         {
-            lblErrorUsuario.Visible = false;
-            lblErrorEmail.Visible = false;
+            lblErrorUsuarioOMail.Visible = false;
             lblMensaje.Visible = false;
 
-            if (string.IsNullOrWhiteSpace(txtUsuario.Text))
+            if (string.IsNullOrWhiteSpace(txtUsuarioOMail.Text))
             {
-                lblErrorUsuario.Text = "Ingrese su usuario.";
-                lblErrorUsuario.Visible = true;
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtEmail.Text))
-            {
-                lblErrorEmail.Text = "Ingrese su mail.";
-                lblErrorEmail.Visible = true;
+                lblErrorUsuarioOMail.Text = "Ingrese su usuario o mail.";
+                lblErrorUsuarioOMail.Visible = true;
                 return;
             }
         }
