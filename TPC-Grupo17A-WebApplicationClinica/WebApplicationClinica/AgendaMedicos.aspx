@@ -22,7 +22,7 @@
             <div class="agenda-filtros">
                 <div>
                     <label for="<%= ddlMedico.ClientID %>" class="form-label">Médico</label>
-                    <asp:DropDownList ID="ddlMedico" runat="server" CssClass="form-select" />
+                    <asp:DropDownList ID="ddlMedico" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlMedico_SelectedIndexChanged" />
                 </div>
                 <div>
                     <label for="<%= ddlEspecialidad.ClientID %>" class="form-label">Especialidad</label>
