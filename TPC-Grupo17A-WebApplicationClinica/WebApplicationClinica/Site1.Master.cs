@@ -61,7 +61,8 @@ namespace WebApplicationClinica
                 return paginaActual == "InicioRecepcionista.aspx"
                     || paginaActual == "AgendaMedicos.aspx"
                     || paginaActual == "WebForm-Turnos.aspx"
-                    || paginaActual == "WebForm-Paciente.aspx"
+                    || paginaActual == "WebForm-Paciente.aspx" 
+                    || paginaActual == "HistorialDeTurnos.aspx"
                     || paginaActual == "FormularioPaciente.aspx"
                     || paginaActual == "WebForm-Medico.aspx";
 
