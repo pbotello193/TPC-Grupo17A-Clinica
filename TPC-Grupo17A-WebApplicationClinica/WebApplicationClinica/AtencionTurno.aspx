@@ -9,8 +9,18 @@
             <div>
                 <h2 class="fw-bold mb-1 text-dark">Consulta Médica</h2>
                 <div class="align-items-center">
-                    <label class="form-label d-inline-block fw-bold text-secondary mb-0">Paciente: </label>
-                    <asp:Label ID="lblNombrePaciente" runat="server" CssClass="fw-bold text-dark me-3 fs-5" />
+                   <div>
+                    <div class="d-flex align-items-center mb-1">
+                        <label class="form-label fw-bold text-secondary mb-0 me-2">Paciente: </label>
+                        <asp:Label ID="lblNombrePaciente" runat="server" CssClass="fw-bold text-dark fs-4 me-2" />
+                        <span class="badge bg-primary text-white fs-6 shadow-sm"><asp:Label ID="lblEdad" runat="server" /></span>
+                    </div>
+                    <div class="d-flex flex-wrap gap-3 text-muted small mt-2">
+                        <span><i class="bi bi-person-vcard me-1 text-secondary"></i><strong>DNI:</strong> <asp:Label ID="lblDniPaciente" runat="server" /></span>
+                        <span><i class="bi bi-telephone me-1 text-secondary"></i><strong>Tel:</strong> <asp:Label ID="lblTelefonoPaciente" runat="server" /></span>
+                        <span><i class="bi bi-envelope me-1 text-secondary"></i><strong>Email:</strong> <asp:Label ID="lblEmailPaciente" runat="server" /></span>
+                    </div>
+                    </div>
                 </div>
             </div>
             <a href="MisTurnosMedicos.aspx" class="btn btn-outline-secondary shadow-sm">Volver a la Agenda</a>

@@ -17,15 +17,16 @@ namespace negocio
             try
             {
                 string consulta = "SELECT T.Id, T.Fecha, T.HoraInicio, T.HoraFin, T.Observaciones, T.Diagnostico, T.Estado, " +
-                                  "T.Indicaciones, T.Receta, T.EstudiosSolicitados, T.SignosVitales, " +
-                                  "P.Id AS IdPaciente, P.Nombre AS NombrePaciente, P.Apellido AS ApellidoPaciente, P.Email AS EmailPaciente, P.DNI AS DniPaciente, P.Telefono AS TelefonoPaciente, " +
-                                  "M.Id AS IdMedico, M.Nombre AS NombreMedico, M.Apellido AS ApellidoMedico, M.Matricula AS MatriculaMedico, M.Telefono AS TelefonoMedico, M.Email AS EmailMedico, " +
-                                  "E.Id AS IdEspecialidad, E.Nombre AS NombreEspecialidad " +
-                                  "FROM Turnos T " +
-                                  "INNER JOIN Pacientes P ON T.IdPaciente = P.Id " +
-                                  "INNER JOIN Medicos M ON T.IdMedico = M.Id " +
-                                  "INNER JOIN Especialidades E ON T.IdEspecialidad = E.Id " +
-                                  "ORDER BY T.Fecha DESC, T.HoraInicio DESC";
+                  "T.Indicaciones, T.Receta, T.EstudiosSolicitados, T.SignosVitales, " +
+                  "P.Id AS IdPaciente, P.Nombre AS NombrePaciente, P.Apellido AS ApellidoPaciente, P.Email AS EmailPaciente, P.DNI AS DniPaciente, P.Telefono AS TelefonoPaciente, P.FechaNacimiento AS FechaNacimientoPaciente, " +
+                  "M.Id AS IdMedico, M.Nombre AS NombreMedico, M.Apellido AS ApellidoMedico, M.Matricula AS MatriculaMedico, M.Telefono AS TelefonoMedico, M.Email AS EmailMedico, " +
+                  "E.Id AS IdEspecialidad, E.Nombre AS NombreEspecialidad " +
+                  "FROM Turnos T " +
+                  "INNER JOIN Pacientes P ON T.IdPaciente = P.Id " +
+                  "INNER JOIN Medicos M ON T.IdMedico = M.Id " +
+                  "INNER JOIN Especialidades E ON T.IdEspecialidad = E.Id " +
+                  "ORDER BY T.Fecha DESC, T.HoraInicio DESC";
+
                 datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
@@ -42,6 +43,7 @@ namespace negocio
                     aux.EstudiosSolicitados = datos.Lector["EstudiosSolicitados"] == DBNull.Value ? "" : (string)datos.Lector["EstudiosSolicitados"];
                     aux.SignosVitales = datos.Lector["SignosVitales"] == DBNull.Value ? "" : (string)datos.Lector["SignosVitales"];
                     aux.Estado = (string)datos.Lector["Estado"];
+
                     aux.Paciente = new Paciente
                     {
                         Id = (int)datos.Lector["IdPaciente"],
@@ -49,8 +51,11 @@ namespace negocio
                         Apellido = (string)datos.Lector["ApellidoPaciente"],
                         Email = (string)datos.Lector["EmailPaciente"],
                         Dni = (string)datos.Lector["DniPaciente"],
-                        Telefono = (string)datos.Lector["TelefonoPaciente"]
+                        Telefono = (string)datos.Lector["TelefonoPaciente"],
+                        FechaNacimiento = (DateTime)datos.Lector["FechaNacimientoPaciente"]
                     };
+
+
                     aux.Medico = new Medico
                     {
                         Id = (int)datos.Lector["IdMedico"],

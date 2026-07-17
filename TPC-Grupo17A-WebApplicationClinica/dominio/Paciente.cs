@@ -16,8 +16,20 @@ namespace dominio
         public DateTime FechaNacimiento { get; set; }
         public string Telefono { get; set; }
         public string Direccion { get; set; }
-        public bool Activo { get; set; } 
-
+        public bool Activo { get; set; }
+        public int Edad
+        {
+            get
+            {
+                int edad = DateTime.Today.Year - FechaNacimiento.Year;
+                // resta 1 si no cumplio este año
+                if (FechaNacimiento.Date > DateTime.Today.AddYears(-edad))
+                {
+                    edad--;
+                }
+                return edad;
+            }
+        }
 
     }
 }

@@ -48,6 +48,11 @@ namespace WebApplicationClinica
                 if (seleccionado != null)
                 {
                     lblNombrePaciente.Text = seleccionado.Paciente.Apellido + ", " + seleccionado.Paciente.Nombre;
+                    lblEdad.Text = seleccionado.Paciente.Edad.ToString() + " años";
+                    // Cargar resto de los datos personales
+                    lblDniPaciente.Text = seleccionado.Paciente.Dni;
+                    lblTelefonoPaciente.Text = seleccionado.Paciente.Telefono;
+                    lblEmailPaciente.Text = seleccionado.Paciente.Email;
                     lblFecha.Text = seleccionado.Fecha.ToString("dd/MM/yyyy");
                     lblHora.Text = seleccionado.HoraInicio.ToString(@"hh\:mm");
                     lblEspecialidad.Text = seleccionado.Especialidad.Nombre;
