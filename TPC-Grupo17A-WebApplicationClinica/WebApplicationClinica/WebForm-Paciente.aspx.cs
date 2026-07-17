@@ -1,7 +1,8 @@
+using dominio;
 using negocio;
 using System;
-using dominio;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WebApplicationClinica
 {
@@ -64,7 +65,55 @@ namespace WebApplicationClinica
                 string id = e.CommandArgument.ToString();
                 Response.Redirect("FormularioPaciente.aspx?id=" + id);
             }
+            else if (e.CommandName == "VerHistorialClinico")
+            {
+                int idPaciente = int.Parse(e.CommandArgument.ToString());
+                cargarHistorialClinico(idPaciente);
+            }
         }
 
+        private void cargarHistorialClinico(int idPaciente)
+        {
+            TurnoNegocio negocio = new TurnoNegocio();
+            PacienteNegocio pacNegocio = new PacienteNegocio();
+
+            try
+            {
+                List<Paciente> pacientes = pacNegocio.listarPacientesCompleto();
+                Paciente pac = pacientes.Find(p => p.Id == idPaciente);
+                lblNombrePacienteHistorial.Text = pac != null ? pac.Apellido + ", " + pac.Nombre : "";
+
+                List<Turno> historial = negocio.listarPorPaciente(idPaciente);
+                var atenciones = historial
+                    .Where(t => t.Estado == "Asistió")
+                    .OrderByDescending(t => t.Fecha)
+                    .ThenByDescending(t => t.HoraInicio)
+                    .ToList();
+
+                if (atenciones.Count > 0)
+                {
+                    rptHistorialClinico.DataSource = atenciones;
+                    rptHistorialClinico.DataBind();
+                    rptHistorialClinico.Visible = true;
+                    lblSinHistorial.Visible = false;
+                }
+                else
+                {
+                    rptHistorialClinico.Visible = false;
+                    lblSinHistorial.Visible = true;
+                }
+
+                pnlHistorialClinico.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                Session.Add("Error", ex);
+            }
+        }
+
+        protected void btnCerrarHistorial_Click(object sender, EventArgs e)
+        {
+            pnlHistorialClinico.Visible = false;
+        }
     }
 }

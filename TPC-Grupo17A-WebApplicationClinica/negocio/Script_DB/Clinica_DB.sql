@@ -261,13 +261,33 @@ VALUES
     (3, 'Medico', 'InicioMedico.aspx', 1);
 GO
 
-INSERT INTO Usuarios (Usuario, Pass, TipoUser, IdMedico, Nombre, Apellido, DNI, Telefono, Email, Activo)
+-- Administradores
+
+INSERT INTO Usuarios
+    (Usuario, Pass, TipoUser, IdMedico, Nombre, Apellido, DNI, Telefono, Email, Activo)
 VALUES
-    ('admin', 'admin', 1, NULL, 'Camila', 'Suarez', '30111222', '1122334455', 'camila.suarez@clinica.com', 1),
-    ('recepcion', 'recepcion', 2, NULL, 'Valentina', 'Rodriguez', '32222333', '1133445566', 'valentina.rodriguez@clinica.com', 1),
-    ('cgomez', 'cgomez', 3, 1, 1),
-    ('mrodriguez', 'mrodriguez', 3, 2, 1),
-    ('jmartinez', 'jmartinez', 3, 3, 1),
-    ('afernandez', 'afernandez', 3, 4, 1),
-    ('jlopez', 'jlopez', 3, 5, 1);
+    ('fvillacis', 'fvillacis1', 1, NULL, 'Fernanda', 'Villacis', '38245671', '1122334455', 'fvillacis@clinica.com', 1),
+    ('pbotello', 'pbotello1', 1, NULL, 'Patricio', 'Botello', '38245672', '1122334456', 'pbotello@clinica.com', 1),
+    ('mschleifer', 'mschleifer1', 1, NULL, 'Maximiliano', 'Schleifer', '38245673', '1122334457', 'mschleifer@clinica.com', 1);
+GO
+
+-- Recepcionistas
+
+INSERT INTO Usuarios
+    (Usuario, Pass, TipoUser, IdMedico, Nombre, Apellido, DNI, Telefono, Email, Activo)
+VALUES
+    ('jvelez', 'jvelez1', 2, NULL, 'Joaquin', 'Velez', '38245674', '1122334458', 'jvelez@clinica.com', 1),
+    ('jgallardo', 'jgallardo1', 2, NULL, 'Julieta', 'Gallardo', '38245675', '1122334459', 'jgallardo@clinica.com', 1);
+GO
+
+-- Medicos
+
+INSERT INTO Usuarios
+    (Usuario, Pass, TipoUser, IdMedico, Activo)
+VALUES
+    ('cgomez', 'cgomez1', 3, 1, 1),
+    ('mrodriguez', 'mrodriguez1', 3, 2, 1),
+    ('jmartinez', 'jmartinez1', 3, 3, 1),
+    ('afernandez', 'afernandez1', 3, 4, 1),
+    ('jlopez', 'jlopez1', 3, 5, 1);
 GO
