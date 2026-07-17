@@ -1,62 +1,7 @@
 ﻿<%@ Page Title="Recuperar contraseña" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="RecuperarPassword.aspx.cs" Inherits="WebApplicationClinica.RecuperarPassword" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
-        .recover-page {
-            position: fixed;
-            inset: 0;
-            z-index: 1050;
-            min-height: 100vh;
-            background-image: linear-gradient(rgba(255, 255, 255, .28), rgba(255, 255, 255, .28)), url('Images/fondoInicio.png');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
 
-        .recover-card {
-            width: 100%;
-            max-width: 430px;
-            border: 0;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, .92);
-            box-shadow: 0 18px 45px rgba(15, 23, 42, .18);
-            backdrop-filter: blur(6px);
-        }
-
-        .recover-icon {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            background: #d7f4ff;
-            color: #13a8dc;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .recover-input-icon {
-            background: #ffffff;
-            color: #8b949e;
-            border-right: 0;
-        }
-
-        .recover-input {
-            border-left: 0;
-        }
-
-        .recover-button {
-            background: #2458e6;
-            border-color: #2458e6;
-        }
-
-        .recover-button:hover {
-            background: #1f4ed0;
-            border-color: #1f4ed0;
-        }
-    </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

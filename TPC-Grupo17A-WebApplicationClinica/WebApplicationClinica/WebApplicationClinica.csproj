@@ -71,6 +71,7 @@
     <Content Include="AtencionTurno.aspx" />
     <Content Include="CambiarPassword.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="estilos.css" />
     <Content Include="FormularioEspecialidad.aspx" />
     <Content Include="FormularioMedico.aspx" />
     <Content Include="FormularioPaciente.aspx" />

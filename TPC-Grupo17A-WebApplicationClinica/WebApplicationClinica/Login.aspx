@@ -1,62 +1,7 @@
 ﻿<%@ Page Title="Login" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="WebApplicationClinica.Login" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
-        .login-page {
-            position: fixed;
-            inset: 0;
-            z-index: 1050;
-            min-height: 100vh;
-            background-image: linear-gradient(rgba(255, 255, 255, .28), rgba(255, 255, 255, .28)), url('Images/fondoInicio.png');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
 
-        .login-card {
-            width: 100%;
-            max-width: 430px;
-            border: 0;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, .92);
-            box-shadow: 0 18px 45px rgba(15, 23, 42, .18);
-            backdrop-filter: blur(6px);
-        }
-
-        .login-icon {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            background: #d7f4ff;
-            color: #13a8dc;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-input-icon {
-            background: #ffffff;
-            color: #8b949e;
-            border-right: 0;
-        }
-
-        .login-input {
-            border-left: 0;
-        }
-
-        .login-button {
-            background: #2458e6;
-            border-color: #2458e6;
-        }
-
-        .login-button:hover {
-            background: #1f4ed0;
-            border-color: #1f4ed0;
-        }
-    </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
