@@ -31,7 +31,14 @@
                         <a id="lnkHorariosMedicos" runat="server" class="nav-link" href="FormularioTurnoDeTrabajo.aspx">Horarios Médicos</a>
                         <a id="lnkMisTurnos" runat="server" class="nav-link" href="MisTurnosMedicos.aspx">Mis turnos</a>
                         <a id="lnkUsuarios" runat="server" class="nav-link" href="WebForm-Usuarios.aspx">Personal Administrativo</a>
-                        <asp:LinkButton ID="lnkLogin" runat="server" CssClass="nav-link" OnClick="lnkLogin_Click" />
+                        <div id="divUsuarioNavbar" runat="server" class="dropdown ms-lg-auto me-lg-1" visible="false">
+                            <button id="btnUsuarioNavbar" runat="server" class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="CambiarPassword.aspx">Cambiar contraseña</a></li>
+                                <li><asp:LinkButton ID="lnkLogin" runat="server" CssClass="dropdown-item" OnClick="lnkLogin_Click" /></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

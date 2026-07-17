@@ -40,6 +40,9 @@ namespace WebApplicationClinica
 
             string paginaActual = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
 
+            if (paginaActual == "CambiarPassword.aspx")
+                return;
+
             if (!TienePermisoParaPagina(usuario, paginaActual))
                 Response.Redirect(usuario.PaginaInicio, false);
         }
@@ -70,6 +73,7 @@ namespace WebApplicationClinica
 
             if (usuario == null)
             {
+                divUsuarioNavbar.Visible = false;
                 lnkLogin.Visible = false;
                 lnkLogin.Text = "Login";
                 lnkInicio.InnerText = "Iniciar sesión";
@@ -77,9 +81,11 @@ namespace WebApplicationClinica
                 return;
             }
 
+            divUsuarioNavbar.Visible = true;
+            btnUsuarioNavbar.InnerText = ObtenerTextoUsuarioNavbar(usuario);
             lnkLogin.Visible = true;
             lnkLogin.Text = "Cerrar sesión";
-            lnkLogin.CssClass = "btn btn-dark ms-lg-auto";
+            lnkLogin.CssClass = "dropdown-item";
             lnkInicio.InnerText = "Inicio";
             lnkInicio.HRef = usuario.PaginaInicio;
 
@@ -114,6 +120,20 @@ namespace WebApplicationClinica
             }
         }
 
+
+        private string ObtenerTextoUsuarioNavbar(Usuario usuario)
+        {
+            string rol = "Usuario";
+
+            if (Seguridad.EsAdmin(usuario))
+                rol = "Administrador";
+            else if (Seguridad.EsRecepcionista(usuario))
+                rol = "Recepcionista";
+            else if (Seguridad.EsMedico(usuario))
+                rol = "Médico";
+
+            return rol + ": " + usuario.NombreMostrar;
+        }
         private void OcultarLinksPrivados()
         {
             lnkTurnos.Visible = false;

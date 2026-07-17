@@ -15,7 +15,7 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("SELECT U.Id, U.TipoUser, U.IdMedico, R.PaginaInicio, ISNULL(M.Nombre + ' ' + M.Apellido, U.Usuario) AS NombreMostrar FROM Usuarios U INNER JOIN Roles R ON R.Id = U.TipoUser LEFT JOIN Medicos M ON M.Id = U.IdMedico WHERE U.Usuario = @user AND U.Pass = @pass AND U.Activo = 1");
+                datos.setearConsulta("SELECT U.Id, U.TipoUser, U.IdMedico, R.PaginaInicio, COALESCE(M.Nombre + ', ' + M.Apellido, U.Nombre + ', ' + U.Apellido, U.Usuario) AS NombreMostrar FROM Usuarios U INNER JOIN Roles R ON R.Id = U.TipoUser LEFT JOIN Medicos M ON M.Id = U.IdMedico WHERE U.Usuario = @user AND U.Pass = @pass AND U.Activo = 1");
                 datos.setearParametro("@user", usuario.User);
                 datos.setearParametro("@pass", usuario.Pass);
 

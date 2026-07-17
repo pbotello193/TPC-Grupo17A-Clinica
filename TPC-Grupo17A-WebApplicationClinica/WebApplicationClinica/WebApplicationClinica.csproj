@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="AgendaMedicos.aspx" />
     <Content Include="AtencionTurno.aspx" />
+    <Content Include="CambiarPassword.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="FormularioEspecialidad.aspx" />
     <Content Include="FormularioMedico.aspx" />
@@ -105,6 +106,13 @@
     </Compile>
     <Compile Include="AtencionTurno.aspx.designer.cs">
       <DependentUpon>AtencionTurno.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CambiarPassword.aspx.cs">
+      <DependentUpon>CambiarPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CambiarPassword.aspx.designer.cs">
+      <DependentUpon>CambiarPassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
