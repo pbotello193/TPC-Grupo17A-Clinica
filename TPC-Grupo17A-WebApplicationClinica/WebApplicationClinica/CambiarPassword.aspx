@@ -17,22 +17,23 @@
                     <div class="mb-3">
                         <label for="txtPasswordActual" class="form-label">Contraseña actual</label>
                         <asp:TextBox ID="txtPasswordActual" runat="server" CssClass="form-control" TextMode="Password" />
-                        <asp:Label ID="lblErrorPasswordActual" runat="server" CssClass="text-danger mt-1 d-block" Visible="false" />
+                        <asp:Label ID="lblErrorPasswordActual" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
                     </div>
 
                     <div class="mb-3">
                         <label for="txtPasswordNueva" class="form-label">Nueva contraseña</label>
                         <asp:TextBox ID="txtPasswordNueva" runat="server" CssClass="form-control" TextMode="Password" />
-                        <asp:Label ID="lblErrorPasswordNueva" runat="server" CssClass="text-danger mt-1 d-block" Visible="false" />
+                        <asp:Label ID="lblErrorPasswordNueva" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
                     </div>
 
                     <div class="mb-3">
                         <label for="txtPasswordConfirmacion" class="form-label">Confirmar nueva contraseña</label>
                         <asp:TextBox ID="txtPasswordConfirmacion" runat="server" CssClass="form-control" TextMode="Password" />
-                        <asp:Label ID="lblErrorPasswordConfirmacion" runat="server" CssClass="text-danger mt-1 d-block" Visible="false" />
+                        <asp:Label ID="lblErrorPasswordConfirmacion" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
                     </div>
 
                     <asp:Label ID="lblMensaje" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
+                    <asp:HyperLink ID="lnkVolverInicio" runat="server" CssClass="btn btn-outline-dark w-100 mb-3" Visible="false">Volver al inicio</asp:HyperLink>
 
                     <div class="d-grid mt-4">
                         <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-dark" OnClick="btnGuardar_Click" />

@@ -17,6 +17,8 @@ namespace WebApplicationClinica
             lblErrorPasswordNueva.Visible = false;
             lblErrorPasswordConfirmacion.Visible = false;
             lblMensaje.Visible = false;
+            lnkVolverInicio.Visible = false;
+            btnGuardar.Visible = true;
 
             string passwordActual = txtPasswordActual.Text.Trim();
             string passwordNueva = txtPasswordNueva.Text.Trim();
@@ -64,9 +66,8 @@ namespace WebApplicationClinica
 
                 if (!passwordModificada)
                 {
-                    lblMensaje.CssClass = "alert alert-danger d-block";
-                    lblMensaje.Text = "La contraseña actual no es correcta.";
-                    lblMensaje.Visible = true;
+                    lblErrorPasswordActual.Text = "La contraseña actual no es correcta.";
+                    lblErrorPasswordActual.Visible = true;
                     return;
                 }
 
@@ -79,6 +80,9 @@ namespace WebApplicationClinica
                 lblMensaje.CssClass = "alert alert-success d-block";
                 lblMensaje.Text = "La contraseña se modificó correctamente.";
                 lblMensaje.Visible = true;
+                lnkVolverInicio.NavigateUrl = usuario.PaginaInicio;
+                lnkVolverInicio.Visible = true;
+                btnGuardar.Visible = false;
             }
             catch (Exception)
             {

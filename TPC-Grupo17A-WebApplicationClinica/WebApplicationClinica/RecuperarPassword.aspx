@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Login" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="WebApplicationClinica.Login" %>
+﻿<%@ Page Title="Recuperar contraseña" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="RecuperarPassword.aspx.cs" Inherits="WebApplicationClinica.RecuperarPassword" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -11,29 +11,25 @@
                     <div class="text-center mb-4">
                         <i class="bi bi-hospital fs-1 text-info"></i>
                         <h1 class="h4 mt-2 mb-1">Clínica Médica</h1>
-                        <p class="text-muted mb-0">Ingreso al sistema</p>
+                        <p class="text-muted mb-0">Recuperar contraseña</p>
                     </div>
 
                     <div class="mb-3">
-                        <label for="txtUsuario" class="form-label">Usuario</label>
+                        <label for="txtUsuario" class="form-label">Ingrese su usuario</label>
                         <asp:TextBox ID="txtUsuario" runat="server" CssClass="form-control" />
                         <asp:Label ID="lblErrorUsuario" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
                     </div>
 
                     <div class="mb-3">
-                        <label for="txtPassword" class="form-label">Contraseña</label>
-                        <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password" />
-                        <asp:Label ID="lblErrorPassword" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
+                        <label for="txtEmail" class="form-label">Ingrese su mail</label>
+                        <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" TextMode="Email" />
+                        <asp:Label ID="lblErrorEmail" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
                     </div>
 
-                    <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
+                    <asp:Label ID="lblMensaje" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
 
                     <div class="d-grid mt-4">
-                        <asp:Button ID="btnLogin" runat="server" Text="Ingresar" CssClass="btn btn-dark" OnClick="btnLogin_Click" />
-                    </div>
-
-                    <div class="text-center mt-3">
-                        <a href="RecuperarPassword.aspx" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+                        <asp:Button ID="btnEnviar" runat="server" Text="Enviar" CssClass="btn btn-dark" OnClick="btnEnviar_Click" />
                     </div>
                 </div>
             </div>

@@ -86,6 +86,7 @@
     <Content Include="MailTurnoConfirmado.html" />
     <Content Include="MailTurnoReprogramado.html" />
     <Content Include="MisTurnosMedicos.aspx" />
+    <Content Include="RecuperarPassword.aspx" />
     <Content Include="Web.config" />
     <Content Include="WebForm-Medico.aspx" />
     <Content Include="WebForm-Paciente.aspx" />
@@ -209,6 +210,13 @@
       <DependentUpon>MisTurnosMedicos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecuperarPassword.aspx.cs">
+      <DependentUpon>RecuperarPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RecuperarPassword.aspx.designer.cs">
+      <DependentUpon>RecuperarPassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site1.Master.cs">
       <DependentUpon>Site1.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

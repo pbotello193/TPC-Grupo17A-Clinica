@@ -29,8 +29,8 @@
                 </div>
 
 
-                <div class="mb-3">
-                    <label for="txtObservaciones" class="form-label">Motivo de consulta / Observaciones)</label>
+                <div class="mb-3" style="margin-top: 24px;">
+                    <label for="txtObservaciones" class="form-label">Motivo de consulta / Observaciones</label>
                     <asp:TextBox ID="txtObservaciones" runat="server"
                         CssClass="form-control"
                         TextMode="MultiLine"

@@ -22,7 +22,9 @@ namespace WebApplicationClinica
 
         private void ValidarSesion()
         {
-            if (Page is Login)
+            string paginaActual = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+
+            if (Page is Login || paginaActual == "RecuperarPassword.aspx")
                 return;
 
             if (!Seguridad.SesionActiva(Session["Usuario"]))
@@ -31,14 +33,14 @@ namespace WebApplicationClinica
 
         private void ValidarPermisosPorPagina()
         {
-            if (Page is Login)
+            string paginaActual = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+
+            if (Page is Login || paginaActual == "RecuperarPassword.aspx")
                 return;
 
             Usuario usuario = Session["Usuario"] as Usuario;
             if (usuario == null || Seguridad.EsAdmin(usuario))
                 return;
-
-            string paginaActual = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
 
             if (paginaActual == "CambiarPassword.aspx")
                 return;
