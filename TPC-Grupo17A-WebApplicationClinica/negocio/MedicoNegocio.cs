@@ -267,6 +267,23 @@ namespace negocio
             }
         }
 
+        public void activarLogico(int id)
+        {
+            try
+            {
+                datos.setearConsulta("UPDATE Medicos SET Activo = 1 WHERE Id = @Id");
+                datos.setearParametro("@Id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
         private bool tieneTurnosDeTrabajoActivos(int idMedico)
         {
             AccesoDatos datosAux = new AccesoDatos();
@@ -290,4 +307,6 @@ namespace negocio
 
     }
 }
+
+
 

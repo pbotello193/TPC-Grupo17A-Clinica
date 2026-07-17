@@ -1,70 +1,213 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="FormularioPaciente.aspx.cs" Inherits="WebApplicationClinica.FormularioPaciente" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="container">
-        <div class="row">
-            <div class="col-6">
-                <%--Errores generales del formulario --%>
-                <div class="mb-3">
-                    <asp:Label ID="lblErrorGeneral" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
-                </div>
-                <asp:Panel ID="pnlId" runat="server" Visible="false">
-                    <div class="mb-3">
-                        <label for="txtId" class="form-label">Id</label>
-                        <asp:TextBox runat="server" ID="txtId" CssClass="form-control" Enabled="false" />
-                    </div>
-                </asp:Panel>
-                <%--Apellido --%>
-                <div class="mb-3">
-                    <label for="txtApellido" class="form-label">Apellido</label>
-                    <asp:TextBox runat="server" ID="txtApellido" CssClass="form-control" />
-                    <asp:Label ID="lblErrorApellido" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
-                </div>
-                <%--Nombre --%>
-                <div class="mb-3">
-                    <label for="txtNombre" class="form-label">Nombre</label>
-                    <asp:TextBox runat="server" ID="txtNombre" CssClass="form-control" />
-                    <asp:Label ID="lblErrorNombre" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
-                </div>
-                <%--DNI --%>
-                <div class="mb-3">
-                    <label for="txtDni" class="form-label">DNI</label>
-                    <asp:TextBox runat="server" ID="txtDni" CssClass="form-control" />
-                    <asp:Label ID="lblErrorDni" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
-                </div>
-                <%--Fecha Nacimiento --%>
-                <div class="mb-3">
-                    <label for="txtFechaNacimiento" class="form-label">Fecha de nacimiento</label>
-                    <asp:TextBox runat="server" ID="txtFechaNacimiento" CssClass="form-control" TextMode="Date" />
-                    <asp:Label ID="lblErrorFechaNacimiento" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
-                </div>
-                <%--Telefono --%>
-                <div class="mb-3">
-                    <label for="txtTelefono" class="form-label">Teléfono</label>
-                    <asp:TextBox runat="server" ID="txtTelefono" CssClass="form-control" />
-                    <asp:Label ID="lblErrorTelefono" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
-                </div>
-                <%--Mail --%>
-                <div class="mb-3">
-                    <label for="txtEmail" class="form-label">Email</label>
-                    <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" />
-                    <asp:Label ID="lblErrorEmail" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
-                </div>
-                <%--Direccion --%>
-                <div class="mb-3">
-                    <label for="txtDireccion" class="form-label">Dirección</label>
-                    <asp:TextBox runat="server" ID="txtDireccion" CssClass="form-control" />
-                    <asp:Label ID="lblErrorDireccion" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
-                </div>
+    <style>
+        body {
+            min-height: 100vh;
+            background-image: linear-gradient(rgba(255, 255, 255, .50), rgba(255, 255, 255, .50)), url('Images/fondoInicio.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
 
-                <div class="mb-3">
-                    <asp:Button ID="btnAceptar" class="btn btn-primary" runat="server" Text="Aceptar" OnClick="btnAceptar_Click" />
-                    <a href="WebForm-Paciente.aspx" class="btn btn-danger">Cancelar</a>
-                    <asp:Button ID="btnCambiarEstado" runat="server" CssClass="btn btn-secondary" Visible="false" OnClick="btnCambiarEstado_Click" />
+        .navbar {
+            margin: 16px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, .72) !important;
+            box-shadow: 0 12px 32px rgba(15, 23, 42, .12);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar .nav-link,
+        .navbar .navbar-brand {
+            color: #172033;
+            font-weight: 500;
+        }
+
+        .navbar .navbar-brand {
+            color: #0d6efd;
+            font-weight: 700;
+        }
+
+        .navbar .btn-outline-dark {
+            background: rgba(255, 255, 255, .65);
+            border-color: rgba(15, 23, 42, .12);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, .08);
+        }
+
+        .paciente-form-panel {
+            max-width: 980px;
+            margin: 48px auto 72px;
+            padding: 32px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .88);
+            box-shadow: 0 18px 45px rgba(15, 23, 42, .14);
+            backdrop-filter: blur(8px);
+        }
+
+        .paciente-form-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding-bottom: 24px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid rgba(15, 23, 42, .12);
+        }
+
+        .paciente-form-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 14px;
+            background: rgba(239, 246, 255, .95);
+            color: #0d6efd;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .82);
+            flex: 0 0 auto;
+        }
+
+        .form-label {
+            color: #172033;
+            font-weight: 600;
+        }
+
+        .input-icon-group {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .input-icon {
+            width: 52px;
+            min-height: 46px;
+            border: 1px solid rgba(15, 23, 42, .12);
+            border-right: 0;
+            border-radius: .375rem 0 0 .375rem;
+            background: rgba(239, 246, 255, .95);
+            color: #0d6efd;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+        }
+
+        .input-icon-group .form-control {
+            min-height: 46px;
+            border-radius: 0 .375rem .375rem 0;
+            border-color: rgba(15, 23, 42, .12);
+            box-shadow: 0 6px 16px rgba(15, 23, 42, .06);
+        }
+
+        .paciente-form-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding-top: 18px;
+            margin-top: 10px;
+            border-top: 1px solid rgba(15, 23, 42, .12);
+        }
+
+        .paciente-form-actions .btn {
+            min-height: 44px;
+            padding-left: 22px;
+            padding-right: 22px;
+            font-weight: 600;
+        }
+    </style>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="paciente-form-panel">
+        <div class="paciente-form-header">
+            <div class="paciente-form-icon">
+                <i class="bi bi-person-plus"></i>
+            </div>
+            <div>
+                <h1 class="h2 fw-bold mb-2">Nuevo Paciente</h1>
+                <p class="text-muted fs-6 mb-0">Complete los datos del paciente para registrarlo en el sistema.</p>
+            </div>
+        </div>
+
+        <asp:Label ID="lblErrorGeneral" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
+
+        <asp:Panel ID="pnlId" runat="server" Visible="false">
+            <div class="mb-3">
+                <label for="txtId" class="form-label">Id</label>
+                <div class="input-icon-group">
+                    <span class="input-icon"><i class="bi bi-hash"></i></span>
+                    <asp:TextBox runat="server" ID="txtId" CssClass="form-control" Enabled="false" />
                 </div>
             </div>
+        </asp:Panel>
+
+        <div class="mb-3">
+            <label for="txtApellido" class="form-label">Apellido</label>
+            <div class="input-icon-group">
+                <span class="input-icon"><i class="bi bi-person"></i></span>
+                <asp:TextBox runat="server" ID="txtApellido" CssClass="form-control" placeholder="Ingrese el apellido" />
+            </div>
+            <asp:Label ID="lblErrorApellido" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
+        </div>
+
+        <div class="mb-3">
+            <label for="txtNombre" class="form-label">Nombre</label>
+            <div class="input-icon-group">
+                <span class="input-icon"><i class="bi bi-person"></i></span>
+                <asp:TextBox runat="server" ID="txtNombre" CssClass="form-control" placeholder="Ingrese el nombre" />
+            </div>
+            <asp:Label ID="lblErrorNombre" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
+        </div>
+
+        <div class="mb-3">
+            <label for="txtDni" class="form-label">DNI</label>
+            <div class="input-icon-group">
+                <span class="input-icon"><i class="bi bi-card-text"></i></span>
+                <asp:TextBox runat="server" ID="txtDni" CssClass="form-control" placeholder="Ingrese el DNI" />
+            </div>
+            <asp:Label ID="lblErrorDni" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
+        </div>
+
+        <div class="mb-3">
+            <label for="txtFechaNacimiento" class="form-label">Fecha de nacimiento</label>
+            <div class="input-icon-group">
+                <span class="input-icon"><i class="bi bi-calendar-date"></i></span>
+                <asp:TextBox runat="server" ID="txtFechaNacimiento" CssClass="form-control" TextMode="Date" />
+            </div>
+            <asp:Label ID="lblErrorFechaNacimiento" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
+        </div>
+
+        <div class="mb-3">
+            <label for="txtTelefono" class="form-label">Teléfono</label>
+            <div class="input-icon-group">
+                <span class="input-icon"><i class="bi bi-telephone"></i></span>
+                <asp:TextBox runat="server" ID="txtTelefono" CssClass="form-control" placeholder="Ingrese el teléfono" />
+            </div>
+            <asp:Label ID="lblErrorTelefono" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
+        </div>
+
+        <div class="mb-3">
+            <label for="txtEmail" class="form-label">Email</label>
+            <div class="input-icon-group">
+                <span class="input-icon"><i class="bi bi-envelope"></i></span>
+                <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" placeholder="Ingrese el email" />
+            </div>
+            <asp:Label ID="lblErrorEmail" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
+        </div>
+
+        <div class="mb-3">
+            <label for="txtDireccion" class="form-label">Dirección</label>
+            <div class="input-icon-group">
+                <span class="input-icon"><i class="bi bi-geo-alt"></i></span>
+                <asp:TextBox runat="server" ID="txtDireccion" CssClass="form-control" placeholder="Ingrese la dirección" />
+            </div>
+            <asp:Label ID="lblErrorDireccion" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
+        </div>
+
+        <div class="paciente-form-actions">
+            <asp:Button ID="btnAceptar" class="btn btn-primary" runat="server" Text="Aceptar" OnClick="btnAceptar_Click" />
+            <a href="WebForm-Paciente.aspx" class="btn btn-outline-danger">Cancelar</a>
+            <asp:Button ID="btnCambiarEstado" runat="server" CssClass="btn btn-secondary" Visible="false" OnClick="btnCambiarEstado_Click" />
         </div>
     </div>
 </asp:Content>

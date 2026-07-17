@@ -40,14 +40,9 @@ namespace WebApplicationClinica
                     txtTelefono.Text = aux.Telefono;
                     txtEmail.Text = aux.Email;
 
-                    if (aux.Activo) //lo trae siempre en false!!!
-                    {
-                        rdbActivo.Checked = true;
-                    }
-                    else
-                    {
-                        rdbInactivo.Checked = true;
-                    }
+                    btnCambiarEstado.Visible = true;
+                    btnCambiarEstado.Text = aux.Activo ? "Dar de baja" : "Reactivar";
+                    btnCambiarEstado.CssClass = aux.Activo ? "btn btn-secondary" : "btn btn-success";
                     if (aux.Especialidades != null)
                     {
                         foreach (ListItem item in cblEspecialidades.Items)
@@ -100,13 +95,15 @@ namespace WebApplicationClinica
                 }
                 nuevo.Telefono = txtTelefono.Text.Trim();
                 nuevo.Email = txtEmail.Text.Trim().ToLower();
-                if (rdbActivo.Checked)
+                if (Request.QueryString["id"] != null)
                 {
-                    nuevo.Activo = true;
+                    List<Medico> listaMedicos = (List<Medico>)Session["listaMedicos"];
+                    Medico medicoActual = listaMedicos.Find(x => x.Id == nuevo.Id);
+                    nuevo.Activo = medicoActual != null ? medicoActual.Activo : true;
                 }
                 else
                 {
-                    nuevo.Activo = false;
+                    nuevo.Activo = true;
                 }
                 List<int> especialidadesSeleccionadas = new List<int>();
                 foreach (ListItem item in cblEspecialidades.Items)
@@ -213,13 +210,6 @@ namespace WebApplicationClinica
                 return false;
             }
 
-            if (!rdbActivo.Checked && !rdbInactivo.Checked)
-            {
-                lblErrorEstado.Text = "Seleccione el estado del médico.";
-                lblErrorEstado.Visible = true;
-                return false;
-            }
-
             return true;
         }
 
@@ -232,7 +222,6 @@ namespace WebApplicationClinica
             lblErrorTelefono.Visible = false;
             lblErrorEmail.Visible = false;
             lblErrorEspecialidades.Visible = false;
-            lblErrorEstado.Visible = false;
             lblErrorUsuario.Visible = false;
             lblErrorPassword.Visible = false;
         }
@@ -269,22 +258,29 @@ namespace WebApplicationClinica
         }
 
 
-        protected void btnEliminarLogico_Click(object sender, EventArgs e)
+        protected void btnCambiarEstado_Click(object sender, EventArgs e)
         {
             try
             {
-                MedicoNegocio medNegocio = new MedicoNegocio();
-
                 int idMedico = int.Parse(txtId.Text);
-                medNegocio.eliminarLogico(idMedico);
-                Response.Redirect("WebForm-Medico.aspx", false);
+                MedicoNegocio medNegocio = new MedicoNegocio();
+                List<Medico> listaMedicos = (List<Medico>)Session["listaMedicos"];
+                Medico medico = listaMedicos.Find(x => x.Id == idMedico);
 
+                if (medico != null && medico.Activo)
+                    medNegocio.eliminarLogico(idMedico);
+                else
+                    medNegocio.activarLogico(idMedico);
+
+                Response.Redirect("WebForm-Medico.aspx", false);
             }
             catch (Exception ex)
             {
-
                 Session.Add("error", ex);
+                lblErrorGeneral.Text = ex.Message;
+                lblErrorGeneral.Visible = true;
             }
         }
     }
 }
+
