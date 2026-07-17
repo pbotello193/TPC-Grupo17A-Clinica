@@ -246,6 +246,13 @@ namespace WebApplicationClinica
                 return false;
             }
 
+            if (password.Length < 5 || password.Length > 10 || !Regex.IsMatch(password, @"[a-zA-Z]") || !Regex.IsMatch(password, @"\d"))
+            {
+                lblErrorPassword.Text = "La contraseña debe tener entre 5 y 10 caracteres e incluir letras y números.";
+                lblErrorPassword.Visible = true;
+                return false;
+            }
+
             UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
             if (usuarioNegocio.existeUsuario(usuario))
             {

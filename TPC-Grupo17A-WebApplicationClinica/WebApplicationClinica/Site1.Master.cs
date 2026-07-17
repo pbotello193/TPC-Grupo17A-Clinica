@@ -24,7 +24,7 @@ namespace WebApplicationClinica
         private void OcultarNavbarEnLogin()
         {
             string paginaActual = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
-            navPrincipal.Visible = paginaActual != "Login.aspx";
+            navPrincipal.Visible = paginaActual != "Login.aspx" && paginaActual != "RecuperarPassword.aspx";
         }
         private void ValidarSesion()
         {

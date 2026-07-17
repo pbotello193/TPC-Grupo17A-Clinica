@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using dominio;
 using negocio;
 
@@ -34,6 +35,13 @@ namespace WebApplicationClinica
             if (string.IsNullOrWhiteSpace(passwordNueva))
             {
                 lblErrorPasswordNueva.Text = "Ingrese la nueva contraseña.";
+                lblErrorPasswordNueva.Visible = true;
+                return;
+            }
+
+            if (passwordNueva.Length < 5 || passwordNueva.Length > 10 || !Regex.IsMatch(passwordNueva, @"[a-zA-Z]") || !Regex.IsMatch(passwordNueva, @"\d"))
+            {
+                lblErrorPasswordNueva.Text = "La contraseña debe tener entre 5 y 10 caracteres e incluir letras y números.";
                 lblErrorPasswordNueva.Visible = true;
                 return;
             }

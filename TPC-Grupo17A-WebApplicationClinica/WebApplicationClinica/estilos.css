@@ -42,10 +42,596 @@ body {
         box-shadow: 0 8px 20px rgba(15, 23, 42, .08);
     }
 
+        .navbar .btn-outline-dark:hover,
+        .navbar .btn-outline-dark:focus,
+        .navbar .btn-outline-dark:active,
+        .navbar .btn-outline-dark.show,
+        .navbar .btn-outline-dark:first-child:active {
+            color: #172033;
+            background: rgba(255, 255, 255, .88);
+            border-color: rgba(15, 23, 42, .18);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, .10);
+        }
+
 .form-label {
     color: #172033;
     font-weight: 600;
 }
+
+
+/* ==================== PAGINA: WebForm-Paciente.aspx ==================== */
+.pacientes-panel {
+    max-width: 1440px;
+    margin: 54px auto 72px;
+    padding: 38px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, .88);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, .14);
+    backdrop-filter: blur(8px);
+}
+
+.pacientes-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 34px;
+}
+
+.pacientes-header-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 16px;
+    background: rgba(215, 244, 255, .9);
+    color: #0d6efd;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    flex: 0 0 auto;
+}
+
+.pacientes-filtros {
+    display: grid;
+    grid-template-columns: 160px minmax(260px, 1fr);
+    gap: 18px;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.pacientes-search {
+    position: relative;
+}
+
+    .pacientes-search i {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #52627a;
+        font-size: 1.2rem;
+        pointer-events: none;
+    }
+
+    .pacientes-search .form-control {
+        padding-left: 54px;
+    }
+
+.pacientes-table-wrap {
+    overflow: visible;
+    border: 1px solid rgba(15, 23, 42, .10);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .9);
+}
+
+    .pacientes-table-wrap .table {
+        margin-bottom: 0;
+    }
+
+    .pacientes-table-wrap th {
+        padding: 16px 12px;
+        background: rgba(248, 250, 252, .92);
+        color: #172033;
+        font-weight: 700;
+        border-bottom-color: rgba(15, 23, 42, .12);
+        white-space: nowrap;
+    }
+
+    .pacientes-table-wrap td {
+        padding: 16px 12px;
+        vertical-align: middle;
+        color: #172033;
+    }
+
+    .pacientes-table-wrap .btn {
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+.pacientes-actions {
+    margin-top: 28px;
+}
+
+    .pacientes-actions .btn {
+        min-height: 46px;
+        padding-inline: 22px;
+        font-weight: 700;
+        box-shadow: 0 10px 24px rgba(13, 110, 253, .22);
+    }
+
+
+/* ==================== PAGINA: WebForm-Medico.aspx ==================== */
+.medicos-panel {
+    max-width: 1440px;
+    margin: 54px auto 72px;
+    padding: 38px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, .88);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, .14);
+    backdrop-filter: blur(8px);
+}
+
+.medicos-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 34px;
+}
+
+.medicos-header-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 16px;
+    background: rgba(215, 244, 255, .9);
+    color: #0d6efd;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    flex: 0 0 auto;
+}
+
+.medicos-filtros {
+    display: grid;
+    grid-template-columns: 160px minmax(260px, 1fr);
+    gap: 18px;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.medicos-search {
+    position: relative;
+}
+
+    .medicos-search i {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #52627a;
+        font-size: 1.2rem;
+        pointer-events: none;
+    }
+
+    .medicos-search .form-control {
+        padding-left: 54px;
+    }
+
+.medicos-table-wrap {
+    overflow: visible;
+    border: 1px solid rgba(15, 23, 42, .10);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .9);
+}
+
+    .medicos-table-wrap .table {
+        margin-bottom: 0;
+    }
+
+    .medicos-table-wrap th {
+        padding: 16px 12px;
+        background: rgba(248, 250, 252, .92);
+        color: #172033;
+        font-weight: 700;
+        border-bottom-color: rgba(15, 23, 42, .12);
+        white-space: nowrap;
+    }
+
+    .medicos-table-wrap td {
+        padding: 16px 12px;
+        vertical-align: middle;
+        color: #172033;
+    }
+
+    .medicos-table-wrap .btn {
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+.medicos-actions {
+    margin-top: 28px;
+}
+
+    .medicos-actions .btn {
+        min-height: 46px;
+        padding-inline: 22px;
+        font-weight: 700;
+        box-shadow: 0 10px 24px rgba(13, 110, 253, .22);
+    }
+
+
+/* ==================== PAGINA: ListaEspecialidades.aspx ==================== */
+.especialidades-panel {
+    max-width: 1440px;
+    margin: 54px auto 72px;
+    padding: 38px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, .88);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, .14);
+    backdrop-filter: blur(8px);
+}
+
+.especialidades-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 34px;
+}
+
+.especialidades-header-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 16px;
+    background: rgba(215, 244, 255, .9);
+    color: #0d6efd;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    flex: 0 0 auto;
+}
+
+.especialidades-filtros {
+    display: grid;
+    grid-template-columns: 160px minmax(260px, 1fr);
+    gap: 18px;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.especialidades-search {
+    position: relative;
+}
+
+    .especialidades-search i {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #52627a;
+        font-size: 1.2rem;
+        pointer-events: none;
+    }
+
+    .especialidades-search .form-control {
+        padding-left: 54px;
+    }
+
+.especialidades-table-wrap {
+    overflow: visible;
+    border: 1px solid rgba(15, 23, 42, .10);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .9);
+}
+
+    .especialidades-table-wrap .table {
+        margin-bottom: 0;
+    }
+
+    .especialidades-table-wrap th {
+        padding: 16px 12px;
+        background: rgba(248, 250, 252, .92);
+        color: #172033;
+        font-weight: 700;
+        border-bottom-color: rgba(15, 23, 42, .12);
+        white-space: nowrap;
+    }
+
+    .especialidades-table-wrap td {
+        padding: 16px 12px;
+        vertical-align: middle;
+        color: #172033;
+    }
+
+    .especialidades-table-wrap .btn {
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+.especialidades-actions {
+    margin-top: 28px;
+}
+
+    .especialidades-actions .btn {
+        min-height: 46px;
+        padding-inline: 22px;
+        font-weight: 700;
+        box-shadow: 0 10px 24px rgba(13, 110, 253, .22);
+    }
+
+
+/* ==================== PAGINA: WebForm-Usuarios.aspx ==================== */
+.usuarios-panel {
+    max-width: 1440px;
+    margin: 54px auto 72px;
+    padding: 38px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, .88);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, .14);
+    backdrop-filter: blur(8px);
+}
+
+.usuarios-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 34px;
+}
+
+.usuarios-header-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 16px;
+    background: rgba(215, 244, 255, .9);
+    color: #0d6efd;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    flex: 0 0 auto;
+}
+
+.usuarios-filtros {
+    display: grid;
+    grid-template-columns: 160px 180px minmax(260px, 1fr);
+    gap: 18px;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.usuarios-search {
+    position: relative;
+}
+
+    .usuarios-search i {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #52627a;
+        font-size: 1.2rem;
+        pointer-events: none;
+    }
+
+    .usuarios-search .form-control {
+        padding-left: 54px;
+    }
+
+.usuarios-table-wrap {
+    overflow: visible;
+    border: 1px solid rgba(15, 23, 42, .10);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .9);
+}
+
+    .usuarios-table-wrap .table {
+        margin-bottom: 0;
+    }
+
+    .usuarios-table-wrap th {
+        padding: 16px 12px;
+        background: rgba(248, 250, 252, .92);
+        color: #172033;
+        font-weight: 700;
+        border-bottom-color: rgba(15, 23, 42, .12);
+        white-space: nowrap;
+    }
+
+    .usuarios-table-wrap td {
+        padding: 16px 12px;
+        vertical-align: middle;
+        color: #172033;
+    }
+
+    .usuarios-table-wrap .btn {
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+.usuarios-actions {
+    margin-top: 28px;
+}
+
+    .usuarios-actions .btn {
+        min-height: 46px;
+        padding-inline: 22px;
+        font-weight: 700;
+        box-shadow: 0 10px 24px rgba(13, 110, 253, .22);
+    }
+
+
+/* ==================== PAGINA: MisTurnosMedicos.aspx ==================== */
+.mis-turnos-page {
+    max-width: 1440px;
+    margin: 48px auto 72px;
+}
+
+.mis-turnos-card {
+    padding: 32px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, .88);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, .14);
+    backdrop-filter: blur(8px);
+}
+
+.mis-turnos-header-card {
+    margin-bottom: 28px;
+}
+
+.mis-turnos-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.mis-turnos-header-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 16px;
+    background: rgba(215, 244, 255, .9);
+    color: #0d6efd;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    flex: 0 0 auto;
+}
+
+.mis-turnos-table-wrap {
+    overflow: visible;
+    border: 1px solid rgba(15, 23, 42, .10);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .9);
+}
+
+    .mis-turnos-table-wrap .table {
+        margin-bottom: 0;
+    }
+
+    .mis-turnos-table-wrap th {
+        padding: 16px;
+        background: rgba(248, 250, 252, .92);
+        color: #172033;
+        font-weight: 700;
+        border-bottom-color: rgba(15, 23, 42, .12);
+        white-space: nowrap;
+    }
+
+    .mis-turnos-table-wrap td {
+        padding: 18px 16px;
+        vertical-align: middle;
+        color: #172033;
+    }
+
+    .mis-turnos-table-wrap .btn {
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+.btn-abrir-turno {
+    box-shadow: 0 10px 24px rgba(25, 135, 84, .20);
+}
+
+
+/* ==================== PAGINA: FormularioTurnoDeTrabajo.aspx ==================== */
+.horarios-panel {
+    max-width: 1440px;
+    margin: 48px auto 72px;
+    padding: 38px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, .88);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, .14);
+    backdrop-filter: blur(8px);
+}
+
+.horarios-title {
+    margin-bottom: 34px;
+}
+
+.horarios-panel .row {
+    align-items: flex-start;
+}
+
+.horarios-panel .input-icon-group {
+    box-shadow: 0 6px 16px rgba(15, 23, 42, .06);
+}
+
+    .horarios-panel .input-icon-group .form-select,
+    .horarios-panel .input-icon-group .form-control {
+        box-shadow: none;
+    }
+
+.horarios-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 26px;
+}
+
+    .horarios-actions .btn {
+        min-height: 46px;
+        padding-inline: 22px;
+        font-weight: 700;
+        box-shadow: 0 10px 24px rgba(13, 110, 253, .22);
+    }
+
+.horarios-list-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 26px;
+}
+
+.horarios-list-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    background: rgba(239, 246, 255, .95);
+    color: #0d6efd;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex: 0 0 auto;
+}
+
+.horarios-filter-box {
+    padding: 22px;
+    border: 1px solid rgba(15, 23, 42, .10);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .78);
+    margin-bottom: 24px;
+}
+
+.horarios-table-wrap {
+    overflow: visible;
+    border: 1px solid rgba(15, 23, 42, .10);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .9);
+}
+
+    .horarios-table-wrap .table {
+        margin-bottom: 0;
+    }
+
+    .horarios-table-wrap th {
+        padding: 16px 12px;
+        background: rgba(248, 250, 252, .92);
+        color: #172033;
+        font-weight: 700;
+        border-bottom-color: rgba(15, 23, 42, .12);
+        white-space: nowrap;
+    }
+
+    .horarios-table-wrap td {
+        padding: 16px 12px;
+        vertical-align: middle;
+        color: #172033;
+    }
+
+    .horarios-table-wrap .btn {
+        font-weight: 600;
+        white-space: nowrap;
+    }
 
 
 /* ==================== PAGINA: AgendaMedicos.aspx ==================== */
@@ -194,6 +780,147 @@ body {
     box-shadow: 0 8px 18px rgba(15, 23, 42, .08);
 }
 
+
+/* ==================== PAGINA: WebForm-Turnos.aspx ==================== */
+.turnos-page {
+    margin: 36px auto 72px;
+}
+
+.turnos-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.turnos-header-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(215, 244, 255, .9);
+    color: #0d6efd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.25rem;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .82);
+    flex: 0 0 auto;
+}
+
+.turnos-card {
+    padding: 32px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, .88);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, .14);
+    backdrop-filter: blur(8px);
+    margin-bottom: 28px;
+}
+
+.turnos-card-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #172033;
+    font-weight: 700;
+    margin-bottom: 22px;
+}
+
+.input-icon-wrap {
+    position: relative;
+}
+
+    .input-icon-wrap > i {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #64748b;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .input-icon-wrap .form-control,
+    .input-icon-wrap .form-select {
+        min-height: 48px;
+        padding-left: 52px;
+        border-color: rgba(15, 23, 42, .12);
+        box-shadow: 0 6px 16px rgba(15, 23, 42, .06);
+    }
+
+.textarea-icon > i {
+    top: 24px;
+    transform: none;
+}
+
+.textarea-icon textarea.form-control {
+    min-height: 86px;
+    padding-top: 15px;
+    resize: vertical;
+}
+
+.btn-buscar-turnos {
+    min-height: 44px;
+    padding-left: 22px;
+    padding-right: 22px;
+    font-weight: 600;
+    box-shadow: 0 10px 22px rgba(13, 110, 253, .22);
+}
+
+.calendar-card,
+.horarios-card {
+    border: 1px solid rgba(15, 23, 42, .10);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .92);
+    box-shadow: 0 10px 26px rgba(15, 23, 42, .08);
+    overflow: hidden;
+}
+
+.calendar-card {
+    padding: 14px;
+}
+
+.turnos-calendar {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0;
+}
+
+    .turnos-calendar th,
+    .turnos-calendar td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .turnos-calendar td {
+        height: 42px;
+    }
+
+.horarios-card {
+    min-height: 310px;
+}
+
+.horarios-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 22px 8px;
+    color: #475569;
+    font-weight: 700;
+}
+
+.horarios-card .table {
+    margin-bottom: 0;
+}
+
+.horarios-card th {
+    color: #172033;
+    background: rgba(248, 250, 252, .92);
+    border-bottom-color: rgba(15, 23, 42, .10);
+}
+
+.horarios-card td {
+    vertical-align: middle;
+}
 
 /* ==================== PAGINA: AtencionTurno.aspx ==================== */
 .atencion-page {
@@ -473,16 +1200,31 @@ body {
     box-shadow: 0 10px 22px rgba(15, 23, 42, .18);
 }
 
-.login-card {
+.login-page,
+.recover-page {
+    width: 100vw;
+    min-height: 100vh;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+}
+
+.login-card,
+.recover-card {
     width: min(100%, 460px);
-    padding: 38px;
+    padding: 0;
+    border: 0;
     border-radius: 18px;
-    background: rgba(255, 255, 255, .86);
+    background: rgba(255, 255, 255, .88);
     box-shadow: 0 18px 45px rgba(15, 23, 42, .14);
     backdrop-filter: blur(8px);
 }
 
-.login-icon {
+.login-icon,
+.recover-icon {
     width: 80px;
     height: 80px;
     border-radius: 50%;
@@ -496,26 +1238,28 @@ body {
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .82);
 }
 
-.login-input {
-    position: relative;
+.login-input-icon,
+.recover-input-icon {
+    width: 52px;
+    justify-content: center;
+    background: rgba(239, 246, 255, .95);
+    border-color: rgba(15, 23, 42, .12);
+    color: #172033;
 }
 
-    .login-input i {
-        position: absolute;
-        left: 18px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #64748b;
-        z-index: 2;
-    }
+.login-input,
+.recover-input {
+    min-height: 48px;
+    border-color: rgba(15, 23, 42, .12);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, .06);
+}
 
-    .login-input .form-control {
-        min-height: 48px;
-        padding-left: 52px;
-        border-color: rgba(15, 23, 42, .12);
-        box-shadow: 0 6px 16px rgba(15, 23, 42, .06);
-    }
-
+.login-button,
+.recover-button {
+    min-height: 48px;
+    font-weight: 600;
+    box-shadow: 0 10px 22px rgba(13, 110, 253, .22);
+}
 
 /* ==================== FORMULARIOS (Especialidad, Medico, Paciente, Usuario, etc.) ==================== */
 .input-icon-group {
@@ -695,8 +1439,11 @@ body {
 
 /* ==================== VISTAS DE INICIO (Panel Admin / Medico / Recepcionista) ==================== */
 .admin-dashboard,
+.admin-home,
 .medico-dashboard,
-.recep-dashboard {
+.doctor-home,
+.recep-dashboard,
+.recepcion-home {
     margin: 48px auto 72px;
 }
 
@@ -712,26 +1459,33 @@ body {
 }
 
 .admin-welcome-header,
+.admin-header,
 .medico-welcome-header,
-.recep-welcome-header {
+.doctor-title,
+.recep-welcome-header,
+.recepcion-header {
     display: flex;
     align-items: center;
     gap: 24px;
 }
 
 .admin-avatar,
+.admin-header-icon,
 .medico-avatar,
-.recep-avatar {
+.doctor-header-icon,
+.recep-avatar,
+.recepcion-header-icon {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: rgba(239, 246, 255, .95);
+    background: rgba(215, 244, 255, .9);
     color: #0d6efd;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2.5rem;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .82);
+    flex: 0 0 auto;
 }
 
 .admin-actions-grid,
@@ -743,8 +1497,11 @@ body {
 }
 
 .admin-card-action,
+.admin-card,
 .medico-card-action,
-.recep-card-action {
+.doctor-card,
+.recep-card-action,
+.recepcion-card {
     display: flex;
     flex-direction: column;
     padding: 28px;
@@ -759,8 +1516,11 @@ body {
 }
 
     .admin-card-action:hover,
+    .admin-card:hover,
     .medico-card-action:hover,
-    .recep-card-action:hover {
+    .doctor-card:hover,
+    .recep-card-action:hover,
+    .recepcion-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 18px 40px rgba(15, 23, 42, .12);
         border-color: rgba(13, 110, 253, .3);
@@ -768,11 +1528,13 @@ body {
 
 .admin-card-icon,
 .medico-card-icon,
-.recep-card-icon {
+.doctor-card-icon,
+.recep-card-icon,
+.recepcion-card-icon {
     width: 60px;
     height: 60px;
     border-radius: 14px;
-    background: rgba(239, 246, 255, .95);
+    background: rgba(215, 244, 255, .9);
     color: #0d6efd;
     display: flex;
     align-items: center;
@@ -782,6 +1544,10 @@ body {
 }
 
 
+
+.doctor-card {
+    width: min(100%, 620px);
+}
 /* ==================== MEDIAS Y ADAPTABILIDAD ==================== */
 @media (max-width: 992px) {
     .agenda-filtros {
