@@ -89,20 +89,10 @@
             color: #64748b;
             z-index: 2;
         }
-
-        .password-input .bi-eye {
-            position: absolute;
-            right: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #64748b;
-            z-index: 2;
-        }
-
-        .password-input .form-control {
+.password-input .form-control {
             min-height: 48px;
             padding-left: 52px;
-            padding-right: 52px;
+            padding-right: 16px;
             border-color: rgba(15, 23, 42, .12);
             box-shadow: 0 6px 16px rgba(15, 23, 42, .06);
         }
@@ -133,7 +123,6 @@
                 <div class="password-input">
                     <i class="bi bi-lock"></i>
                     <asp:TextBox ID="txtPasswordActual" runat="server" CssClass="form-control" TextMode="Password" placeholder="Ingrese su contraseña actual" />
-                    <i class="bi bi-eye"></i>
                 </div>
                 <asp:Label ID="lblErrorPasswordActual" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
             </div>
@@ -143,7 +132,6 @@
                 <div class="password-input">
                     <i class="bi bi-lock"></i>
                     <asp:TextBox ID="txtPasswordNueva" runat="server" CssClass="form-control" TextMode="Password" placeholder="Ingrese su nueva contraseña" />
-                    <i class="bi bi-eye"></i>
                 </div>
                 <asp:Label ID="lblErrorPasswordNueva" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
             </div>
@@ -153,7 +141,6 @@
                 <div class="password-input">
                     <i class="bi bi-lock"></i>
                     <asp:TextBox ID="txtPasswordConfirmacion" runat="server" CssClass="form-control" TextMode="Password" placeholder="Repita su nueva contraseña" />
-                    <i class="bi bi-eye"></i>
                 </div>
                 <asp:Label ID="lblErrorPasswordConfirmacion" runat="server" CssClass="alert alert-danger d-block mt-2" Visible="false" />
             </div>
@@ -167,3 +154,4 @@
         </div>
     </div>
 </asp:Content>
+

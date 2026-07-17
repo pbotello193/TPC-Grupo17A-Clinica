@@ -84,7 +84,7 @@ namespace WebApplicationClinica
             }
 
             divUsuarioNavbar.Visible = true;
-            btnUsuarioNavbar.InnerText = ObtenerTextoUsuarioNavbar(usuario);
+            btnUsuarioNavbar.InnerHtml = ObtenerTextoUsuarioNavbar(usuario);
             lnkLogin.Visible = true;
             lnkLogin.Text = "Cerrar sesión";
             lnkLogin.CssClass = "dropdown-item";
@@ -134,7 +134,8 @@ namespace WebApplicationClinica
             else if (Seguridad.EsMedico(usuario))
                 rol = "Médico";
 
-            return rol + ": " + usuario.NombreMostrar;
+            string nombreMostrar = HttpUtility.HtmlEncode(usuario.NombreMostrar);
+            return "<span class=\"fw-bold\">" + rol + ":</span> " + nombreMostrar;
         }
         private void OcultarLinksPrivados()
         {
@@ -161,3 +162,5 @@ namespace WebApplicationClinica
         }
     }
 }
+
+

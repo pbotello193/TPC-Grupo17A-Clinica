@@ -190,8 +190,30 @@ namespace WebApplicationClinica
                 }
             }
         }
+        protected string GetEstadoCss(object estado)
+        {
+            string estadoTexto = estado == null ? "" : estado.ToString().Trim().ToLower();
 
-
-
+            switch (estadoTexto)
+            {
+                case "asignado":
+                case "programado":
+                    return "estado-badge estado-asignado";
+                case "reprogramado":
+                    return "estado-badge estado-reprogramado";
+                case "cancelado":
+                    return "estado-badge estado-cancelado";
+                case "no asistió":
+                case "no asistio":
+                    return "estado-badge estado-no-asistio";
+                case "asistió":
+                case "asistio":
+                    return "estado-badge estado-asistio";
+                case "cerrado":
+                    return "estado-badge estado-cerrado";
+                default:
+                    return "estado-badge estado-default";
+            }
+        }
     }
 }

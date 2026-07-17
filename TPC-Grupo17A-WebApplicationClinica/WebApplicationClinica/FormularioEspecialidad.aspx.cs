@@ -36,6 +36,10 @@ namespace WebApplicationClinica
                     {
                         rdbInactivo.Checked = true;
                     }
+
+                    btnCambiarEstado.Visible = true;
+                    btnCambiarEstado.Text = aux.Activo ? "Dar de baja" : "Reactivar";
+                    btnCambiarEstado.CssClass = aux.Activo ? "btn btn-secondary" : "btn btn-success";
                 }
             }
             catch (Exception ex)
@@ -59,13 +63,15 @@ namespace WebApplicationClinica
 
                 nuevo.Nombre = txtNombre.Text;
                 nuevo.Descripcion = txtDescripcion.Text;
-                if (rdbActivo.Checked)
+                if (Request.QueryString["id"] != null)
                 {
-                    nuevo.Activo = true;
+                    List<Especialidad> listaEspecialidades = (List<Especialidad>)Session["listaEspecialidades"];
+                    Especialidad especialidadActual = listaEspecialidades.Find(x => x.Id == int.Parse(txtId.Text));
+                    nuevo.Activo = especialidadActual != null ? especialidadActual.Activo : true;
                 }
                 else
                 {
-                    nuevo.Activo = false;
+                    nuevo.Activo = true;
                 }
 
                 if (Request.QueryString["id"] != null)
@@ -107,7 +113,27 @@ namespace WebApplicationClinica
                 lblMensaje.Visible = true;
             }
         }
+        protected void btnCambiarEstado_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                EspecialidadNegocio espNegocio = new EspecialidadNegocio();
+                List<Especialidad> listaEspecialidades = (List<Especialidad>)Session["listaEspecialidades"];
+                Especialidad especialidad = listaEspecialidades.Find(x => x.Id == int.Parse(txtId.Text));
 
-       
+                if (especialidad == null)
+                    return;
+
+                especialidad.Activo = !especialidad.Activo;
+                espNegocio.modificar(especialidad);
+
+                Response.Redirect("ListaEspecialidades.aspx", false);
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = ex.Message;
+                lblMensaje.Visible = true;
+            }
+        }
     }
 }

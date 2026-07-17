@@ -65,12 +65,12 @@ namespace WebApplicationClinica
         {
             try
             {
-            if (e.CommandName == "AbrirTurno")
-            {
-                string idTurno = e.CommandArgument.ToString();
-                Response.Redirect("AtencionTurno.aspx?id=" + idTurno, false);
-            }
-   
+                if (e.CommandName == "AbrirTurno")
+                {
+                    string idTurno = e.CommandArgument.ToString();
+                    Response.Redirect("AtencionTurno.aspx?id=" + idTurno, false);
+                }
+
 
             }
             catch (Exception ex)
@@ -82,15 +82,27 @@ namespace WebApplicationClinica
 
         protected string badgeEstado(string estado)
         {
-            switch (estado)
+            string estadoTexto = string.IsNullOrWhiteSpace(estado) ? "" : estado.Trim().ToLower();
+
+            switch (estadoTexto)
             {
-                case "Asignado": return "badge bg-primary text-white px-2 py-1.5";
-                case "Asistió": return "badge bg-success text-white px-2 py-1.5";
-                case "Reprogramado": return "badge bg-warning text-dark px-2 py-1.5";
-                case "Cancelado": return "badge bg-danger text-white px-2 py-1.5";
-                case "No asistió":
-                case "No Asistió": return "badge bg-secondary text-white px-2 py-1.5";
-                default: return "badge bg-secondary text-white px-2 py-1.5";
+                case "asignado":
+                case "programado":
+                    return "estado-badge estado-asignado";
+                case "reprogramado":
+                    return "estado-badge estado-reprogramado";
+                case "cancelado":
+                    return "estado-badge estado-cancelado";
+                case "no asistió":
+                case "no asistio":
+                    return "estado-badge estado-no-asistio";
+                case "asistió":
+                case "asistio":
+                    return "estado-badge estado-asistio";
+                case "cerrado":
+                    return "estado-badge estado-cerrado";
+                default:
+                    return "estado-badge estado-default";
             }
         }
     }
