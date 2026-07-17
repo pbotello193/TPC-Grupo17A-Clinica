@@ -13,6 +13,7 @@ namespace WebApplicationClinica
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            OcultarNavbarEnLogin();
             ValidarSesion();
             ValidarPermisosPorPagina();
 
@@ -20,6 +21,11 @@ namespace WebApplicationClinica
                 ActualizarLoginNavbar();
         }
 
+        private void OcultarNavbarEnLogin()
+        {
+            string paginaActual = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+            navPrincipal.Visible = paginaActual != "Login.aspx";
+        }
         private void ValidarSesion()
         {
             string paginaActual = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
@@ -162,5 +168,7 @@ namespace WebApplicationClinica
         }
     }
 }
+
+
 
 

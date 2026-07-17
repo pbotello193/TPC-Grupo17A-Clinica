@@ -26,7 +26,7 @@
 <body>
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav id="navPrincipal" runat="server" class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a id="lnkInicio" runat="server" class="navbar-brand" href="Default.aspx">Inicio</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,5 +61,6 @@
 
 </body>
 </html>
+
 
 
