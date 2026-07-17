@@ -1,11 +1,12 @@
-﻿using System;
+﻿using dominio;
+using negocio;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using dominio;
-using negocio;
 
 namespace WebApplicationClinica
 {
@@ -58,7 +59,16 @@ namespace WebApplicationClinica
         private void CargarEspecialidades()
         {
             EspecialidadNegocio especialidadNegocio = new EspecialidadNegocio();
-            ddlEspecialidad.DataSource = especialidadNegocio.listarEspecialidadesActivas();
+            List<Especialidad> lista;
+            if (int.TryParse(ddlMedico.SelectedValue, out int idMedico))
+            {
+                lista = especialidadNegocio.listarPorMedico(idMedico);
+            }
+            else
+            {
+                lista = especialidadNegocio.listarEspecialidadesActivas();
+            }
+            ddlEspecialidad.DataSource = lista;
             ddlEspecialidad.DataValueField = "Id";
             ddlEspecialidad.DataTextField = "Nombre";
             ddlEspecialidad.DataBind();
@@ -122,6 +132,7 @@ namespace WebApplicationClinica
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             ddlMedico.SelectedIndex = 0;
+            CargarEspecialidades();
             ddlEspecialidad.SelectedIndex = 0;
             ddlEstado.SelectedIndex = 0;
             txtFecha.Text = string.Empty;
@@ -214,6 +225,12 @@ namespace WebApplicationClinica
                 default:
                     return "estado-badge estado-default";
             }
+        }
+        //para que no muestre especialidades que no tenga el medico
+        protected void ddlMedico_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarEspecialidades();
+            CargarAgenda();
         }
     }
 }
