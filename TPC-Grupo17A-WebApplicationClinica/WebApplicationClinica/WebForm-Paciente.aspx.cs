@@ -70,6 +70,15 @@ namespace WebApplicationClinica
                 int idPaciente = int.Parse(e.CommandArgument.ToString());
                 cargarHistorialClinico(idPaciente);
             }
+            else if (e.CommandName == "VerHistorialClinico")
+            {
+                if (Seguridad.EsRecepcionista(Session["Usuario"]))
+                    return;
+
+                int idPaciente = int.Parse(e.CommandArgument.ToString());
+                cargarHistorialClinico(idPaciente);
+            }
+
         }
 
         private void cargarHistorialClinico(int idPaciente)

@@ -63,7 +63,11 @@
                             <asp:LinkButton ID="btnHistorial" runat="server" CommandName="VerHistorial" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-outline-primary me-2">
                                 Historial de turnos
                             </asp:LinkButton>
-                            <asp:LinkButton ID="btnHistorialClinico" runat="server" CommandName="VerHistorialClinico" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-outline-secondary me-2">
+                            <asp:LinkButton ID="btnHistorialClinico" runat="server" 
+                                CommandName="VerHistorialClinico" 
+                                CommandArgument='<%# Eval("Id") %>' 
+                                Visible='<%# !negocio.Seguridad.EsRecepcionista(Session["Usuario"]) %>' 
+                                CssClass="btn btn-sm btn-outline-secondary me-2">
                                 Ficha Médica
                             </asp:LinkButton>
                             <asp:LinkButton ID="btnEditar" runat="server" CommandName="Editar" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-outline-danger">
