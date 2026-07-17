@@ -51,6 +51,24 @@ namespace WebApplicationClinica
         protected global::System.Web.UI.WebControls.Label lblErrorPasswordNueva;
 
         /// <summary>
+        /// Control txtPasswordConfirmacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPasswordConfirmacion;
+
+        /// <summary>
+        /// Control lblErrorPasswordConfirmacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorPasswordConfirmacion;
+
+        /// <summary>
         /// Control lblMensaje.
         /// </summary>
         /// <remarks>

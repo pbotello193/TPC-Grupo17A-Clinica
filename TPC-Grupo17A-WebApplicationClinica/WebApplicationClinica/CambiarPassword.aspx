@@ -26,6 +26,12 @@
                         <asp:Label ID="lblErrorPasswordNueva" runat="server" CssClass="text-danger mt-1 d-block" Visible="false" />
                     </div>
 
+                    <div class="mb-3">
+                        <label for="txtPasswordConfirmacion" class="form-label">Confirmar nueva contraseña</label>
+                        <asp:TextBox ID="txtPasswordConfirmacion" runat="server" CssClass="form-control" TextMode="Password" />
+                        <asp:Label ID="lblErrorPasswordConfirmacion" runat="server" CssClass="text-danger mt-1 d-block" Visible="false" />
+                    </div>
+
                     <asp:Label ID="lblMensaje" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
 
                     <div class="d-grid mt-4">

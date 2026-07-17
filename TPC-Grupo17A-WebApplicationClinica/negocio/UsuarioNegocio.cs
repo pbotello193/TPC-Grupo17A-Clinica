@@ -275,5 +275,27 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+        public bool cambiarPassword(int idUsuario, string passwordActual, string passwordNueva)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE Usuarios SET Pass = @PasswordNueva WHERE Id = @Id AND Pass = @PasswordActual AND Activo = 1; SELECT @@ROWCOUNT;");
+                datos.setearParametro("@Id", idUsuario);
+                datos.setearParametro("@PasswordActual", passwordActual);
+                datos.setearParametro("@PasswordNueva", passwordNueva);
+
+                return datos.ejecutarAccionScalar() > 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
